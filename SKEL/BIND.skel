@@ -1,0 +1,82 @@
+)CM *******************************************************************
+)CM (C) COPYRIGHT IBM CORPORATION 2003, 2023.
+)CM     Copyright Contributors to the GenevaERS Project.
+)CM SPDX-License-Identifier: Apache-2.0
+)CM 
+)CM Licensed under the Apache License, Version 2.0 (the "License");
+)CM you may not use this file except in compliance with the License.
+)CM You may obtain a copy of the License at
+)CM 
+)CM     http://www.apache.org/licenses/LICENSE-2.0
+)CM 
+)CM Unless required by applicable law or agreed to in writing, software
+)CM distributed under the License is distributed on an "AS IS" BASIS,
+)CM WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+)CM or implied.
+)CM See the License for the specific language governing permissions
+)CM and limitations under the License.
+)CM 
+)CM ******************************************************************
+)CM 
+
+)SET SPGMSFX = &SUBSTR(&PID.,4)
+)TBA 12 
+
+//*********************************************************************
+//*   Free plan
+//*********************************************************************
+//*
+//FRE&SPGMSFX. !EXEC PGM=IKJEFT01,
+// COND=(4,LT)
+//*
+//STEPLIB  DD DISP=SHR,DSN=&$DB2LOAD.
+//*
+//SYSTSPRT DD SYSOUT=*
+//*
+//SYSTSIN  DD *
+ DSN SYSTEM(&$DB2SYS.)
+  FREE PLAN(&PID.&$DB2SFX.)
+  END                                                                  
+ CALL 'SYS1.LINKLIB(IEFBR14)'       /* ZERO OUT RETURN CODE */
+//*
+//*********************************************************************
+//*   Bind plan
+//*********************************************************************
+//*
+//BND&SPGMSFX. !EXEC PGM=IKJEFT1A,
+// COND=(4,LT)
+//*
+//STEPLIB  DD DISP=SHR,DSN=&$DB2LOAD.
+//*
+//DBRMLIB  DD DSN=&$TGTHLQ..GVBDBRM,
+//            DISP=SHR
+//*
+//SYSTSPRT DD SYSOUT=*
+//*
+//SYSTSIN  DD *
+ DSN SYSTEM(&$DB2SYS.)                                                      
+  BIND PLAN(&PID.&$DB2SFX.) MEM(&PID.) ACT(REP) ISOLATION(CS) -             
+  LIB('&$TGTHLQ..GVBDBRM') QUALIFIER(&$DB2QUAL.) -             
+  OWNER(&$DB2QUAL.)
+//*
+//*********************************************************************
+//*   Grant execute authority to plan
+//*********************************************************************
+//*
+//GRT&SPGMSFX. !EXEC PGM=IKJEFT1A,DYNAMNBR=20,
+// COND=(4,LT)
+//*
+//STEPLIB  DD DISP=SHR,DSN=&$DB2EXIT.
+//         DD DISP=SHR,DSN=&$DB2LOAD.
+//*
+//SYSTSPRT DD SYSOUT=*                                                 
+//SYSPRINT DD SYSOUT=*                                                 
+//*
+//SYSTSIN  DD *                                                        
+  DSN SYSTEM(&$DB2SYS.) RETRY(0) TEST(0)                                    
+  RUN PROGRAM(DSNTIAD) PLAN(&$DB2UTIL.) -                                
+  LIB('&$DB2RUN.')                                            
+//SYSIN    DD  *                                                       
+ SET CURRENT SQLID='&$DB2QUAL.';                                         
+ GRANT EXECUTE ON PLAN &PID.&$DB2SFX. TO PUBLIC;                              
+//*

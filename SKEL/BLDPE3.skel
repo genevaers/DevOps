@@ -1,0 +1,434 @@
+)CM *******************************************************************
+)CM (C) COPYRIGHT IBM CORPORATION 2003, 2023. 
+)CM     Copyright Contributors to the GenevaERS Project.
+)CM SPDX-License-Identifier: Apache-2.0
+)CM 
+)CM Licensed under the Apache License, Version 2.0 (the "License");
+)CM you may not use this file except in compliance with the License.
+)CM You may obtain a copy of the License at
+)CM 
+)CM     http://www.apache.org/licenses/LICENSE-2.0
+)CM 
+)CM Unless required by applicable law or agreed to in writing, software
+)CM distributed under the License is distributed on an "AS IS" BASIS,
+)CM WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+)CM or implied.
+)CM See the License for the specific language governing permissions
+)CM and limitations under the License.
+)CM 
+)CM ******************************************************************
+)CM 
+//BLDPE3   JOB (&$JACTINF.),
+//          'Build GenevaERS PE  ',
+//          NOTIFY=&&SYSUID.,
+//          CLASS=&$JJOBCLS.,REGION=0M,
+//          MSGLEVEL=&$JMSGLVL.,
+//          MSGCLASS=&$JMSGCLS.
+//*
+
+)SEL    &$CLONPEB. EQ Y 
+//*********************************************************************
+//*   Clone Performance-Engine repository
+//*********************************************************************
+//*
+//CLONPEB  EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+echo;
+echo 'Environment variables:';
+echo '----------------------';
+env || sort;
+echo;
+cd &$REPODIR.;
+rm -rf Performance-Engine;
+
+)IF &$CMETHOD. EQ SSH  THEN
+git clone git@github.com:GenevaERS/Performance-Engine.git;
+)ELSE
+git clone https://github.com/GenevaERS/Performance-Engine.git;
+
+//*
+)ENDSEL &$CLONPEB. EQ Y 
+
+)SEL    &$INCLPEX. EQ Y 
+)SEL    &$CLONPEX. EQ Y 
+//*********************************************************************
+//*   Clone Performance-Engine-Extensions repository
+//*********************************************************************
+//*
+//CLONPEX  EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+echo;
+echo 'Environment variables:';
+echo '----------------------';
+env || sort;
+echo;
+cd &$REPODIR.;
+rm -rf Performance-Engine-Extensions;
+
+)IF &$CMETHOD. EQ SSH  THEN
+git clone git@github.com:GenevaERS/Performance-Engine-Extensions.git;
+)ELSE
+git clone https://github.com/GenevaERS/Performance-Engine-Extensions.git;
+
+//*
+)ENDSEL &$CLONPEX. EQ Y 
+)ENDSEL &$INCLPEX. EQ Y 
+
+)SEL    &$CLONRUN. EQ Y 
+//*********************************************************************
+//*   Clone Run-Control-Apps repository
+//*********************************************************************
+//*
+//CLONRUN  EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+echo;
+echo 'Environment variables:';
+echo '----------------------';
+env || sort;
+echo;
+cd &$REPODIR.;
+rm -rf Run-Control-Apps;
+
+)IF &$CMETHOD. EQ SSH  THEN
+git clone git@github.com:GenevaERS/Run-Control-Apps.git;
+)ELSE
+git clone https://github.com/GenevaERS/Run-Control-Apps.git;
+
+//*
+)ENDSEL &$CLONRUN. EQ Y 
+
+//*********************************************************************
+//*   Check out branch on Performance-Engine repository
+//*********************************************************************
+//*
+//BRCHPEB  EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+echo;
+echo 'Environment variables:';
+echo '----------------------';
+env || sort;
+echo;
+cd &$REPODIR.;
+cd Performance-Engine;
+git checkout &$BRCHPEB.;
+//*
+
+)SEL    &$INCLPEX. EQ Y 
+//*********************************************************************
+//*   Check out branch on Performance-Engine-Extensions repository
+//*********************************************************************
+//*
+//BRCHPEX  EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+echo;
+echo 'Environment variables:';
+echo '----------------------';
+env || sort;
+echo;
+cd &$REPODIR.;
+cd Performance-Engine-Extensions;
+git checkout &$BRCHPEX.;
+//*
+)ENDSEL &$INCLPEX. EQ Y 
+
+//*********************************************************************
+//*   Check out branch on Run-Control-Apps repository
+//*********************************************************************
+//*
+//BRCHRUN  EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+echo;
+echo 'Environment variables:';
+echo '----------------------';
+env || sort;
+echo;
+cd &$REPODIR.;
+cd Run-Control-Apps;
+git checkout &$BRCHRUN.;
+//*
+
+)SEL    &$CLONRUN. NE Y 
+//*********************************************************************
+//*   Delete directory holding Test Framework output
+//*********************************************************************
+//*
+//DELOUT   EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+echo;
+echo 'Environment variables:';
+echo '----------------------';
+env || sort;
+echo;
+cd &$REPODIR.;
+rm -rf Run-Control-Apps/PETestFramework/out;
+//*
+)ENDSEL &$CLONRUN. NE Y 
+
+//********************************************************************* 
+//*   Copy tables from USS repositories to MVS libraries
+//********************************************************************* 
+//*
+//COPY     EXEC PGM=IKJEFT1A,
+//          COND=(0,NE)
+//*
+//SYSEXEC  DD DISP=SHR,DSN=&$USSEXEC.
+//*
+//ISPWRK1  DD DISP=(NEW,DELETE,DELETE),
+//            UNIT=VIO,
+//            SPACE=(TRK,(10000,10000)),
+//            LRECL=256,BLKSIZE=2560,RECFM=FB
+//*
+//ISPLOG   DD DUMMY                              ISPF log file
+//*
+//ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
+//            UNIT=SYSDA,
+//            DSORG=PO,RECFM=FB,LRECL=80,
+//            SPACE=(TRK,(5,5,5))
+//*
+//ISPPLIB  DD DSN=&$ISPPLIB.,
+//            DISP=SHR                           ISPF panels
+//*
+//ISPMLIB  DD DSN=&$ISPMLIB.,
+//            DISP=SHR                           ISPF messages
+//         DD DSN=&$USSMLIB.,
+//            DISP=SHR                           USS messages
+//*
+//ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
+//            UNIT=SYSDA,
+//            SPACE=(TRK,(5,5,5)),
+//            DSORG=PO,RECFM=FB,LRECL=80
+//         DD DSN=&$ISPTLIB.,
+//            DISP=SHR
+//*
+//ISPSLIB  DD DSN=&$ISPSLIB.,
+//            DISP=SHR                           ISPF skeletons
+//*
+//ISPLLIB  DD DISP=SHR,DSN=SYS1.LINKLIB
+//         DD DISP=SHR,DSN=&$ISPLLIB.
+//*
+//SYSTSPRT DD SYSOUT=*
+//*
+//ISPTABL  DD DUMMY                              ISPF tables (output)
+//*
+//ISPFTTRC DD SYSOUT=*,RECFM=VB,LRECL=259        TSO output
+//*
+//SYSTSIN  DD *,SYMBOLS=EXECSYS
+
+OGETX '+
+ &$REPODIR.+
+ /Performance-Engine/TABLE' +
+ '&$ENVHLQ..TABLE' SUFFIX(csv) LC
+
+)SEL    &$INCLPEX. EQ Y 
+OGETX '+
+ &$REPODIR.+
+ /Performance-Engine-Extensions/TABLE' +
+ '&$ENVHLQ..TABLE' SUFFIX(csv) LC
+)ENDSEL &$INCLPEX. EQ Y 
+
+//*
+//*********************************************************************
+//*   Load data from source tables to ISPF tables 
+//*********************************************************************
+//*
+//LOADTBL  EXEC PGM=IKJEFT1A,                    Batch TSO program
+// PARM='ISPSTART CMD(LOADTBL)',
+//            COND=(4,LT)
+//*
+//SYSEXEC  DD DSN=&$ENVHLQ..EXEC,
+//            DISP=SHR                           REXX program library
+//*
+//ISPWRK1  DD DISP=(NEW,DELETE,DELETE),
+//            UNIT=VIO,
+//            SPACE=(TRK,(1000,1000)),
+//            LRECL=256,BLKSIZE=2560,RECFM=FB
+//*
+//ISPLOG   DD DUMMY                              ISPF log file
+//*
+//ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
+//            UNIT=SYSDA,
+//            SPACE=(TRK,(5,5,5)),
+//            DSORG=PO,RECFM=FB,LRECL=80
+//*
+//ISPPLIB  DD DSN=&$ISPPLIB.,
+//            DISP=SHR                           ISPF panels
+//*
+//ISPMLIB  DD DSN=&$ISPMLIB.,
+//            DISP=SHR                           ISPF menus
+//*
+//ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
+//            UNIT=SYSDA,
+//            SPACE=(TRK,(5,5,5)),
+//            DSORG=PO,RECFM=FB,LRECL=80
+//         DD DSN=ISP.SISPTENU,
+//            DISP=SHR
+//*
+//ISPSLIB  DD DSN=&$ENVHLQ..SKEL,
+//            DISP=SHR                           JCL skeletons
+//*
+//SYSTSPRT DD SYSOUT=*
+//*
+//SYSTSIN  DD DUMMY
+//*
+//ISPTABL  DD DSN=&$ENVHLQ..ISPTLIB,
+//            DISP=SHR                           ISPF tables (output)
+//*
+//ISPFTTRC DD SYSOUT=*,RECFM=VB,LRECL=259        TSO output
+//*
+//SRCTLIB  DD DISP=SHR,DSN=&$ENVHLQ..TABLE
+//*
+//TBLLIST  DD *
+BLDDSET
+BLDJOB
+MAC
+PGM
+)SEL    &$INCLPEX. EQ Y 
+MACRND
+PGMRND
+)ENDSEL &$INCLPEX. EQ Y 
+//*
+//*********************************************************************
+//*   Generate installation JCL for the GenevaERS Performance Engine 
+//*********************************************************************
+//*
+// SET USEDEFLB='N'         USE SCRIPT DEFINITION LIBRARY (Y/N)?
+// SET USEVARLB='Y'         USE ENVIRONMENT VARIABLE LIBRARY (Y/N)?
+// SET SITE='N/A'           SITE (MACHINE) ENVIRONMENT
+// SET ENV='$ENVIRON'       PRIMARY DATA ENVIRONMENT
+// SET ENV2='N/A'           SECONDARY DATA ENVIRONMENT
+// SET SGTRCOPT='R'         SCRIPT GENERATOR TRACE OPTION
+// SET USEFTTRC='N'         USE FILE TAILORING TRACE (Y/N)?
+// SET FTTRCOPT=''          FILE TAILORING TRACE OPTIONS
+//*
+//GENJCL   EXEC PGM=IKJEFT1A,                    Batch TSO program
+// COND=(4,LT),
+// REGION=32M,
+// PARM='ISPSTART CMD(GENSCRPT &&USEDEFLB. &&USEVARLB. &&SITE. &&ENV.      X
+//             &&ENV2. &&SGTRCOPT. &&USEFTTRC. &&FTTRCOPT.)'
+//*
+//         SET SYM=''                            Dummy symbolic
+//*
+//SYSEXEC  DD DSN=&$ENVHLQ..EXEC,
+//            DISP=SHR                           REXX program library
+//*
+//ISPWRK1  DD DISP=(NEW,DELETE,DELETE),
+//            UNIT=VIO,
+//            SPACE=(TRK,(10000,10000)),
+//            LRECL=256,BLKSIZE=2560,RECFM=FB
+//*
+//ISPLOG   DD DUMMY                              ISPF log file
+//*
+//ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
+//            UNIT=SYSDA,
+//            SPACE=(TRK,(5,5,5)),
+//            DSORG=PO,RECFM=FB,LRECL=80
+//*
+//ISPPLIB  DD DSN=&$ISPPLIB.,
+//            DISP=SHR                           ISPF panels
+//*
+//ISPMLIB  DD DSN=&$ISPMLIB.,
+//            DISP=SHR                           ISPF menus
+//*
+//ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
+//            UNIT=SYSDA,
+//            SPACE=(TRK,(5,5,5)),
+//            DSORG=PO,RECFM=FB,LRECL=80
+//         DD DSN=&$ENVHLQ..ISPTLIB,
+//            DISP=SHR
+//         DD DSN=ISP.SISPTENU,
+//            DISP=SHR
+//*
+//ISPSLIB  DD DSN=&$ENVHLQ..SKEL,
+//            DISP=SHR                           JCL skeletons
+//*
+//VARLIB   DD DSN=&$ENVHLQ..VAR,
+//            DISP=SHR                           Global variables
+//*
+//SYSTSPRT DD SYSOUT=*
+//*
+//SYSTSIN  DD DUMMY
+//*
+//ISPFILE  DD DSN=&$ENVHLQ..JCL,
+//            DISP=SHR
+//*
+//ISPTABL  DD DUMMY                              ISPF tables (output)
+//*
+//ISPFTTRC DD SYSOUT=*,RECFM=VB,LRECL=259        TSO output
+//*
+//DEFLIST  DD *
+BLDPE4
+BLDPE5
+BLDPE6
+//*
+//*******************************************************************
+//* Submit the next job 
+//*******************************************************************
+//*
+//SUBJOB   EXEC PGM=IEBGENER,
+//            COND=(4,LT)
+//*
+//SYSIN    DD DUMMY
+//*
+//SYSUT1   DD DSN=&$ENVHLQ..JCL(BLDPE4),
+//            DISP=SHR
+//*
+//SYSUT2   DD SYSOUT=(*,INTRDR)
+//*
+//SYSPRINT DD DUMMY
+//*

@@ -1,0 +1,89 @@
+)CM *******************************************************************
+)CM (C) COPYRIGHT IBM CORPORATION 2003, 2023.
+)CM     Copyright Contributors to the GenevaERS Project.
+)CM SPDX-License-Identifier: Apache-2.0
+)CM 
+)CM Licensed under the Apache License, Version 2.0 (the "License");
+)CM you may not use this file except in compliance with the License.
+)CM You may obtain a copy of the License at
+)CM 
+)CM     http://www.apache.org/licenses/LICENSE-2.0
+)CM 
+)CM Unless required by applicable law or agreed to in writing, software
+)CM distributed under the License is distributed on an "AS IS" BASIS,
+)CM WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+)CM or implied.
+)CM See the License for the specific language governing permissions
+)CM and limitations under the License.
+)CM 
+)CM ******************************************************************
+)CM 
+//POSTPE   JOB (&$JACTINF.),
+//          'Post GenevaERS PE   ',
+//          NOTIFY=&&SYSUID.,
+//          CLASS=&$JJOBCLS.,REGION=0M,
+//          MSGLEVEL=&$JMSGLVL.,
+//          MSGCLASS=&$JMSGCLS.
+//*
+ 
+//*********************************************************************
+//*
+//*     POSTPE   - Tag the GenevaERS Performance Engine source code
+//*                and create XMIT-format files suitable for posting
+//*                in a GitHub Releases folder 
+//*
+//*********************************************************************
+//*********************************************************************
+//*   Delete XMIT-format data set
+//*********************************************************************
+//*
+//DELFILE  EXEC PGM=IDCAMS
+//*
+//SYSPRINT DD SYSOUT=*
+//*
+//SYSIN    DD *
+
+)DOT    BLDDSET
+)SEL    &BPOST. EQ Y
+ DELETE  &$MINHLQ..&BDS..XMI PURGE
+ IF LASTCC >> 0  THEN        /* IF OPERATION FAILED,     */    -
+     SET MAXCC = 0          /* PROCEED AS NORMAL ANYWAY */
+)ENDSEL &BPOST. EQ Y
+)ENDDOT BLDDSET
+
+//*
+//*********************************************************************
+//*   Convert file to XMIT format
+//*********************************************************************
+//*
+//XMITFILE EXEC PGM=IKJEFT1A,DYNAMNBR=30
+//*
+
+)TBA 12
+
+)DOT    BLDDSET
+)SEL    &BPOST. EQ Y
+//&BDS. !DD DSN=&$MINHLQ..&BDS..XMI,
+//            DISP=(NEW,CATLG,DELETE),
+//            UNIT=SYSDA,
+//            SPACE=(TRK,(&BTRKSPRI.,&BTRKSSEC.),RLSE),
+//            DCB=(DSORG=PS,RECFM=FB,LRECL=80)
+//*
+)ENDSEL &BPOST. EQ Y
+)ENDDOT BLDDSET
+
+//SYSTSPRT DD SYSOUT=*
+//*
+//SYSTSIN  DD *
+PROFILE NOPREFIX
+
+)DOT    BLDDSET
+)SEL    &BPOST. EQ Y
+XMIT DUMMY.DEST NOLOG -
+OUTDDNAME(GVBLOAD) -
+DA(&$TGTHLQ..&BDS.)
+XMIT DUMMY.DEST NOLOG -
+)ENDSEL &BPOST. EQ Y
+)ENDDOT BLDDSET
+
+//*
