@@ -143,6 +143,30 @@ export GERS_INCLUDE_PEX='Y'
 #
 export GERS_RCA_DB2_INPUT='N'
 
+#     GERS_TEMP_UNIT_NAME is the name to be used in the UNIT parameter
+#     of all DD statements for temporary data sets.  
+#
+#     Example: 
+#
+#         GERS_TEMP_UNIT_NAME='TEMPDISK' yields: 
+#             UNIT=TEMPDISK
+#
+export GERS_TEMP_UNIT_NAME='SYSDA'
+
+#     GERS_PERM_UNIT_NAME is the name to be used in the UNIT parameter
+#     of all DD statements for permanent data sets.  A Retention Period
+#     can optionally be appended to the end of the name.
+#
+#     Examples: 
+#
+#         GERS_PERM_UNIT_NAME='DISK' yields: 
+#             UNIT=DISK                     (without retention period)
+#
+#         GERS_PERM_UNIT_NAME='DISK,RETPD=9999' yields: 
+#             UNIT=DISK,RETPD=9999          (with retention period)
+#
+export GERS_PERM_UNIT_NAME='SYSDA'
+
 #     GERS_ISPF_LOAD_LIB is the name of the ISPF load library.
 #
 export GERS_ISPF_LOAD_LIB='ISP.SISPLOAD'

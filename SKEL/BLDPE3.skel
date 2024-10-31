@@ -237,7 +237,7 @@ rm -rf Run-Control-Apps/PETestFramework/out;
 //ISPLOG   DD DUMMY                              ISPF log file
 //*
 //ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            DSORG=PO,RECFM=FB,LRECL=80,
 //            SPACE=(TRK,(5,5,5))
 //*
@@ -250,7 +250,7 @@ rm -rf Run-Control-Apps/PETestFramework/out;
 //            DISP=SHR                           USS messages
 //*
 //ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //         DD DSN=&$ISPTLIB.,
@@ -302,7 +302,7 @@ OGETX '+
 //ISPLOG   DD DUMMY                              ISPF log file
 //*
 //ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //*
@@ -313,7 +313,7 @@ OGETX '+
 //            DISP=SHR                           ISPF menus
 //*
 //ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //         DD DSN=ISP.SISPTENU,
@@ -375,7 +375,7 @@ PGMRND
 //ISPLOG   DD DUMMY                              ISPF log file
 //*
 //ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //*
@@ -386,7 +386,7 @@ PGMRND
 //            DISP=SHR                           ISPF menus
 //*
 //ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //         DD DSN=&$ENVHLQ..ISPTLIB,
