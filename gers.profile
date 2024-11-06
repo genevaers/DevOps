@@ -7,8 +7,6 @@
 #         GERS_PE_VERSION_NBR is the Version Number (1 digit).
 #         GERS_PE_MAJOR_REL_NBR is the Major Release Number (2 digits).
 #         GERS_PE_MINOR_REL_NBR is the Minor Release Number (3 digits). 
-#     Note:  You may override these values in the Performance Engine
-#     build JCL.   
 #
 export GERS_PE_VERSION_NBR='5'
 export GERS_PE_MAJOR_REL_NBR='01'
@@ -19,7 +17,7 @@ export GERS_PE_MINOR_REL_NBR='001'
 #
 export GERS_PE_REL_NBR=$GERS_PE_VERSION_NBR$GERS_PE_MAJOR_REL_NBR$GERS_PE_MINOR_REL_NBR
 #    
-#     Sometimes the number is formatted with dots.  (Example 5.01.001)
+#     Sometimes the number is formatted with dots.  (Example: 5.01.001)
 #    
 export GERS_PE_REL_NBR_FORMATTED=$GERS_PE_VERSION_NBR.$GERS_PE_MAJOR_REL_NBR.$GERS_PE_MINOR_REL_NBR
 #    
@@ -143,30 +141,6 @@ export GERS_INCLUDE_PEX='Y'
 #
 export GERS_RCA_DB2_INPUT='N'
 
-#     GERS_TEMP_UNIT_NAME is the name to be used in the UNIT parameter
-#     of all DD statements for temporary data sets.  
-#
-#     Example: 
-#
-#         GERS_TEMP_UNIT_NAME='TEMPDISK' yields: 
-#             UNIT=TEMPDISK
-#
-export GERS_TEMP_UNIT_NAME='SYSDA'
-
-#     GERS_PERM_UNIT_NAME is the name to be used in the UNIT parameter
-#     of all DD statements for permanent data sets.  A Retention Period
-#     can optionally be appended to the end of the name.
-#
-#     Examples: 
-#
-#         GERS_PERM_UNIT_NAME='DISK' yields: 
-#             UNIT=DISK                     (without retention period)
-#
-#         GERS_PERM_UNIT_NAME='DISK,RETPD=9999' yields: 
-#             UNIT=DISK,RETPD=9999          (with retention period)
-#
-export GERS_PERM_UNIT_NAME='SYSDA'
-
 #     GERS_ISPF_LOAD_LIB is the name of the ISPF load library.
 #
 export GERS_ISPF_LOAD_LIB='ISP.SISPLOAD'
@@ -262,26 +236,6 @@ export GERS_DB2_QUALIFIER='SDATRT01'
 #     GERS_DB2_UTILITY is the Db2 SQL utility program.  
 #
 export GERS_DB2_UTILITY='DSNTIA13'
-
-#     GERS_JOB_ACCT_INFO is used in the job accounting information 
-#     area of the JOB card in generated JCL.  
-#
-export GERS_JOB_ACCT_INFO='ACCT'
-
-#     GERS_JOB_CLASS is the job class to be used in
-#     the JOB card in generated JCL.  
-#
-export GERS_JOB_CLASS='A'
-
-#     GERS_MSG_CLASS is the message class to be used in
-#     the JOB card in generated JCL.  
-#
-export GERS_MSG_CLASS='H'
-
-#     GERS_MSG_LEVEL is the message level to be used in
-#     the JOB card in generated JCL.  
-#
-export GERS_MSG_LEVEL='(1,1)'
 
 #     The following environment variables set values that are needed
 #     to run UNIX System Services process from MVS batch JCL.  

@@ -46,7 +46,7 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 rm -rf Performance-Engine;
 
 )IF &$CMETHOD. EQ SSH  THEN
@@ -76,9 +76,9 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 cd Performance-Engine;
-git checkout &$BRCHPEB.;
+git checkout $GERS_BRANCH_PEB;
 //*
 
 )SEL    &$INCLPEX. EQ Y 
@@ -103,7 +103,7 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 rm -rf Performance-Engine-Extensions;
 
 )IF &$CMETHOD. EQ SSH  THEN
@@ -133,9 +133,9 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 cd Performance-Engine-Extensions;
-git checkout &$BRCHPEX.;
+git checkout $GERS_BRANCH_PEX;
 //*
 
 )ENDSEL &$INCLPEX. EQ Y 
@@ -160,7 +160,7 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 rm -rf Run-Control-Apps;
 
 )IF &$CMETHOD. EQ SSH  THEN
@@ -190,9 +190,9 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 cd Run-Control-Apps;
-git checkout &$BRCHRUN.;
+git checkout $GERS_BRANCH_RUN;
 //*
 
 )SEL    &$CLONRUN. NE Y 
@@ -215,7 +215,7 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 rm -rf Run-Control-Apps/PETestFramework/out;
 //*
 )ENDSEL &$CLONRUN. NE Y 

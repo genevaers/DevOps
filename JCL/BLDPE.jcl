@@ -1,5 +1,4 @@
-//BLDPE    JOB (ACCT), 
-//          'Build GenevaERS PE  ',
+//BLDPE    JOB (ACCT),'Set up build parms  ', 
 //          NOTIFY=&SYSUID.,
 //          CLASS=A,
 //          MSGLEVEL=(1,1),
@@ -29,61 +28,193 @@
 //*
 //*********************************************************************
 //*
-//*     BLDPE    - Build the libraries to be used for 
-//*                utility functions and start the process to 
+//*     BLDPE    - Set up parameters and start the process to 
 //*                build the GenevaERS Performance Engine 
 //*
 //* Before submitting this job, please do the following:   
 //*
-//* 1) Update the JOB statement above to be appropriate for your site.
-//*
-//* 2) Verify that the following files have your desired default 
+//* 1) Verify that the following file contains your desired  
 //*    values for the current build: 
 //*
 //*        <your-uss-home-directory>/.profile
-//*        <your-tso-id>.GERS.BLDPARM(DEFAULT)
 //*
-//* 3) If you prefer to override these values in this job, 
-//*    uncomment the SET statements below and specify the new values.
+//* 2) Update the JOB statement above to be appropriate for your site.
+//*
+//* 3) Enter your desired values on the following SET statements.  
+//*
+//*        JACTINF is used in the job accounting information 
+//*        area of the JOB card in generated JCL.  
+//*
+//             SET JACTINF='ACCT'
+//*
+//*        JJOBCLS is the job class to be used in
+//*        the JOB card in generated JCL.  
+//*
+//             SET JJOBCLS='A'
+//*
+//*        JMSGCLS is the message class to be used in
+//*        the JOB card in generated JCL.  
+//* 
+//             SET JMSGCLS='H'
+//*
+//*        JMSGLVL is the message level to be used in
+//*        the JOB card in generated JCL.  
+//*
+//             SET JMSGLVL='(1,1)'
+//*
+//*        UNITTMP is the name to be used in the UNIT parameter
+//*        of all DD statements for temporary data sets.  
+//*
+//*            Example: 
+//*
+//*                UNITTMP='TEMPDISK' yields: 
+//*                    UNIT=TEMPDISK
+//*
+//             SET UNITTMP='SYSDA'
+//*
+//*        UNITPRM is the name to be used in the UNIT parameter
+//*        of all DD statements for permanent data sets.  A Retention 
+//*        Period can optionally be appended to the end of the name.
+//*
+//*            Examples: 
+//*
+//*                UNITPRM='DISK' yields: 
+//*                    UNIT=DISK            (without retention period)
+//*
+//*                UNITPRM='DISK,RETPD=9999' yields: 
+//*                    UNIT=DISK,RETPD=9999    (with retention period)
+//*
+//             SET UNITPRM='SYSDA'
+//*
+//*********************************************************************
+//*
+//*********************************************************************
+//* Delete the Build Parameter library 
+//*********************************************************************
+//*
+//DELETE   EXEC PGM=IDCAMS,
+//          COND=(4,LT)
+//*
+//SYSPRINT DD SYSOUT=*
+//*
+//SYSIN    DD *,SYMBOLS=EXECSYS
+ DELETE  &SYSUID..GERS.BLDPARM PURGE
+ IF MAXCC LE 8 THEN         /* IF OPERATION FAILED,     */    -
+     SET MAXCC = 0          /* PROCEED AS NORMAL ANYWAY */
+//*
+//*********************************************************************
+//* Allocate the Build Parameter library 
+//*********************************************************************
+//*
+//ALLOC    EXEC PGM=IEFBR14,
+//          COND=(4,LT)
+//*
+//NEWLIB   DD DSN=&SYSUID..GERS.BLDPARM,
+//            DISP=(NEW,CATLG,DELETE),
+//            UNIT=&UNITPRM.,DSNTYPE=LIBRARY,
+//            SPACE=(TRK,(10,10)),
+//            DSORG=PO,RECFM=FM,LRECL=80
+//*
+//*********************************************************************
+//*   Copy USS environment variables to the Build Parameter library
+//*********************************************************************
+//*
+//COPYPARM EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDPARM DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+echo "// SET ASMMAC2='$GERS_HLASM_TK_MAC_LIB'";
+echo "// SET ASMMOD2='$GERS_HLASM_TK_MOD_LIB'";
+echo "// SET BLDHLQ='$GERS_BUILD_HLQ'";
+echo "// SET BRCHPEB='$GERS_BRANCH_PEB'";
+echo "// SET BRCHPEX='$GERS_BRANCH_PEX'";
+echo "// SET BRCHRUN='$GERS_BRANCH_RUN'";
+echo "// SET CEELIB='$GERS_LE_DLL_LIB'";
+echo "// SET CEELKED='$GERS_LE_CALL_LIB'";
+echo "// SET CEEMAC='$GERS_LE_MAC_LIB'";
+echo "// SET CEERUN='$GERS_LE_RUN_LIB'";
+echo "// SET CLONPEB='$GERS_CLONE_PEB'";
+echo "// SET CLONPEX='$GERS_CLONE_PEX'";
+echo "// SET CLONRUN='$GERS_CLONE_RUN'";
+echo "// SET CMETHOD='$GERS_CLONING_METHOD'";
+echo "// SET CSSLIB='$GERS_CSS_LIB'";
+echo "// SET DB2EXIT='$GERS_DB2_EXIT_LIB'";
+echo "// SET DB2LOAD='$GERS_DB2_LOAD_LIB'";
+echo "// SET DB2QUAL='$GERS_DB2_QUALIFIER'";
+echo "// SET DB2RUN='$GERS_DB2_RUN_LIB'";
+echo "// SET DB2SFX='$GERS_DB2_PLAN_SUFFIX'";
+echo "// SET DB2SYS='$GERS_DB2_SUBSYSTEM'";
+echo "// SET DB2UTIL='$GERS_DB2_UTILITY'";
+echo "// SET ENVHLQ='$GERS_ENV_HLQ'";
+echo "// SET INCLPEX='$GERS_INCLUDE_PEX'";
+echo "// SET ISPLLIB='$GERS_ISPF_LOAD_LIB'";
+echo "// SET ISPMLIB='$GERS_ISPF_MSG_LIB'";
+echo "// SET ISPPLIB='$GERS_ISPF_PANEL_LIB'";
+echo "// SET ISPSLIB='$GERS_ISPF_SKEL_LIB'";
+echo "// SET ISPTLIB='$GERS_ISPF_TABLE_LIB'";
+echo "// SET JACTINF='&JACTINF.'";
+echo "// SET JARSDIR='$GERS_JARS'";
+echo "// SET JJOBCLS='&JJOBCLS.'";
+echo "// SET JMSGCLS='&JMSGCLS.'";
+echo "// SET JMSGLVL='&JMSGLVL.'";
+echo "// SET LINKLIB='$GERS_LINK_LIB'";
+echo "// SET MAJ='$GERS_PE_MAJOR_REL_NBR'";
+echo "// SET MIN='$GERS_PE_MINOR_REL_NBR'";
+echo "// SET RCADB2='$GERS_RCA_DB2_INPUT'";
+echo "// SET RCAJDIR='$GERS_RCA_JAR_DIR'";
+echo "// SET RELEASE='$GERS_PE_REL_NBR'";
+echo "// SET RELFMT='$GERS_PE_REL_NBR_FORMATTED'";
+echo "// SET REPODIR='$GERS_GIT_REPO_DIR'";
+echo "// SET TFHLQ='$GERS_TEST_HLQ'";
+echo "// SET TFLIST='$GERS_TEST_SPEC_FILE_LIST'";
+echo "// SET UNITPRM='&UNITPRM.'";
+echo "// SET USSEXEC='$GERS_USS_EXEC_LIB'";
+echo "// SET USSMLIB='$GERS_USS_MSG_LIB'";
+echo "// SET VER='$GERS_PE_VERSION_NBR'";
+echo "// SET WBDBTYP='$GERS_WB_DB_TYPE'";
+//*
+//STDOUT   DD DSN=&SYSUID..GERS.BLDPARM(DEFAULT),
+//            DISP=SHR
+//*
+//STDERR   DD SYSOUT=*
+//*
+//*******************************************************************
+//* Submit the next job
+//*******************************************************************
+//*
+//SUBJOB   EXEC PGM=IEBGENER,
+//            COND=(4,LT)
+//*
+//SYSIN    DD DUMMY
+//*
+//SYSPRINT DD DUMMY
+//*
+//SYSUT2   DD SYSOUT=(*,INTRDR)
+//*
+//SYSUT1   DD DATA,SYMBOLS=EXECSYS,DLM=$$
+//BLDPE2   JOB (&JACTINF.), 
+//          'Build GenevaERS PE  ',
+//          NOTIFY=&SYSUID.,
+//          CLASS=&JJOBCLS.,
+//          MSGLEVEL=&JMSGLVL.,
+//          MSGCLASS=&JMSGCLS.
+//*
+// EXPORT SYMLIST=*
+//*
+//*********************************************************************
+//*
+//*     BLDPE2   - Generate and submit JCL in 
+//*                &ENVHLQ..JCL(BLDPE3) to 
+//*                build the GenevaERS Performance Engine
 //*
 //*********************************************************************
 //*
 //PROCLIB  JCLLIB ORDER=(&SYSUID..GERS.BLDPARM)
 //*
 // INCLUDE MEMBER=DEFAULT
-//*
-//*     The following symbolic parameters define the release  
-//*     of the Performance Engine:
-//*         VER is the version (1 digit).
-//*         MAJ is the major release number (2 digits).
-//*         MIN is the minor release number (3 digits). 
-//*
-//*SET     VER='9'
-//*SET     MAJ='99'
-//*SET     MIN='999'
-//*
-//*     For each of the following symbolic parameters,
-//*     a value of 'Y' will cause the associated repository to be 
-//*     deleted (if it exists) and cloned.  Any other value will
-//*     leave the repository source code untouched.
-//*         CLONPEB - Performance-Engine (base)
-//*         CLONPEX - Performance-Engine-Extensions
-//*         CLONRUN - Run-Control-Apps
-//*      
-//*SET CLONPEB='N'
-//*SET CLONPEX='N'
-//*SET CLONRUN='N'
-//*
-//*     The following symbolic parameters specify the branches or tags
-//*     to be checked out on the Git repositories to be used for the
-//*     build:
-//*         BRCHPEB - Performance-Engine (base)
-//*         BRCHPEX - Performance-Engine-Extensions
-//*         BRCHRUN - Run-Control-Apps
-//*      
-//*SET BRCHPEB='main'
-//*SET BRCHPEX='main'
-//*SET BRCHRUN='main'
 //*
 //*********************************************************************
 //*
@@ -116,7 +247,7 @@
 //*
 //NEWLIB   DD DSN=&ENVHLQ..&LLQ.,
 //            DISP=(NEW,CATLG,DELETE),
-//            UNIT=SYSDA,DSNTYPE=LIBRARY,
+//            UNIT=&UNITPRM.,DSNTYPE=LIBRARY,
 //            SPACE=(TRK,(100,100)),
 //            DSORG=PO,RECFM=&RECFM.,LRECL=&LRECL.
 //*
@@ -137,7 +268,7 @@
 //ISPLOG   DD DUMMY                              ISPF log file 
 //*
 //ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
-//            UNIT=SYSDA,
+//            UNIT=&UNITTMP.,
 //            DSORG=PO,RECFM=FB,LRECL=80,
 //            SPACE=(TRK,(5,5,5))
 //*
@@ -150,7 +281,7 @@
 //            DISP=SHR                           USS messages
 //*
 //ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
-//            UNIT=SYSDA,
+//            UNIT=&UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //         DD DSN=&ISPTLIB.,
@@ -185,35 +316,6 @@ OGETX '+
 //         EXEC COPYDIR,
 // SUBDIR='TABLE',SUFFIX='csv',LLQ=TABLE,RECFM=VB,LRECL=1004
 //*
-//*******************************************************************
-//* Submit the next job
-//*******************************************************************
-//*
-//SUBJOB   EXEC PGM=IEBGENER,
-//            COND=(4,LT)
-//*
-//SYSIN    DD DUMMY
-//*
-//SYSPRINT DD DUMMY
-//*
-//SYSUT2   DD SYSOUT=(*,INTRDR)
-//*
-//SYSUT1   DD DATA,SYMBOLS=EXECSYS  
-//BLDPE2   JOB (&JACTINF.),
-//          'Build GenevaERS PE  ',
-//          NOTIFY=&SYSUID.,
-//          CLASS=&JJOBCLS.,
-//          MSGLEVEL=&JMSGLVL.,
-//          MSGCLASS=&JMSGCLS.
-//*
-//*********************************************************************
-//*
-//*     BLDPE2   - Generate and submit JCL in 
-//*                &ENVHLQ..JCL(BLDPE3) to 
-//*                build the GenevaERS Performance Engine
-//*
-//*********************************************************************
-//*
 //**********************************************************************
 //*   Delete the files created in the next steps 
 //**********************************************************************
@@ -243,19 +345,19 @@ OGETX '+
 //*
 //VAR      DD DSN=&ENVHLQ..VAR,
 //            DISP=(NEW,CATLG,DELETE),
-//            UNIT=SYSDA,DSNTYPE=LIBRARY,
+//            UNIT=&UNITPRM.,DSNTYPE=LIBRARY,
 //            SPACE=(TRK,(1,1)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //*
 //ISPTLIB  DD DSN=&ENVHLQ..ISPTLIB,
 //            DISP=(NEW,CATLG,DELETE),
-//            UNIT=SYSDA,DSNTYPE=LIBRARY,
+//            UNIT=&UNITPRM.,DSNTYPE=LIBRARY,
 //            SPACE=(TRK,(100,100)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //*
 //JCL      DD DSN=&ENVHLQ..JCL,
 //            DISP=(NEW,CATLG,DELETE),
-//            UNIT=SYSDA,DSNTYPE=LIBRARY,
+//            UNIT=&UNITPRM.,DSNTYPE=LIBRARY,
 //            SPACE=(TRK,(100,100)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //*
@@ -290,9 +392,9 @@ OGETX '+
 $ASMMAC2 = '&ASMMAC2.'
 $ASMMOD2 = '&ASMMOD2.'
 $BLDHLQ  = '&BLDHLQ.' 
-$BRCHRUN = '&BRCHRUN.'
 $BRCHPEB = '&BRCHPEB.' 
 $BRCHPEX = '&BRCHPEX.'
+$BRCHRUN = '&BRCHRUN.'
 $CEELIB  = '&CEELIB.' 
 $CEELKED = '&CEELKED.'
 $CEEMAC  = '&CEEMAC.' 
@@ -329,6 +431,8 @@ $RCAJDIR = '&RCAJDIR.'
 $RELEASE = '&RELEASE.'
 $RELFMT  = '&RELFMT.'
 $REPODIR = '&REPODIR.'
+$TFHLQ   = '&TFHLQ.' 
+$TFLIST  = '&TFLIST.'
 $UNITPRM = '&UNITPRM.'
 $UNITTMP = '&UNITTMP.'
 $USSEXEC = '&USSEXEC.'
@@ -378,7 +482,7 @@ $MINHLQ  = $BLDHLQ || ".PM" || $VER || $MAJ || $MIN
 //ISPLOG   DD DUMMY                              ISPF log file
 //*
 //ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
-//            UNIT=SYSDA,
+//            UNIT=&UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //*
@@ -389,7 +493,7 @@ $MINHLQ  = $BLDHLQ || ".PM" || $VER || $MAJ || $MIN
 //            DISP=SHR                           ISPF menus
 //*
 //ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
-//            UNIT=SYSDA,
+//            UNIT=&UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //         DD DSN=&ENVHLQ..ISPTLIB,
@@ -433,3 +537,4 @@ BLDPE3
 //*
 //SYSPRINT DD DUMMY
 //* 
+$$

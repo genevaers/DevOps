@@ -187,10 +187,10 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$JARSDIR.;
+cd $GERS_JARS;
 java -cp ./db2jcc4.jar com.ibm.db2.jcc.DB2Jcc -version;
 echo;
-cd &$REPODIR./Run-Control-Apps/;
+cd $GERS_GIT_REPO_DIR/Run-Control-Apps/;
 chmod +x prebuild/*.sh;
 mvn clean;
 
@@ -205,7 +205,8 @@ export rev=`grep "<<revision>>" pom.xml
 || awk -F'<<revision>>||<</revision>>' '{print $2}'`;
 echo RCA release number $rev;
 
-cp RCApps/target/rcapps-$rev-jar-with-dependencies.jar &$RCAJDIR.;
+cp RCApps/target/rcapps-$rev-jar-with-dependencies.jar 
+$GERS_RCA_JAR_DIR;
 
 cd PETestFramework/;
 ./target/bin/gerstf;
@@ -223,7 +224,7 @@ cd PETestFramework/;
 sh ;
 set -e;
 set -o xtrace;
-cd &$REPODIR./Run-Control-Apps/;
+cd $GERS_GIT_REPO_DIR/Run-Control-Apps/;
 cd PETestFramework/out;
 chtag  -R -c 819 *;
 chtag  -R -t *;
