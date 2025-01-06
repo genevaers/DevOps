@@ -129,6 +129,9 @@ set -e;
 echo "// SET ASMMAC2='$GERS_HLASM_TK_MAC_LIB'";
 echo "// SET ASMMOD2='$GERS_HLASM_TK_MOD_LIB'";
 echo "// SET BLDHLQ='$GERS_BUILD_HLQ'";
+echo "// SET BLDMAJ='$GERS_PE_MAJOR_REL_NBR'";
+echo "// SET BLDMIN='$GERS_PE_MINOR_REL_NBR'";
+echo "// SET BLDVER='$GERS_PE_VERSION_NBR'";
 echo "// SET BRCHPEB='$GERS_BRANCH_PEB'";
 echo "// SET BRCHPEX='$GERS_BRANCH_PEX'";
 echo "// SET BRCHRUN='$GERS_BRANCH_RUN'";
@@ -161,8 +164,6 @@ echo "// SET JJOBCLS='&JJOBCLS.'";
 echo "// SET JMSGCLS='&JMSGCLS.'";
 echo "// SET JMSGLVL='&JMSGLVL.'";
 echo "// SET LINKLIB='$GERS_LINK_LIB'";
-echo "// SET MAJ='$GERS_PE_MAJOR_REL_NBR'";
-echo "// SET MIN='$GERS_PE_MINOR_REL_NBR'";
 echo "// SET RCADB2='$GERS_RCA_DB2_INPUT'";
 echo "// SET RCAJDIR='$GERS_RCA_JAR_DIR'";
 echo "// SET RELEASE='$GERS_PE_REL_NBR'";
@@ -173,7 +174,6 @@ echo "// SET TFLIST='$GERS_TEST_SPEC_FILE_LIST'";
 echo "// SET UNITPRM='&UNITPRM.'";
 echo "// SET USSEXEC='$GERS_USS_EXEC_LIB'";
 echo "// SET USSMLIB='$GERS_USS_MSG_LIB'";
-echo "// SET VER='$GERS_PE_VERSION_NBR'";
 echo "// SET WBDBTYP='$GERS_WB_DB_TYPE'";
 //*
 //STDOUT   DD DSN=&SYSUID..GERS.BLDPARM(DEFAULT),
@@ -366,7 +366,7 @@ OGETX '+
 //*********************************************************************
 //*
 //INCRBLD EXEC PGM=IKJEFT1A,
-// PARM='%INCRBLD &BLDHLQ..PM&VER.&MAJ.&MIN.',
+// PARM='%INCRBLD &BLDHLQ..PM&BLDVER.&BLDMAJ.&BLDMIN.',
 // COND=(4,LT)
 //*
 //SYSEXEC  DD DSN=&ENVHLQ..EXEC,     REXX program library
@@ -392,6 +392,9 @@ OGETX '+
 $ASMMAC2 = '&ASMMAC2.'
 $ASMMOD2 = '&ASMMOD2.'
 $BLDHLQ  = '&BLDHLQ.' 
+$BLDMAJ  = '&BLDMAJ.'    
+$BLDMIN  = '&BLDMIN.'    
+$BLDVER  = '&BLDVER.'    
 $BRCHPEB = '&BRCHPEB.' 
 $BRCHPEX = '&BRCHPEX.'
 $BRCHRUN = '&BRCHRUN.'
@@ -424,8 +427,6 @@ $JJOBCLS = '&JJOBCLS.'
 $JMSGCLS = '&JMSGCLS.'
 $JMSGLVL = '&JMSGLVL.'
 $LINKLIB = '&LINKLIB.'
-$MAJ     = '&MAJ.'    
-$MIN     = '&MIN.'    
 $RCADB2  = '&RCADB2.'
 $RCAJDIR = '&RCAJDIR.'
 $RELEASE = '&RELEASE.'
@@ -437,11 +438,10 @@ $UNITPRM = '&UNITPRM.'
 $UNITTMP = '&UNITTMP.'
 $USSEXEC = '&USSEXEC.'
 $USSMLIB = '&USSMLIB.'
-$VER     = '&VER.'    
 $WBDBTYP = '&WBDBTYP.'    
 $TGTHLQ  = $BLDHLQ || ".PM" || $RELEASE || ".B" || $BLDNBR
-$MAJHLQ  = $BLDHLQ || ".PM" || $VER || $MAJ
-$MINHLQ  = $BLDHLQ || ".PM" || $VER || $MAJ || $MIN
+$MAJHLQ  = $BLDHLQ || ".PM" || $BLDVER || $BLDMAJ
+$MINHLQ  = $BLDHLQ || ".PM" || $BLDVER || $BLDMAJ || $BLDMIN
 //*
 //$ENVIRO2 DD DISP=SHR,DSN=&ENVHLQ..VAR($ENVIRON)
 //*
