@@ -36,7 +36,7 @@
 
 //ASMAOPT  DD *
 ADATA
-NOALIGN
+ALIGN
 NODECK                      
 GOFF
 LIST(133)
