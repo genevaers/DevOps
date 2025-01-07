@@ -37,7 +37,8 @@
 //ASMAOPT  DD *
 ADATA
 ALIGN
-NODECK                      
+NODECK 
+FLAG(NOALIGN)                     
 GOFF
 LIST(133)
 OBJECT
