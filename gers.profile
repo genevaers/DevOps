@@ -66,6 +66,19 @@ export GERS_BUILD_HLQ='<your-build-hlq>'
 #
 export GERS_ENV_HLQ='<your-env-hlq>'
 
+#     GERS_ENV_USS specifies the alias for Unix System Services (USS)
+#     files. 
+#
+#     Examples:
+#
+#         GERS_ENV_USS='LATEST' yields: 
+#             rcapps-LATEST-jar-with-dependencies.jar (Production alias)
+#
+#         GERS_ENV_USS='BOB' yields: 
+#             rcapps-BOB-jar-with-dependencies.jar    (Alias for Bob)
+#
+export GERS_ENV_USS='<your-env-uss>'
+
 #     GERS_TEST_SPEC_LIST specifies a file containing list of 
 #     regression tests to run.
 #
