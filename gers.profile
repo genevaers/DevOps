@@ -7,8 +7,6 @@
 #         GERS_PE_VERSION_NBR is the Version Number (1 digit).
 #         GERS_PE_MAJOR_REL_NBR is the Major Release Number (2 digits).
 #         GERS_PE_MINOR_REL_NBR is the Minor Release Number (3 digits). 
-#     Note:  You may override these values in the Performance Engine
-#     build JCL.   
 #
 export GERS_PE_VERSION_NBR='5'
 export GERS_PE_MAJOR_REL_NBR='01'
@@ -19,7 +17,7 @@ export GERS_PE_MINOR_REL_NBR='001'
 #
 export GERS_PE_REL_NBR=$GERS_PE_VERSION_NBR$GERS_PE_MAJOR_REL_NBR$GERS_PE_MINOR_REL_NBR
 #    
-#     Sometimes the number is formatted with dots.  (Example 5.01.001)
+#     Sometimes the number is formatted with dots.  (Example: 5.01.001)
 #    
 export GERS_PE_REL_NBR_FORMATTED=$GERS_PE_VERSION_NBR.$GERS_PE_MAJOR_REL_NBR.$GERS_PE_MINOR_REL_NBR
 #    
@@ -67,6 +65,19 @@ export GERS_BUILD_HLQ='<your-build-hlq>'
 #             GENEVA.BOB.JCL                     (JCL library for Bob)
 #
 export GERS_ENV_HLQ='<your-env-hlq>'
+
+#     GERS_ENV_USS specifies the alias for Unix System Services (USS)
+#     files. 
+#
+#     Examples:
+#
+#         GERS_ENV_USS='LATEST' yields: 
+#             rcapps-LATEST-jar-with-dependencies.jar (Production alias)
+#
+#         GERS_ENV_USS='BOB' yields: 
+#             rcapps-BOB-jar-with-dependencies.jar    (Alias for Bob)
+#
+export GERS_ENV_USS='<your-env-uss>'
 
 #     GERS_TEST_SPEC_LIST specifies a file containing list of 
 #     regression tests to run.
@@ -238,26 +249,6 @@ export GERS_DB2_QUALIFIER='SDATRT01'
 #     GERS_DB2_UTILITY is the Db2 SQL utility program.  
 #
 export GERS_DB2_UTILITY='DSNTIA13'
-
-#     GERS_JOB_ACCT_INFO is used in the job accounting information 
-#     area of the JOB card in generated JCL.  
-#
-export GERS_JOB_ACCT_INFO='ACCT'
-
-#     GERS_JOB_CLASS is the job class to be used in
-#     the JOB card in generated JCL.  
-#
-export GERS_JOB_CLASS='A'
-
-#     GERS_MSG_CLASS is the message class to be used in
-#     the JOB card in generated JCL.  
-#
-export GERS_MSG_CLASS='H'
-
-#     GERS_MSG_LEVEL is the message level to be used in
-#     the JOB card in generated JCL.  
-#
-export GERS_MSG_LEVEL='(1,1)'
 
 #     The following environment variables set values that are needed
 #     to run UNIX System Services process from MVS batch JCL.  

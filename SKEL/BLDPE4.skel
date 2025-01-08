@@ -1,3 +1,4 @@
+
 )CM *******************************************************************
 )CM (C) COPYRIGHT IBM CORPORATION 2003, 2023. 
 )CM     Copyright Contributors to the GenevaERS Project.
@@ -69,7 +70,7 @@
  
 //&BDS. !DD DSN=&$TGTHLQ..&BDS.,
 //            DISP=(NEW,CATLG,DELETE),
-//            UNIT=SYSDA&SDSNTYPE.,
+//            UNIT=&$UNITPRM.&SDSNTYPE.,
 //            SPACE=(TRK,(&BTRKSPRI.,&BTRKSSEC.),RLSE),
 //            DSORG=&BDSORG.,RECFM=&BRECFM.,LRECL=&BLRECL.&SBLKSIZE.
 //*

@@ -14,13 +14,6 @@ Utilities for Development and Operations for GenevaERS
 7. Paste the saved lines at the end of .profile.
 8. Follow the instructions in these new lines and update your environment variables with the appropriate values.
 9. Save and close .profile.
-10. In the JCL folder of the DevOps repo, open the SETUPBLD.jcl file.  (We recommend using ISPF option 3.17 for this.)
-11. Edit the JCL according to the instructions specified in the job.  This job will delete and recreate a library named:
-    - `<your-tso-id>.GERS.BLDPARM`  
-(This will be known as your Build Parameters library.)
-1.  The job will then copy environment variable values from your .profile to symbolic parameters that will be used in subsequent jobs. You may override key environment variable when you submit the Performance Engine build job.  
-2.  At the USS command line, create a symbolic link from our web server's data directory to your Test Framework output directory.  For example:   
-    - `ln -fs /u/rhness/git/GenevaERS/Run-Control-Apps/PETestFramework/out /u/safrbld/websrv1/htdocs/rhnresults`
 
 ### Building the Performance Engine and executing the regression tests
 1. Navigate to your DevOps repo directory on a USS command line.
@@ -29,8 +22,5 @@ Utilities for Development and Operations for GenevaERS
 ```
     git pull
 ```
-3. If you've made any recent changes to GERS_ environment variables, open the SETUPBLD.jcl file in the JCL folder of the DevOps repo and submit it.  (We recommend using ISPF option 3.17 for this.)
 12. In the JCL folder of the DevOps repo, open the BLDPE.jcl file.  (We recommend using ISPF option 3.17 for this.)
-13. Edit the job card to be appropriate for your site.
-14. Edit the JCL according to the instructions specified in the job.
-15. Submit the job to build the Performance Engine and execute the regression tests.
+13. Edit the JCL according to the instructions specified in the job, then submit the job.  This will start a series of jobs which will build the Performance Engine and execute regression tests.  

@@ -26,7 +26,7 @@
 //          MSGCLASS=&$JMSGCLS.
 //*
 
-)SEL    &$CLONPEB. EQ Y 
+)SEL    &$CLONPEB. EQ Y  
 //*********************************************************************
 //*   Clone Performance-Engine repository
 //*********************************************************************
@@ -46,7 +46,7 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 rm -rf Performance-Engine;
 
 )IF &$CMETHOD. EQ SSH  THEN
@@ -57,7 +57,32 @@ git clone https://github.com/GenevaERS/Performance-Engine.git;
 //*
 )ENDSEL &$CLONPEB. EQ Y 
 
+//*********************************************************************
+//*   Check out branch on Performance-Engine repository
+//*********************************************************************
+//*
+//BRCHPEB  EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+echo;
+echo 'Environment variables:';
+echo '----------------------';
+env || sort;
+echo;
+cd $GERS_GIT_REPO_DIR;
+cd Performance-Engine;
+git checkout $GERS_BRANCH_PEB;
+//*
+
 )SEL    &$INCLPEX. EQ Y 
+
 )SEL    &$CLONPEX. EQ Y 
 //*********************************************************************
 //*   Clone Performance-Engine-Extensions repository
@@ -78,7 +103,7 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 rm -rf Performance-Engine-Extensions;
 
 )IF &$CMETHOD. EQ SSH  THEN
@@ -88,6 +113,31 @@ git clone https://github.com/GenevaERS/Performance-Engine-Extensions.git;
 
 //*
 )ENDSEL &$CLONPEX. EQ Y 
+
+//*********************************************************************
+//*   Check out branch on Performance-Engine-Extensions repository
+//*********************************************************************
+//*
+//BRCHPEX  EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+echo;
+echo 'Environment variables:';
+echo '----------------------';
+env || sort;
+echo;
+cd $GERS_GIT_REPO_DIR;
+cd Performance-Engine-Extensions;
+git checkout $GERS_BRANCH_PEX;
+//*
+
 )ENDSEL &$INCLPEX. EQ Y 
 
 )SEL    &$CLONRUN. EQ Y 
@@ -110,7 +160,7 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 rm -rf Run-Control-Apps;
 
 )IF &$CMETHOD. EQ SSH  THEN
@@ -120,56 +170,6 @@ git clone https://github.com/GenevaERS/Run-Control-Apps.git;
 
 //*
 )ENDSEL &$CLONRUN. EQ Y 
-
-//*********************************************************************
-//*   Check out branch on Performance-Engine repository
-//*********************************************************************
-//*
-//BRCHPEB  EXEC PGM=BPXBATCH,
-//            COND=(4,LT)
-//*
-//STDOUT   DD SYSOUT=*
-//STDERR   DD SYSOUT=*
-//*
-//STDPARM  DD *,SYMBOLS=EXECSYS
-sh ;
-set -o xtrace;
-set -e;
-echo;
-echo 'Environment variables:';
-echo '----------------------';
-env || sort;
-echo;
-cd &$REPODIR.;
-cd Performance-Engine;
-git checkout &$BRCHPEB.;
-//*
-
-)SEL    &$INCLPEX. EQ Y 
-//*********************************************************************
-//*   Check out branch on Performance-Engine-Extensions repository
-//*********************************************************************
-//*
-//BRCHPEX  EXEC PGM=BPXBATCH,
-//            COND=(4,LT)
-//*
-//STDOUT   DD SYSOUT=*
-//STDERR   DD SYSOUT=*
-//*
-//STDPARM  DD *,SYMBOLS=EXECSYS
-sh ;
-set -o xtrace;
-set -e;
-echo;
-echo 'Environment variables:';
-echo '----------------------';
-env || sort;
-echo;
-cd &$REPODIR.;
-cd Performance-Engine-Extensions;
-git checkout &$BRCHPEX.;
-//*
-)ENDSEL &$INCLPEX. EQ Y 
 
 //*********************************************************************
 //*   Check out branch on Run-Control-Apps repository
@@ -190,9 +190,9 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 cd Run-Control-Apps;
-git checkout &$BRCHRUN.;
+git checkout $GERS_BRANCH_RUN;
 //*
 
 )SEL    &$CLONRUN. NE Y 
@@ -215,7 +215,7 @@ echo 'Environment variables:';
 echo '----------------------';
 env || sort;
 echo;
-cd &$REPODIR.;
+cd $GERS_GIT_REPO_DIR;
 rm -rf Run-Control-Apps/PETestFramework/out;
 //*
 )ENDSEL &$CLONRUN. NE Y 
@@ -237,7 +237,7 @@ rm -rf Run-Control-Apps/PETestFramework/out;
 //ISPLOG   DD DUMMY                              ISPF log file
 //*
 //ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            DSORG=PO,RECFM=FB,LRECL=80,
 //            SPACE=(TRK,(5,5,5))
 //*
@@ -250,7 +250,7 @@ rm -rf Run-Control-Apps/PETestFramework/out;
 //            DISP=SHR                           USS messages
 //*
 //ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //         DD DSN=&$ISPTLIB.,
@@ -302,7 +302,7 @@ OGETX '+
 //ISPLOG   DD DUMMY                              ISPF log file
 //*
 //ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //*
@@ -313,7 +313,7 @@ OGETX '+
 //            DISP=SHR                           ISPF menus
 //*
 //ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //         DD DSN=ISP.SISPTENU,
@@ -375,7 +375,7 @@ PGMRND
 //ISPLOG   DD DUMMY                              ISPF log file
 //*
 //ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //*
@@ -386,7 +386,7 @@ PGMRND
 //            DISP=SHR                           ISPF menus
 //*
 //ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
-//            UNIT=SYSDA,
+//            UNIT=&$UNITTMP.,
 //            SPACE=(TRK,(5,5,5)),
 //            DSORG=PO,RECFM=FB,LRECL=80
 //         DD DSN=&$ENVHLQ..ISPTLIB,
