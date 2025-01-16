@@ -227,7 +227,7 @@ cd $GERS_GIT_REPO_DIR/Run-Control-Apps/PETestFramework/;
 //*   Tag the Test Framework output files as ASCII
 //**********************************************************************
 //*
-//TAGOUTPT   EXEC PGM=BPXBATCH
+//SETASCII   EXEC PGM=BPXBATCH
 //*
 //STDPARM  DD *
 sh ;
