@@ -25,7 +25,6 @@
 //          MSGLEVEL=&$JMSGLVL.,
 //          MSGCLASS=&$JMSGCLS.
 //*
- 
 //*********************************************************************
 //* Copy source code from USS repositories to MVS libraries
 //*********************************************************************
@@ -206,9 +205,19 @@ export rev=`grep "<<revision>>" pom.xml
 echo RCA release number $rev;
 
 cp RCApps/target/rcapps-$rev-jar-with-dependencies.jar 
-$GERS_RCA_JAR_DIR;
+$GERS_RCA_JAR_DIR/rcapps-$rev.jar;
 
-cd PETestFramework/;
+cd $GERS_RCA_JAR_DIR;
+
+touch rcapps-latest.jar;
+rm rcapps-latest.jar;
+ln -s rcapps-$rev.jar rcapps-latest.jar;
+
+touch rcapps-&$MINREL..jar;
+rm rcapps-&$MINREL..jar;
+ln -s rcapps-$rev.jar rcapps-&$MINREL..jar;
+
+cd $GERS_GIT_REPO_DIR/Run-Control-Apps/PETestFramework/;
 ./target/bin/gerstf;
 //*
 //STDOUT   DD SYSOUT=*
