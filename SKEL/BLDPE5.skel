@@ -241,6 +241,46 @@ chtag  -R -t *;
 //STDOUT   DD SYSOUT=*
 //STDERR   DD SYSOUT=*
 //*
+//**********************************************************************
+//*   Print the results of the regression tests
+//**********************************************************************
+//*
+//PRTRESLT EXEC PGM=IKJEFT1A,DYNAMNBR=25,REGION=1024K  
+//*                                                     
+//INFILE   DD PATHOPTS=(ORDONLY),
+
+)CM The following REXX code deals with the fact that a single-quoted 
+)CM parameter in JCL (such as PATH) must either be contained within
+)CM the first 71 characters of the JCL or be continued starting at 
+)CM position 16 of the next line.  Depending on the length of the name
+)CM user's Git repository, the quoted parameter containing the 
+)CM location of the results file for the PE Test Framework may or
+)CM may not fit on one line.  The REXX code tests for this and splits
+)CM the value into two JCL lines if necessary.  
+
+)REXX $REPODIR SRESFL1 SRESFL2 
+Results_File = "'" || $REPODIR || , 
+    "/Run-Control-Apps/PETestFramework/out/fmoverview.txt'"
+SRESFL1 = strip(substr(Results_File,1,63))
+SRESFL2 = substr(Results_File,64)
+)ENDREXX
+
+)IF &SRESFL2. EQ &Z.  THEN 
+// PATH=&SRESFL1.
+)ELSE )DO
+// PATH=&SRESFL1.
+//             &SRESFL2.
+)ENDDO
+
+//*                                                     
+//SYSTSPRT DD SYSOUT=*                                  
+//*                                                     
+//RESULTS  DD SYSOUT=*,RECFM=VB,LRECL=164               
+//*                                                     
+//SYSTSIN  DD *                                         
+ OCOPY INDD(INFILE) OUTDD(RESULTS) TEXT -              
+  CONVERT((BPXFX311)) TO1047                            
+//*                                                     
 //*******************************************************************
 //* Submit the next job 
 //*******************************************************************
