@@ -42,11 +42,7 @@ sh ;
 set -o xtrace;
 set -e;
 echo;
-echo 'Environment variables:';
-echo '----------------------';
-env || sort;
-echo;
-cd $GERS_GIT_REPO_DIR;
+cd &$REPODIR.;
 rm -rf Performance-Engine;
 
 )IF &$CMETHOD. EQ SSH  THEN
@@ -72,13 +68,9 @@ sh ;
 set -o xtrace;
 set -e;
 echo;
-echo 'Environment variables:';
-echo '----------------------';
-env || sort;
-echo;
-cd $GERS_GIT_REPO_DIR;
+cd &$REPODIR.;
 cd Performance-Engine;
-git checkout $GERS_BRANCH_PEB;
+git checkout &$BRCHPEB.;
 //*
 
 )SEL    &$INCLPEX. EQ Y 
@@ -99,11 +91,7 @@ sh ;
 set -o xtrace;
 set -e;
 echo;
-echo 'Environment variables:';
-echo '----------------------';
-env || sort;
-echo;
-cd $GERS_GIT_REPO_DIR;
+cd &$REPODIR.;
 rm -rf Performance-Engine-Extensions;
 
 )IF &$CMETHOD. EQ SSH  THEN
@@ -129,13 +117,9 @@ sh ;
 set -o xtrace;
 set -e;
 echo;
-echo 'Environment variables:';
-echo '----------------------';
-env || sort;
-echo;
-cd $GERS_GIT_REPO_DIR;
+cd &$REPODIR.;
 cd Performance-Engine-Extensions;
-git checkout $GERS_BRANCH_PEX;
+git checkout &$BRCHPEX.;
 //*
 
 )ENDSEL &$INCLPEX. EQ Y 
@@ -155,12 +139,7 @@ git checkout $GERS_BRANCH_PEX;
 sh ;
 set -o xtrace;
 set -e;
-echo;
-echo 'Environment variables:';
-echo '----------------------';
-env || sort;
-echo;
-cd $GERS_GIT_REPO_DIR;
+cd &$REPODIR.;
 rm -rf Run-Control-Apps;
 
 )IF &$CMETHOD. EQ SSH  THEN
@@ -186,13 +165,9 @@ sh ;
 set -o xtrace;
 set -e;
 echo;
-echo 'Environment variables:';
-echo '----------------------';
-env || sort;
-echo;
-cd $GERS_GIT_REPO_DIR;
+cd &$REPODIR.;
 cd Run-Control-Apps;
-git checkout $GERS_BRANCH_RUN;
+git checkout &$BRCHRUN.;
 //*
 
 )SEL    &$CLONRUN. NE Y 
@@ -211,11 +186,7 @@ sh ;
 set -o xtrace;
 set -e;
 echo;
-echo 'Environment variables:';
-echo '----------------------';
-env || sort;
-echo;
-cd $GERS_GIT_REPO_DIR;
+cd &$REPODIR.;
 rm -rf Run-Control-Apps/PETestFramework/out;
 //*
 )ENDSEL &$CLONRUN. NE Y 

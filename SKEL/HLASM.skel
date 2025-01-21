@@ -22,9 +22,9 @@
 )SET SPGMSFX = &SUBSTR(&PID.,4)
 )TBA 12 
 
-)SEL    &PSQL. EQ Y
+)SEL    &PSQL. EQ Y  &&  &$MR95DB2. EQ Y
 )IM HLASMSQL
-)ENDSEL &PSQL. EQ Y
+)ENDSEL &PSQL. EQ Y  &&  &$MR95DB2. EQ Y
 
 //*********************************************************************
 //*  Assemble module
@@ -48,7 +48,12 @@ SECTALGN(256)
 SYSPARM(&$RELFMT.)
 //*
 
-)IF &PSQL. EQ Y  THEN 
+)SET SDB2PRE = N
+)SEL    &PSQL. EQ Y  &&  &$MR95DB2. EQ Y
+)SET SDB2PRE = Y
+)ENDSEL &PSQL. EQ Y  &&  &$MR95DB2. EQ Y
+
+)IF &SDB2PRE. EQ Y  THEN
 )DO
 //SYSIN    DD DSN=&&DB2PS,
 //            DISP=(OLD,DELETE)

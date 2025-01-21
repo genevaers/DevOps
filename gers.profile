@@ -2,34 +2,6 @@
 # Environment variables for GenevaERS 
 # -----------------------------------
 
-#     The following environment variables are used to identify the 
-#     release of the Performance Engine:
-#         GERS_PE_VERSION_NBR is the Version Number (1 digit).
-#         GERS_PE_MAJOR_REL_NBR is the Major Release Number (2 digits).
-#         GERS_PE_MINOR_REL_NBR is the Minor Release Number (3 digits). 
-#
-export GERS_PE_VERSION_NBR='5'
-export GERS_PE_MAJOR_REL_NBR='01'
-export GERS_PE_MINOR_REL_NBR='001'
-#
-#     The grouping of these three pieces is known as the 
-#     Release Number.  (Example: 501001)
-#
-export GERS_PE_REL_NBR=$GERS_PE_VERSION_NBR$GERS_PE_MAJOR_REL_NBR$GERS_PE_MINOR_REL_NBR
-#    
-#     Sometimes the number is formatted with dots.  (Example: 5.01.001)
-#    
-export GERS_PE_REL_NBR_FORMATTED=$GERS_PE_VERSION_NBR.$GERS_PE_MAJOR_REL_NBR.$GERS_PE_MINOR_REL_NBR
-#    
-#     The Component ID for this product is "PM" for "Performance Engine 
-#     - MVS".
-#
-#     The Release Name is the Release Number prefixed by the 
-#     Component ID.  (Example: PM501001)
-#
-#     The Major Release Name is the Component Id grouped with the 
-#     Version Number and the Major Release Number.  (Example: PM501)
-
 #     GERS_BUILD_HLQ specifies the high-level qualifier(s) to be used 
 #     for build output files, such as load libraries.  
 #
@@ -112,33 +84,6 @@ export GERS_RCA_JAR_DIR='<your-rca-jar-dir>'
 #      
 export GERS_CLONING_METHOD='HTTPS'
 
-#     For each of the following environment variables,
-#     a value of 'Y' will cause the associated repository to be 
-#     deleted (if it exists) and cloned.  Any other value will
-#     leave the repository source code untouched.
-#         GERS_CLONE_PEB - Performance-Engine (base)
-#         GERS_CLONE_PEX - Performance-Engine-Extensions
-#         GERS_CLONE_RUN - Run-Control-Apps
-#     Note:  You may override these values in the Performance Engine
-#     build JCL.   
-#      
-export GERS_CLONE_PEB='Y'
-export GERS_CLONE_PEX='Y'
-export GERS_CLONE_RUN='Y'
-
-#     The following symbolic parameters specify the branches or tags
-#     to be checked out on the Git repositories to be used for the
-#     build:
-#         GERS_BRANCH_PEB - Performance-Engine (base)
-#         GERS_BRANCH_PEX - Performance-Engine-Extensions
-#         GERS_BRANCH_RUN - Run-Control-Apps
-#     Note:  You may override these values in the Performance Engine
-#     build JCL.   
-#      
-export GERS_BRANCH_PEB='main'
-export GERS_BRANCH_PEX='main'
-export GERS_BRANCH_RUN='main'
-
 #     A value of 'Y' for GERS_INCLUDE_PEX will cause the R&D components 
 #     of the Performance Engine to be included in the build.  Any 
 #     other value will cause the R&D components to be skipped. 
@@ -153,6 +98,13 @@ export GERS_INCLUDE_PEX='Y'
 #     the Db2 components to be skipped.  
 #
 export GERS_RCA_DB2_INPUT='N'
+
+#     A value of 'Y' for GERS_MR95_DB2_INPUT will cause Db2 components
+#     to be built into the View Extract Process (GVBMR95), allowing it 
+#     to receive input from a Db2 database.  Any other value will cause
+#     the Db2 components to be skipped.  
+#
+export GERS_MR95_DB2_INPUT='N'
 
 #     GERS_ISPF_LOAD_LIB is the name of the ISPF load library.
 #

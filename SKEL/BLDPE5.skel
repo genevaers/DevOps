@@ -130,16 +130,16 @@ OGETX '+
 )ENDSEL &$INCLPEX. EQ Y
 
 )DOT    PGM
-)SEL    &PSQL. EQ Y
+)SEL    &PSQL. EQ Y  &&  &$MR95DB2. EQ Y
 )IM BIND
-)ENDSEL &PSQL. EQ Y
+)ENDSEL &PSQL. EQ Y  &&  &$MR95DB2. EQ Y
 )ENDDOT PGM
 
 )SEL    &$INCLPEX. EQ Y
 )DOT    PGMRND
-)SEL    &PSQL. EQ Y
+)SEL    &PSQL. EQ Y  &&  &$MR95DB2. EQ Y
 )IM BIND
-)ENDSEL &PSQL. EQ Y
+)ENDSEL &PSQL. EQ Y  &&  &$MR95DB2. EQ Y
 )ENDDOT PGMRND
 )ENDSEL &$INCLPEX. EQ Y
 
@@ -182,14 +182,10 @@ sh ;
 set -e;
 set -o xtrace;
 echo;
-echo 'Environment variables:';
-echo '----------------------';
-env || sort;
-echo;
-cd $GERS_JARS;
+cd &$JARSDIR.;
 java -cp ./db2jcc4.jar com.ibm.db2.jcc.DB2Jcc -version;
 echo;
-cd $GERS_GIT_REPO_DIR/Run-Control-Apps/;
+cd &$REPODIR./Run-Control-Apps/;
 chmod +x prebuild/*.sh;
 mvn clean;
 
@@ -205,9 +201,9 @@ export rev=`grep "<<revision>>" pom.xml
 echo RCA release number $rev;
 
 cp RCApps/target/rcapps-$rev-jar-with-dependencies.jar 
-$GERS_RCA_JAR_DIR/rcapps-$rev.jar;
+&$RCAJDIR./rcapps-$rev.jar;
 
-cd $GERS_RCA_JAR_DIR;
+cd &$RCAJDIR.;
 
 touch rcapps-latest.jar;
 rm rcapps-latest.jar;
@@ -217,7 +213,7 @@ touch rcapps-&$MINREL..jar;
 rm rcapps-&$MINREL..jar;
 ln -s rcapps-$rev.jar rcapps-&$MINREL..jar;
 
-cd $GERS_GIT_REPO_DIR/Run-Control-Apps/PETestFramework/;
+cd &$REPODIR./Run-Control-Apps/PETestFramework/;
 ./target/bin/gerstf;
 //*
 //STDOUT   DD SYSOUT=*
@@ -233,7 +229,7 @@ cd $GERS_GIT_REPO_DIR/Run-Control-Apps/PETestFramework/;
 sh ;
 set -e;
 set -o xtrace;
-cd $GERS_GIT_REPO_DIR/Run-Control-Apps/;
+cd &$REPODIR./Run-Control-Apps/;
 cd PETestFramework/out;
 chtag  -R -c 819 *;
 chtag  -R -t *;

@@ -33,60 +33,101 @@
 //*
 //* Before submitting this job, please do the following:   
 //*
-//* 1) Verify that the following file contains your desired  
-//*    values for the current build: 
+//* 1) Update the JOB statement above to be appropriate for your site.
 //*
-//*        <your-uss-home-directory>/.profile
+//* 2) Enter your desired values on the following SET statements.  
 //*
-//* 2) Update the JOB statement above to be appropriate for your site.
+//*     The following symbolic parameters specify the branches or tags
+//*     to be checked out on the Git repositories to be used for the
+//*     build:
+//*         BRCHPEB - Performance-Engine (base)
+//*         BRCHPEX - Performance-Engine-Extensions
+//*         BRCHRUN - Run-Control-Apps
+//*      
+//             SET BRCHPEB='main'
+//             SET BRCHPEX='main'
+//             SET BRCHRUN='main'
+//*      
+//*     For each of the following symbolic parameters,
+//*     a value of 'Y' will cause the associated repository to be 
+//*     deleted (if it exists) and cloned.  Any other value will
+//*     leave the repository source code untouched.
+//*         CLONPEB - Performance-Engine (base)
+//*         CLONPEX - Performance-Engine-Extensions
+//*         CLONRUN - Run-Control-Apps
+//*      
+//             SET CLONPEB='Y'
+//             SET CLONPEX='Y'
+//             SET CLONRUN='Y'
 //*
-//* 3) Enter your desired values on the following SET statements.  
+//*     The following symbolic parameters are used to identify the 
+//*     release of the Performance Engine:
+//*         BLDVER is the Version Number (1 digit).
+//*         BLDMAJ is the Major Release Number (2 digits).
+//*         BLDMIN is the Minor Release Number (3 digits). 
 //*
-//*        JACTINF is used in the job accounting information 
-//*        area of the JOB card in generated JCL.  
+//             SET BLDVER='5'
+//             SET BLDMAJ='01'
+//             SET BLDMIN='001'
+//*
+//*     The grouping of these three pieces is known as the 
+//*     Release Number.  (Example: 501001)
+//*
+//*     Sometimes the number is formatted with dots. 
+//*     (Example: 5.01.001)
+//* 
+//*     The Component ID for this product is "PM" for "Performance 
+//*     Engine - MVS".
+//*
+//*     The Release Name is the Release Number prefixed by the 
+//*     Component ID.  (Example: PM501001)
+//*
+//*     The Major Release Name is the Component Id grouped with the 
+//*     Version Number and the Major Release Number.  (Example: PM501)
+//*
+//*     JACTINF is used in the job accounting information 
+//*     area of the JOB card in generated JCL.  
 //*
 //             SET JACTINF='ACCT'
 //*
-//*        JJOBCLS is the job class to be used in
-//*        the JOB card in generated JCL.  
+//*     JJOBCLS is the job class to be used in
+//*     the JOB card in generated JCL.  
 //*
 //             SET JJOBCLS='A'
 //*
-//*        JMSGCLS is the message class to be used in
-//*        the JOB card in generated JCL.  
+//*     JMSGCLS is the message class to be used in
+//*     the JOB card in generated JCL.  
 //* 
 //             SET JMSGCLS='H'
 //*
-//*        JMSGLVL is the message level to be used in
-//*        the JOB card in generated JCL.  
+//*     JMSGLVL is the message level to be used in
+//*     the JOB card in generated JCL.  
 //*
 //             SET JMSGLVL='(1,1)'
 //*
-//*        UNITTMP is the name to be used in the UNIT parameter
-//*        of all DD statements for temporary data sets.  
+//*     UNITTMP is the name to be used in the UNIT parameter
+//*     of all DD statements for temporary data sets.  
 //*
-//*            Example: 
+//*         Example: 
 //*
-//*                UNITTMP='TEMPDISK' yields: 
-//*                    UNIT=TEMPDISK
+//*             UNITTMP='TEMPDISK' yields: 
+//*                 UNIT=TEMPDISK
 //*
 //             SET UNITTMP='SYSDA'
 //*
-//*        UNITPRM is the name to be used in the UNIT parameter
-//*        of all DD statements for permanent data sets.  A Retention 
-//*        Period can optionally be appended to the end of the name.
+//*     UNITPRM is the name to be used in the UNIT parameter
+//*     of all DD statements for permanent data sets.  A Retention 
+//*     Period can optionally be appended to the end of the name.
 //*
-//*            Examples: 
+//*         Examples: 
 //*
-//*                UNITPRM='DISK' yields: 
-//*                    UNIT=DISK            (without retention period)
+//*             UNITPRM='DISK' yields: 
+//*                 UNIT=DISK            (without retention period)
 //*
-//*                UNITPRM='DISK,RETPD=9999' yields: 
-//*                    UNIT=DISK,RETPD=9999    (with retention period)
+//*             UNITPRM='DISK,RETPD=9999' yields: 
+//*                 UNIT=DISK,RETPD=9999    (with retention period)
 //*
 //             SET UNITPRM='SYSDA'
-//*
-//*********************************************************************
 //*
 //*********************************************************************
 //* Delete the Build Parameter library 
@@ -129,19 +170,10 @@ set -e;
 echo "// SET ASMMAC2='$GERS_HLASM_TK_MAC_LIB'";
 echo "// SET ASMMOD2='$GERS_HLASM_TK_MOD_LIB'";
 echo "// SET BLDHLQ='$GERS_BUILD_HLQ'";
-echo "// SET BLDMAJ='$GERS_PE_MAJOR_REL_NBR'";
-echo "// SET BLDMIN='$GERS_PE_MINOR_REL_NBR'";
-echo "// SET BLDVER='$GERS_PE_VERSION_NBR'";
-echo "// SET BRCHPEB='$GERS_BRANCH_PEB'";
-echo "// SET BRCHPEX='$GERS_BRANCH_PEX'";
-echo "// SET BRCHRUN='$GERS_BRANCH_RUN'";
 echo "// SET CEELIB='$GERS_LE_DLL_LIB'";
 echo "// SET CEELKED='$GERS_LE_CALL_LIB'";
 echo "// SET CEEMAC='$GERS_LE_MAC_LIB'";
 echo "// SET CEERUN='$GERS_LE_RUN_LIB'";
-echo "// SET CLONPEB='$GERS_CLONE_PEB'";
-echo "// SET CLONPEX='$GERS_CLONE_PEX'";
-echo "// SET CLONRUN='$GERS_CLONE_RUN'";
 echo "// SET CMETHOD='$GERS_CLONING_METHOD'";
 echo "// SET CSSLIB='$GERS_CSS_LIB'";
 echo "// SET DB2EXIT='$GERS_DB2_EXIT_LIB'";
@@ -158,23 +190,18 @@ echo "// SET ISPMLIB='$GERS_ISPF_MSG_LIB'";
 echo "// SET ISPPLIB='$GERS_ISPF_PANEL_LIB'";
 echo "// SET ISPSLIB='$GERS_ISPF_SKEL_LIB'";
 echo "// SET ISPTLIB='$GERS_ISPF_TABLE_LIB'";
-echo "// SET JACTINF='&JACTINF.'";
 echo "// SET JARSDIR='$GERS_JARS'";
-echo "// SET JJOBCLS='&JJOBCLS.'";
-echo "// SET JMSGCLS='&JMSGCLS.'";
-echo "// SET JMSGLVL='&JMSGLVL.'";
 echo "// SET LINKLIB='$GERS_LINK_LIB'";
+echo "// SET MR95DB2='$GERS_MR95_DB2_INPUT'";
 echo "// SET RCADB2='$GERS_RCA_DB2_INPUT'";
 echo "// SET RCAJDIR='$GERS_RCA_JAR_DIR'";
 echo "// SET RELEASE='$GERS_PE_REL_NBR'";
 echo "// SET RELFMT='$GERS_PE_REL_NBR_FORMATTED'";
 echo "// SET REPODIR='$GERS_GIT_REPO_DIR'";
 echo "// SET TFHLQ='$GERS_TEST_HLQ'";
-echo "// SET TFLIST='$GERS_TEST_SPEC_FILE_LIST'";
-echo "// SET UNITPRM='&UNITPRM.'";
+echo "// SET TFLIST='$GERS_TEST_SPEC_LIST'";
 echo "// SET USSEXEC='$GERS_USS_EXEC_LIB'";
 echo "// SET USSMLIB='$GERS_USS_MSG_LIB'";
-echo "// SET WBDBTYP='$GERS_WB_DB_TYPE'";
 //*
 //STDOUT   DD DSN=&SYSUID..GERS.BLDPARM(DEFAULT),
 //            DISP=SHR
@@ -427,6 +454,7 @@ $JJOBCLS = '&JJOBCLS.'
 $JMSGCLS = '&JMSGCLS.'
 $JMSGLVL = '&JMSGLVL.'
 $LINKLIB = '&LINKLIB.'
+$MR95DB2 = '&MR95DB2.'
 $RCADB2  = '&RCADB2.'
 $RCAJDIR = '&RCAJDIR.'
 $RELEASE = '&RELEASE.'
@@ -438,7 +466,6 @@ $UNITPRM = '&UNITPRM.'
 $UNITTMP = '&UNITTMP.'
 $USSEXEC = '&USSEXEC.'
 $USSMLIB = '&USSMLIB.'
-$WBDBTYP = '&WBDBTYP.'    
 $MAJHLQ  = $BLDHLQ || ".PM" || $BLDVER || $BLDMAJ
 $MINHLQ  = $BLDHLQ || ".PM" || $BLDVER || $BLDMAJ || $BLDMIN
 $MINREL  = "PM" || $RELEASE
