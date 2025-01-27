@@ -60,6 +60,16 @@
 //             SET CLONPEX='Y'
 //             SET CLONRUN='Y'
 //*
+//*     If set to 'Y', the BLDRCA symbolic parameter will cause
+//*     the following steps to be executed in the build process:
+//*         - Build the Run-Control App (RCA)
+//*         - Build the Test Framework
+//*         - Execute the Test Framework
+//*         - Archiving the JES output of the build jobs
+//*     Any other value will cause these steps to be skipped.  
+//*      
+//             SET BLDRCA='Y'
+//*
 //*     The following symbolic parameters are used to identify the 
 //*     release of the Performance Engine:
 //*         BLDVER is the Version Number (1 digit).
@@ -460,6 +470,7 @@ $RCAJDIR = '&RCAJDIR.'
 $RELEASE = '&RELEASE.'
 $RELFMT  = '&RELFMT.'
 $REPODIR = '&REPODIR.'
+$SKIPRCA = '&SKIPRCA.'
 $TFHLQ   = '&TFHLQ.' 
 $TFLIST  = '&TFLIST.'
 $UNITPRM = '&UNITPRM.'
