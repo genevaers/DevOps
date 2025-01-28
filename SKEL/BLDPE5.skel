@@ -170,6 +170,8 @@ OGETX '+
 //*
 //SYSPRINT DD SYSOUT=*
 //*
+
+)SEL    &$BLDRCA. EQ Y  
 //**********************************************************************
 //*   Execute regression tests 
 //**********************************************************************
@@ -292,3 +294,4 @@ SRESFL2 = substr(Results_File,64)
 //*
 //SYSPRINT DD DUMMY
 //*
+)ENDSEL &$BLDRCA. EQ Y  

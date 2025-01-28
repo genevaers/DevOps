@@ -60,6 +60,16 @@
 //             SET CLONPEX='Y'
 //             SET CLONRUN='Y'
 //*
+//*     If set to 'Y', the BLDRCA symbolic parameter will cause
+//*     the following steps to be executed in the build process:
+//*         - Build the Run-Control App (RCA)
+//*         - Build the Test Framework
+//*         - Execute the Test Framework
+//*         - Archiving the JES output of the build jobs
+//*     Any other value will cause these steps to be skipped.  
+//*      
+//             SET BLDRCA='Y'
+//*
 //*     The following symbolic parameters are used to identify the 
 //*     release of the Performance Engine:
 //*         BLDVER is the Version Number (1 digit).
@@ -195,8 +205,8 @@ echo "// SET LINKLIB='$GERS_LINK_LIB'";
 echo "// SET MR95DB2='$GERS_MR95_DB2_INPUT'";
 echo "// SET RCADB2='$GERS_RCA_DB2_INPUT'";
 echo "// SET RCAJDIR='$GERS_RCA_JAR_DIR'";
-echo "// SET RELEASE='$GERS_PE_REL_NBR'";
-echo "// SET RELFMT='$GERS_PE_REL_NBR_FORMATTED'";
+echo "// SET RELEASE='&BLDVER.&BLDMAJ.&BLDMIN.'";
+echo "// SET RELFMT='&BLDVER..&BLDMAJ..&BLDMIN.'";
 echo "// SET REPODIR='$GERS_GIT_REPO_DIR'";
 echo "// SET TFHLQ='$GERS_TEST_HLQ'";
 echo "// SET TFLIST='$GERS_TEST_SPEC_LIST'";
@@ -460,6 +470,7 @@ $RCAJDIR = '&RCAJDIR.'
 $RELEASE = '&RELEASE.'
 $RELFMT  = '&RELFMT.'
 $REPODIR = '&REPODIR.'
+$SKIPRCA = '&SKIPRCA.'
 $TFHLQ   = '&TFHLQ.' 
 $TFLIST  = '&TFLIST.'
 $UNITPRM = '&UNITPRM.'
