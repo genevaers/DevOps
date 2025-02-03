@@ -1,0 +1,59 @@
+)CM *******************************************************************
+)CM (C) COPYRIGHT IBM CORPORATION 2003, 2023.
+)CM     Copyright Contributors to the GenevaERS Project.
+)CM SPDX-License-Identifier: Apache-2.0
+)CM 
+)CM Licensed under the Apache License, Version 2.0 (the "License");
+)CM you may not use this file except in compliance with the License.
+)CM You may obtain a copy of the License at
+)CM 
+)CM     http://www.apache.org/licenses/LICENSE-2.0
+)CM 
+)CM Unless required by applicable law or agreed to in writing, software
+)CM distributed under the License is distributed on an "AS IS" BASIS,
+)CM WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+)CM or implied.
+)CM See the License for the specific language governing permissions
+)CM and limitations under the License.
+)CM 
+)CM ******************************************************************
+)CM 
+//TAGBLD   JOB (&$JACTINF.),
+//          'Tag build           ',
+//          NOTIFY=&&SYSUID.,
+//          CLASS=&$JJOBCLS.,REGION=0M,
+//          MSGLEVEL=&$JMSGLVL.,
+//          MSGCLASS=&$JMSGCLS.
+//*
+//**********************************************************************
+//*   Tag build
+//**********************************************************************
+//*
+//TAGBLD   EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDPARM  DD *
+sh ;
+set -e;
+set -o xtrace;
+echo;
+cd &$REPODIR./DevOps/;
+git tag -a "PM_&$RELFMT..B&$BLDNBR." 
+-m "Performance Engine PM &$RELFMT..B&$BLDNBR.";   
+git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
+cd &$REPODIR./Performance-Engine/;
+git tag -a "PM_&$RELFMT..B&$BLDNBR." 
+-m "Performance Engine PM &$RELFMT..B&$BLDNBR.";   
+git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
+cd &$REPODIR./Performance-Engine-Extensions/;
+git tag -a "PM_&$RELFMT..B&$BLDNBR." 
+-m "Performance Engine PM &$RELFMT..B&$BLDNBR.";   
+git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
+cd &$REPODIR./Run-Control-Apps/;
+git tag -a "PM_&$RELFMT..B&$BLDNBR." 
+-m "Performance Engine PM &$RELFMT..B&$BLDNBR.";   
+git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*

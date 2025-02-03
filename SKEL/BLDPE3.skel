@@ -386,6 +386,8 @@ PGMRND
 BLDPE4
 BLDPE5
 BLDPE6
+TAGBLD
+TAGREL
 //*
 //*******************************************************************
 //* Submit the next job 
