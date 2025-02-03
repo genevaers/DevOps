@@ -38,13 +38,17 @@ set -e;
 set -o xtrace;
 echo;
 cd &$REPODIR./DevOps/;
-git tag -a "PM_&$RELFMT." -m "Performance Engine PM &$RELFMT.";   
+git tag -a "PM_&$RELFMT." 
+-m "Performance Engine release PM &$RELFMT.";   
 cd &$REPODIR./Performance-Engine/;
-git tag -a "PM_&$RELFMT." -m "Performance Engine PM &$RELFMT.";   
+git tag -a "PM_&$RELFMT." 
+-m "Performance Engine release PM &$RELFMT.";   
 cd &$REPODIR./Performance-Engine-Extensions/;
-git tag -a "PM_&$RELFMT." -m "Performance Engine PM &$RELFMT.";   
+git tag -a "PM_&$RELFMT." 
+-m "Performance Engine release PM &$RELFMT.";   
 cd &$REPODIR./Run-Control-Apps/;
-git tag -a "PM_&$RELFMT." -m "Performance Engine PM &$RELFMT.";   
+git tag -a "PM_&$RELFMT." 
+-m "Performance Engine release PM &$RELFMT.";   
 //*
 //STDOUT   DD SYSOUT=*
 //STDERR   DD SYSOUT=*

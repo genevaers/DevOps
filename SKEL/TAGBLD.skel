@@ -39,19 +39,19 @@ set -o xtrace;
 echo;
 cd &$REPODIR./DevOps/;
 git tag -a "PM_&$RELFMT..B&$BLDNBR." 
--m "Performance Engine PM &$RELFMT..B&$BLDNBR.";   
+-m "Performance Engine build PM &$RELFMT..B&$BLDNBR.";   
 git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
 cd &$REPODIR./Performance-Engine/;
 git tag -a "PM_&$RELFMT..B&$BLDNBR." 
--m "Performance Engine PM &$RELFMT..B&$BLDNBR.";   
+-m "Performance Engine build PM &$RELFMT..B&$BLDNBR.";   
 git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
 cd &$REPODIR./Performance-Engine-Extensions/;
 git tag -a "PM_&$RELFMT..B&$BLDNBR." 
--m "Performance Engine PM &$RELFMT..B&$BLDNBR.";   
+-m "Performance Engine build PM &$RELFMT..B&$BLDNBR.";   
 git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
 cd &$REPODIR./Run-Control-Apps/;
 git tag -a "PM_&$RELFMT..B&$BLDNBR." 
--m "Performance Engine PM &$RELFMT..B&$BLDNBR.";   
+-m "Performance Engine build PM &$RELFMT..B&$BLDNBR.";   
 git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
 //*
 //STDOUT   DD SYSOUT=*
