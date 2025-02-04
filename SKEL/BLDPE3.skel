@@ -44,11 +44,7 @@ set -e;
 echo;
 cd &$REPODIR.;
 rm -rf Performance-Engine;
-
-)IF &$CMETHOD. EQ SSH  THEN
-git clone git@github.com:GenevaERS/Performance-Engine.git;
-)ELSE
-git clone https://github.com/GenevaERS/Performance-Engine.git;
+git clone &$RMTPEB.;
 
 //*
 )ENDSEL &$CLONPEB. EQ Y 
@@ -93,11 +89,7 @@ set -e;
 echo;
 cd &$REPODIR.;
 rm -rf Performance-Engine-Extensions;
-
-)IF &$CMETHOD. EQ SSH  THEN
-git clone git@github.com:GenevaERS/Performance-Engine-Extensions.git;
-)ELSE
-git clone https://github.com/GenevaERS/Performance-Engine-Extensions.git;
+git clone &$RMTPEX.;
 
 //*
 )ENDSEL &$CLONPEX. EQ Y 
@@ -141,11 +133,7 @@ set -o xtrace;
 set -e;
 cd &$REPODIR.;
 rm -rf Run-Control-Apps;
-
-)IF &$CMETHOD. EQ SSH  THEN
-git clone git@github.com:GenevaERS/Run-Control-Apps.git;
-)ELSE
-git clone https://github.com/GenevaERS/Run-Control-Apps.git;
+git clone &$RMTRUN.;
 
 //*
 )ENDSEL &$CLONRUN. EQ Y 

@@ -63,14 +63,6 @@ export GERS_GIT_REPO_DIR='<your-git-repo-dir>'
 #                                                                  
 export GERS_RCA_JAR_DIR='<your-rca-jar-dir>'                            
                                                                    
-#     GERS_CLONING_METHOD specifies the method that Git will use
-#     to clone your repository from the remote server.  A value
-#     'SSH' will cause the cloning process to use a password-protected
-#     SSH key.  HTTPS (or any other value) will cause the cloning 
-#     process to use the web URL instead.
-#      
-export GERS_CLONING_METHOD='HTTPS'
-
 #     A value of 'Y' for GERS_INCLUDE_PEX will cause the R&D components 
 #     of the Performance Engine to be included in the build.  Any 
 #     other value will cause the R&D components to be skipped. 
@@ -92,6 +84,16 @@ export GERS_RCA_DB2_INPUT='N'
 #     the Db2 components to be skipped.  
 #
 export GERS_MR95_DB2_INPUT='N'
+
+#     The following variables specify the references to remote 
+#     repositories to be used in "git clone" statements:
+#         GERS_REMOTE_PEB - Performance-Engine (base)
+#         GERS_REMOTE_PEX - Performance-Engine-Extensions
+#         GERS_REMOTE_RUN - Run-Control-Apps
+#
+export GERS_REMOTE_PEB='https://github.com/genevaers/Performance-Engine.git'
+export GERS_REMOTE_PEX='https://github.com/genevaers/Performance-Engine-Extensions.git'
+export GERS_REMOTE_RUN='https://github.com/genevaers/Run-Control-Apps.git'
 
 #     GERS_ISPF_LOAD_LIB is the name of the ISPF load library.
 #

@@ -184,7 +184,6 @@ echo "// SET CEELIB='$GERS_LE_DLL_LIB'";
 echo "// SET CEELKED='$GERS_LE_CALL_LIB'";
 echo "// SET CEEMAC='$GERS_LE_MAC_LIB'";
 echo "// SET CEERUN='$GERS_LE_RUN_LIB'";
-echo "// SET CMETHOD='$GERS_CLONING_METHOD'";
 echo "// SET CSSLIB='$GERS_CSS_LIB'";
 echo "// SET DB2EXIT='$GERS_DB2_EXIT_LIB'";
 echo "// SET DB2LOAD='$GERS_DB2_LOAD_LIB'";
@@ -207,6 +206,9 @@ echo "// SET RCADB2='$GERS_RCA_DB2_INPUT'";
 echo "// SET RCAJDIR='$GERS_RCA_JAR_DIR'";
 echo "// SET RELEASE='&BLDVER.&BLDMAJ.&BLDMIN.'";
 echo "// SET RELFMT='&BLDVER..&BLDMAJ..&BLDMIN.'";
+echo "// SET RMTPEB='$GERS_REMOTE_PEB'";
+echo "// SET RMTPEX='$GERS_REMOTE_PEX'";
+echo "// SET RMTRUN='$GERS_REMOTE_RUN'";
 echo "// SET REPODIR='$GERS_GIT_REPO_DIR'";
 echo "// SET TFHLQ='$GERS_TEST_HLQ'";
 echo "// SET TFLIST='$GERS_TEST_SPEC_LIST'";
@@ -253,13 +255,13 @@ echo "// SET USSMLIB='$GERS_USS_MSG_LIB'";
 //*
 // INCLUDE MEMBER=DEFAULT
 //*
+//COPYDIR  PROC LLQ=,SUBDIR=,RECFM=,LRECL=
+//*
 //*********************************************************************
 //*
 //*     Copy a USS directory to an MVS library 
 //*
 //*********************************************************************
-//*
-//COPYDIR  PROC LLQ=,SUBDIR=,RECFM=,LRECL=
 //*
 //*********************************************************************
 //* Delete the file(s) created in the next step
@@ -443,7 +445,6 @@ $CEERUN  = '&CEERUN.'
 $CLONPEB = '&CLONPEB.' 
 $CLONPEX = '&CLONPEX.'
 $CLONRUN = '&CLONRUN.'
-$CMETHOD = '&CMETHOD.'
 $CSSLIB  = '&CSSLIB.' 
 $DB2EXIT = '&DB2EXIT.'
 $DB2LOAD = '&DB2LOAD.'
@@ -470,6 +471,9 @@ $RCADB2  = '&RCADB2.'
 $RCAJDIR = '&RCAJDIR.'
 $RELEASE = '&RELEASE.'
 $RELFMT  = '&RELFMT.'
+$RMTPEB  = '&RMTPEB.'
+$RMTPEX  = '&RMTPEX.'
+$RMTRUN  = '&RMTRUN.'
 $REPODIR = '&REPODIR.'
 $SKIPRCA = '&SKIPRCA.'
 $TFHLQ   = '&TFHLQ.' 
