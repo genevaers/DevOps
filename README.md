@@ -45,10 +45,11 @@ Utilities for Development and Operations for GenevaERS
 12. Save and close .profile.
 
 ### Building the Performance Engine and executing the regression tests
-1. Navigate to your DevOps repo directory on a USS command line.
-2. Enter the following command to refresh the repo with the latest updates:
-    ```
-    git pull
-    ```
-12. In the JCL folder of the DevOps repo, open the BLDPE.jcl file.  (We recommend using ISPF option 3.17 for this.)
-13. Edit the JCL according to the instructions specified in the job, then submit the job.  This will start a series of jobs which will build the Performance Engine and execute regression tests.  
+1. In the JCL folder of the DevOps repo, open the BLDPE.jcl file.  (We recommend using ISPF option 3.17 for this.)
+2. Edit the JCL according to the instructions specified in the job, then submit the job.  This will start a series of jobs which will build the Performance Engine and execute regression tests.  
+
+### Tagging the build 
+1. In your build JCL library (<GERS_ENV_HLQ>.JCL), submit TAGBLD.
+
+### Tagging the release 
+1. In your build JCL library (<GERS_ENV_HLQ>.JCL), submit TAGREL.
