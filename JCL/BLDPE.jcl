@@ -80,21 +80,6 @@
 //             SET BLDMAJ='01'
 //             SET BLDMIN='001'
 //*
-//*     The grouping of these three pieces is known as the 
-//*     Release Number.  (Example: 501001)
-//*
-//*     Sometimes the number is formatted with dots. 
-//*     (Example: 5.01.001)
-//* 
-//*     The Component ID for this product is "PM" for "Performance 
-//*     Engine - MVS".
-//*
-//*     The Release Name is the Release Number prefixed by the 
-//*     Component ID.  (Example: PM501001)
-//*
-//*     The Major Release Name is the Component Id grouped with the 
-//*     Version Number and the Major Release Number.  (Example: PM501)
-//*
 //*     JACTINF is used in the job accounting information 
 //*     area of the JOB card in generated JCL.  
 //*
@@ -177,39 +162,14 @@
 sh ;
 set -o xtrace;
 set -e;
-echo "// SET ASMMAC2='$GERS_HLASM_TK_MAC_LIB'";
-echo "// SET ASMMOD2='$GERS_HLASM_TK_MOD_LIB'";
 echo "// SET BLDHLQ='$GERS_BUILD_HLQ'";
-echo "// SET CEELIB='$GERS_LE_DLL_LIB'";
-echo "// SET CEELKED='$GERS_LE_CALL_LIB'";
-echo "// SET CEEMAC='$GERS_LE_MAC_LIB'";
-echo "// SET CEERUN='$GERS_LE_RUN_LIB'";
-echo "// SET CMETHOD='$GERS_CLONING_METHOD'";
-echo "// SET CSSLIB='$GERS_CSS_LIB'";
-echo "// SET DB2EXIT='$GERS_DB2_EXIT_LIB'";
-echo "// SET DB2LOAD='$GERS_DB2_LOAD_LIB'";
-echo "// SET DB2QUAL='$GERS_DB2_QUALIFIER'";
-echo "// SET DB2RUN='$GERS_DB2_RUN_LIB'";
-echo "// SET DB2SFX='$GERS_DB2_PLAN_SUFFIX'";
-echo "// SET DB2SYS='$GERS_DB2_SUBSYSTEM'";
-echo "// SET DB2UTIL='$GERS_DB2_UTILITY'";
 echo "// SET ENVHLQ='$GERS_ENV_HLQ'";
-echo "// SET INCLPEX='$GERS_INCLUDE_PEX'";
 echo "// SET ISPLLIB='$GERS_ISPF_LOAD_LIB'";
 echo "// SET ISPMLIB='$GERS_ISPF_MSG_LIB'";
 echo "// SET ISPPLIB='$GERS_ISPF_PANEL_LIB'";
 echo "// SET ISPSLIB='$GERS_ISPF_SKEL_LIB'";
 echo "// SET ISPTLIB='$GERS_ISPF_TABLE_LIB'";
-echo "// SET JARSDIR='$GERS_JARS'";
-echo "// SET LINKLIB='$GERS_LINK_LIB'";
-echo "// SET MR95DB2='$GERS_MR95_DB2_INPUT'";
-echo "// SET RCADB2='$GERS_RCA_DB2_INPUT'";
-echo "// SET RCAJDIR='$GERS_RCA_JAR_DIR'";
-echo "// SET RELEASE='&BLDVER.&BLDMAJ.&BLDMIN.'";
-echo "// SET RELFMT='&BLDVER..&BLDMAJ..&BLDMIN.'";
 echo "// SET REPODIR='$GERS_GIT_REPO_DIR'";
-echo "// SET TFHLQ='$GERS_TEST_HLQ'";
-echo "// SET TFLIST='$GERS_TEST_SPEC_LIST'";
 echo "// SET USSEXEC='$GERS_USS_EXEC_LIB'";
 echo "// SET USSMLIB='$GERS_USS_MSG_LIB'";
 //*
@@ -253,13 +213,40 @@ echo "// SET USSMLIB='$GERS_USS_MSG_LIB'";
 //*
 // INCLUDE MEMBER=DEFAULT
 //*
+//*     BLDVER is the Version Number (1 digit).
+//*     BLDMAJ is the Major Release Number (2 digits).
+//*     BLDMIN is the Minor Release Number (3 digits). 
+//*
+//*     The grouping of these three pieces is known as the 
+//*     Release Number.  (Example: 501001)
+//*
+//             SET RELEASE='&BLDVER.&BLDMAJ.&BLDMIN.'
+//*             
+//*     Sometimes the number is formatted with dots. 
+//*     (Example: 5.01.001)
+//* 
+//             SET RELFMT='&BLDVER..&BLDMAJ..&BLDMIN.'
+//* 
+//*     The Component ID for this product is "PM" for "Performance 
+//*     Engine - MVS".
+//*
+//*     The Major Release Name is the Component Id grouped with the 
+//*     Version Number and the Major Release Number.  (Example: PM501)
+//*
+//             SET MAJREL='PM&BLDVER.&BLDMAJ.'
+//*
+//*     The Minor Release Name is the Release Number prefixed by the 
+//*     Component ID.  (Example: PM501001)
+//*
+//             SET MINREL='PM&BLDVER.&BLDMAJ.&BLDMIN.'
+//*
+//COPYDIR  PROC LLQ=,SUBDIR=,RECFM=,LRECL=
+//*
 //*********************************************************************
 //*
 //*     Copy a USS directory to an MVS library 
 //*
 //*********************************************************************
-//*
-//COPYDIR  PROC LLQ=,SUBDIR=,RECFM=,LRECL=
 //*
 //*********************************************************************
 //* Delete the file(s) created in the next step
@@ -403,7 +390,7 @@ OGETX '+
 //*********************************************************************
 //*
 //INCRBLD EXEC PGM=IKJEFT1A,
-// PARM='%INCRBLD &BLDHLQ..PM&BLDVER.&BLDMAJ.&BLDMIN.',
+// PARM='%INCRBLD &BLDHLQ..&MINREL.',       
 // COND=(4,LT)
 //*
 //SYSEXEC  DD DSN=&ENVHLQ..EXEC,     REXX program library
@@ -417,18 +404,66 @@ OGETX '+
 //            DISP=SHR
 //*
 //*********************************************************************
+//*   Copy USS environment variables to the variable library
+//*********************************************************************
+//*
+//COPYVAR  EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;   
+echo "\$ASMMAC2 = '$GERS_HLASM_TK_MAC_LIB'";
+echo "\$ASMMOD2 = '$GERS_HLASM_TK_MOD_LIB'";
+echo "\$BLDHLQ  = '$GERS_BUILD_HLQ'";
+echo "\$CEELIB  = '$GERS_LE_DLL_LIB'";
+echo "\$CEELKED = '$GERS_LE_CALL_LIB'";
+echo "\$CEEMAC  = '$GERS_LE_MAC_LIB'";
+echo "\$CEERUN  = '$GERS_LE_RUN_LIB'";
+echo "\$CSSLIB  = '$GERS_CSS_LIB'";
+echo "\$DB2EXIT = '$GERS_DB2_EXIT_LIB'";
+echo "\$DB2LOAD = '$GERS_DB2_LOAD_LIB'";
+echo "\$DB2QUAL = '$GERS_DB2_QUALIFIER'";
+echo "\$DB2RUN  = '$GERS_DB2_RUN_LIB'";
+echo "\$DB2SFX  = '$GERS_DB2_PLAN_SUFFIX'";
+echo "\$DB2SYS  = '$GERS_DB2_SUBSYSTEM'";
+echo "\$DB2UTIL = '$GERS_DB2_UTILITY'";
+echo "\$ENVHLQ  = '$GERS_ENV_HLQ'";
+echo "\$INCLPEX = '$GERS_INCLUDE_PEX'";
+echo "\$ISPLLIB = '$GERS_ISPF_LOAD_LIB'";
+echo "\$ISPMLIB = '$GERS_ISPF_MSG_LIB'";
+echo "\$ISPPLIB = '$GERS_ISPF_PANEL_LIB'";
+echo "\$ISPSLIB = '$GERS_ISPF_SKEL_LIB'";
+echo "\$ISPTLIB = '$GERS_ISPF_TABLE_LIB'";
+echo "\$JARSDIR = '$GERS_JARS'";
+echo "\$LINKLIB = '$GERS_LINK_LIB'";
+echo "\$MR95DB2 = '$GERS_MR95_DB2_INPUT'";
+echo "\$RCADB2  = '$GERS_RCA_DB2_INPUT'";
+echo "\$RCAJDIR = '$GERS_RCA_JAR_DIR'";
+echo "\$RMTPEB  = '$GERS_REMOTE_PEB'";
+echo "\$RMTPEX  = '$GERS_REMOTE_PEX'";
+echo "\$RMTRUN  = '$GERS_REMOTE_RUN'";
+echo "\$REPODIR = '$GERS_GIT_REPO_DIR'";
+echo "\$TFHLQ   = '$GERS_TEST_HLQ'";
+echo "\$TFLIST  = '$GERS_TEST_SPEC_LIST'";
+echo "\$USSEXEC = '$GERS_USS_EXEC_LIB'";
+echo "\$USSMLIB = '$GERS_USS_MSG_LIB'";
+//*
+//STDOUT   DD DISP=SHR,DSN=&ENVHLQ..VAR(USSVAR)
+//*
+//STDERR   DD SYSOUT=*
+//*
+//*********************************************************************
 //*   Copy all environment variables to a single member 
 //*********************************************************************
 //*
 //COPYCNTL EXEC PGM=IDCAMS,
 //            COND=(4,LT)
 //*
-//$ENVIRON DD DSN=&ENVHLQ..VAR(BLDNBR),
-//            DISP=SHR
+//$ENVIRON DD DISP=SHR,DSN=&ENVHLQ..VAR(BLDNBR)
+//         DD DISP=SHR,DSN=&ENVHLQ..VAR(USSVAR)
 //         DD *,SYMBOLS=EXECSYS
-$ASMMAC2 = '&ASMMAC2.'
-$ASMMOD2 = '&ASMMOD2.'
-$BLDHLQ  = '&BLDHLQ.' 
 $BLDMAJ  = '&BLDMAJ.'    
 $BLDMIN  = '&BLDMIN.'    
 $BLDRCA  = '&BLDRCA.'    
@@ -436,52 +471,20 @@ $BLDVER  = '&BLDVER.'
 $BRCHPEB = '&BRCHPEB.' 
 $BRCHPEX = '&BRCHPEX.'
 $BRCHRUN = '&BRCHRUN.'
-$CEELIB  = '&CEELIB.' 
-$CEELKED = '&CEELKED.'
-$CEEMAC  = '&CEEMAC.' 
-$CEERUN  = '&CEERUN.' 
 $CLONPEB = '&CLONPEB.' 
 $CLONPEX = '&CLONPEX.'
 $CLONRUN = '&CLONRUN.'
-$CMETHOD = '&CMETHOD.'
-$CSSLIB  = '&CSSLIB.' 
-$DB2EXIT = '&DB2EXIT.'
-$DB2LOAD = '&DB2LOAD.'
-$DB2QUAL = '&DB2QUAL' 
-$DB2RUN  = '&DB2RUN.' 
-$DB2SFX  = '&DB2SFX.' 
-$DB2SYS  = '&DB2SYS.' 
-$DB2UTIL = '&DB2UTIL' 
-$ENVHLQ  = '&ENVHLQ.' 
-$INCLPEX = '&INCLPEX.'
-$ISPLLIB = '&ISPLLIB.'
-$ISPMLIB = '&ISPMLIB.'
-$ISPPLIB = '&ISPPLIB.'
-$ISPSLIB = '&ISPSLIB.'
-$ISPTLIB = '&ISPTLIB.'
 $JACTINF = '&JACTINF.'
-$JARSDIR = '&JARSDIR.'
 $JJOBCLS = '&JJOBCLS.'
 $JMSGCLS = '&JMSGCLS.'
 $JMSGLVL = '&JMSGLVL.'
-$LINKLIB = '&LINKLIB.'
-$MR95DB2 = '&MR95DB2.'
-$RCADB2  = '&RCADB2.'
-$RCAJDIR = '&RCAJDIR.'
+$MAJREL  = '&MAJREL.'
+$MINREL  = '&MINREL.'
 $RELEASE = '&RELEASE.'
 $RELFMT  = '&RELFMT.'
-$REPODIR = '&REPODIR.'
-$SKIPRCA = '&SKIPRCA.'
-$TFHLQ   = '&TFHLQ.' 
-$TFLIST  = '&TFLIST.'
-$UNITPRM = '&UNITPRM.'
-$UNITTMP = '&UNITTMP.'
-$USSEXEC = '&USSEXEC.'
-$USSMLIB = '&USSMLIB.'
-$MAJHLQ  = $BLDHLQ || ".PM" || $BLDVER || $BLDMAJ
-$MINHLQ  = $BLDHLQ || ".PM" || $BLDVER || $BLDMAJ || $BLDMIN
-$MINREL  = "PM" || $RELEASE
-$TGTHLQ  = $BLDHLQ || ".PM" || $RELEASE || ".B" || $BLDNBR
+$MAJHLQ  = $BLDHLQ || "." || $MAJREL
+$MINHLQ  = $BLDHLQ || "." || $MINREL
+$TGTHLQ  = $BLDHLQ || "." || $MINREL || ".B" || $BLDNBR
 //*
 //$ENVIRO2 DD DISP=SHR,DSN=&ENVHLQ..VAR($ENVIRON)
 //*
