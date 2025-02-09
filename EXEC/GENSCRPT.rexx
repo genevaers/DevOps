@@ -357,9 +357,9 @@ address "ISPEXEC"
             end
  
 /*      call 8000_VALIDATE_ASSIGNMENT
- 
+*/ 
         say Line
-        interpret Asmt_Var._J "=" Asmt_Value
+/*      interpret Asmt_Var._J "=" Asmt_Value
 */      interpret Line
  
     end
