@@ -172,6 +172,9 @@ echo "// SET ISPTLIB='$GERS_ISPF_TABLE_LIB'";
 echo "// SET REPODIR='$GERS_GIT_REPO_DIR'";
 echo "// SET USSEXEC='$GERS_USS_EXEC_LIB'";
 echo "// SET USSMLIB='$GERS_USS_MSG_LIB'";
+X=$GERS_REMOTE_DEV;
+Y=$(echo $X | awk -F'/' '{print $NF}' | awk -F'.' '{print $1}');
+echo "// SET REPODEV='$Y'"; 
 //*
 //STDOUT   DD DSN=&SYSUID..GERS.BLDPARM(DEFAULT),
 //            DISP=SHR
@@ -326,7 +329,7 @@ echo "// SET USSMLIB='$GERS_USS_MSG_LIB'";
 //SYSTSIN  DD *,SYMBOLS=EXECSYS
 OGETX '+
  &REPODIR.+
- /DevOps/&SUBDIR.' +
+ /&REPODEV./&SUBDIR.' +
  '&ENVHLQ..&LLQ.' SUFFIX(&SUFFIX.) LC
 //*
 //         PEND
@@ -336,6 +339,9 @@ OGETX '+
 //*
 //         EXEC COPYDIR,
 // SUBDIR='SKEL',SUFFIX='skel',LLQ=SKEL,RECFM=VB,LRECL=259
+//*
+//         EXEC COPYDIR,
+// SUBDIR='SH',SUFFIX='sh',LLQ=SH,RECFM=VB,LRECL=259
 //*
 //         EXEC COPYDIR,
 // SUBDIR='TABLE',SUFFIX='csv',LLQ=TABLE,RECFM=VB,LRECL=1004
@@ -371,7 +377,7 @@ OGETX '+
 //            DISP=(NEW,CATLG,DELETE),
 //            UNIT=&UNITPRM.,DSNTYPE=LIBRARY,
 //            SPACE=(TRK,(1,1)),
-//            DSORG=PO,RECFM=FB,LRECL=80
+//            DSORG=PO,RECFM=VB,LRECL=259
 //*
 //ISPTLIB  DD DSN=&ENVHLQ..ISPTLIB,
 //            DISP=(NEW,CATLG,DELETE),
@@ -407,63 +413,23 @@ OGETX '+
 //*   Copy USS environment variables to the variable library
 //*********************************************************************
 //*
-//COPYVAR  EXEC PGM=BPXBATCH,
+//COPYUSS  EXEC PGM=BPXBATCH,
 //            COND=(4,LT)
 //*
-//STDPARM  DD *,SYMBOLS=EXECSYS
-sh ;
-set -o xtrace;
-set -e;   
-echo "\$ASMMAC2 = '$GERS_HLASM_TK_MAC_LIB'";
-echo "\$ASMMOD2 = '$GERS_HLASM_TK_MOD_LIB'";
-echo "\$BLDHLQ  = '$GERS_BUILD_HLQ'";
-echo "\$CEELIB  = '$GERS_LE_DLL_LIB'";
-echo "\$CEELKED = '$GERS_LE_CALL_LIB'";
-echo "\$CEEMAC  = '$GERS_LE_MAC_LIB'";
-echo "\$CEERUN  = '$GERS_LE_RUN_LIB'";
-echo "\$CSSLIB  = '$GERS_CSS_LIB'";
-echo "\$DB2EXIT = '$GERS_DB2_EXIT_LIB'";
-echo "\$DB2LOAD = '$GERS_DB2_LOAD_LIB'";
-echo "\$DB2QUAL = '$GERS_DB2_QUALIFIER'";
-echo "\$DB2RUN  = '$GERS_DB2_RUN_LIB'";
-echo "\$DB2SFX  = '$GERS_DB2_PLAN_SUFFIX'";
-echo "\$DB2SYS  = '$GERS_DB2_SUBSYSTEM'";
-echo "\$DB2UTIL = '$GERS_DB2_UTILITY'";
-echo "\$ENVHLQ  = '$GERS_ENV_HLQ'";
-echo "\$INCLPEX = '$GERS_INCLUDE_PEX'";
-echo "\$ISPLLIB = '$GERS_ISPF_LOAD_LIB'";
-echo "\$ISPMLIB = '$GERS_ISPF_MSG_LIB'";
-echo "\$ISPPLIB = '$GERS_ISPF_PANEL_LIB'";
-echo "\$ISPSLIB = '$GERS_ISPF_SKEL_LIB'";
-echo "\$ISPTLIB = '$GERS_ISPF_TABLE_LIB'";
-echo "\$JARSDIR = '$GERS_JARS'";
-echo "\$LINKLIB = '$GERS_LINK_LIB'";
-echo "\$MR95DB2 = '$GERS_MR95_DB2_INPUT'";
-echo "\$RCADB2  = '$GERS_RCA_DB2_INPUT'";
-echo "\$RCAJDIR = '$GERS_RCA_JAR_DIR'";
-echo "\$RMTPEB  = '$GERS_REMOTE_PEB'";
-echo "\$RMTPEX  = '$GERS_REMOTE_PEX'";
-echo "\$RMTRUN  = '$GERS_REMOTE_RUN'";
-echo "\$REPODIR = '$GERS_GIT_REPO_DIR'";
-echo "\$TFHLQ   = '$GERS_TEST_HLQ'";
-echo "\$TFLIST  = '$GERS_TEST_SPEC_LIST'";
-echo "\$USSEXEC = '$GERS_USS_EXEC_LIB'";
-echo "\$USSMLIB = '$GERS_USS_MSG_LIB'";
+//STDPARM  DD DISP=SHR,DSN=&ENVHLQ..SH(COPYUSS)
 //*
 //STDOUT   DD DISP=SHR,DSN=&ENVHLQ..VAR(USSVAR)
 //*
 //STDERR   DD SYSOUT=*
 //*
 //*********************************************************************
-//*   Copy all environment variables to a single member 
+//*   Copy all JCL symbols to a single member 
 //*********************************************************************
 //*
-//COPYCNTL EXEC PGM=IDCAMS,
+//COPYMVS  EXEC PGM=IDCAMS,
 //            COND=(4,LT)
 //*
-//$ENVIRON DD DISP=SHR,DSN=&ENVHLQ..VAR(BLDNBR)
-//         DD DISP=SHR,DSN=&ENVHLQ..VAR(USSVAR)
-//         DD *,SYMBOLS=EXECSYS
+//JCLSYM   DD *,SYMBOLS=EXECSYS
 $BLDMAJ  = '&BLDMAJ.'    
 $BLDMIN  = '&BLDMIN.'    
 $BLDRCA  = '&BLDRCA.'    
@@ -486,12 +452,30 @@ $MAJHLQ  = $BLDHLQ || "." || $MAJREL
 $MINHLQ  = $BLDHLQ || "." || $MINREL
 $TGTHLQ  = $BLDHLQ || "." || $MINREL || ".B" || $BLDNBR
 //*
-//$ENVIRO2 DD DISP=SHR,DSN=&ENVHLQ..VAR($ENVIRON)
+//MVSVAR   DD DISP=SHR,DSN=&ENVHLQ..VAR(MVSVAR)
 //*
 //SYSPRINT DD SYSOUT=*
 //*
 //SYSIN    DD *
- REPRO INFILE($ENVIRON) OUTFILE($ENVIRO2)
+ REPRO INFILE(JCLSYM) OUTFILE(MVSVAR)
+//*
+//*********************************************************************
+//*   Copy all environment variables to a single member 
+//*********************************************************************
+//*
+//COPYCNTL EXEC PGM=IDCAMS,
+//            COND=(4,LT)
+//*
+//$ENVIN   DD DISP=SHR,DSN=&ENVHLQ..VAR(BLDNBR)
+//         DD DISP=SHR,DSN=&ENVHLQ..VAR(USSVAR)
+//         DD DISP=SHR,DSN=&ENVHLQ..VAR(MVSVAR)
+//*
+//$ENVIRON DD DISP=SHR,DSN=&ENVHLQ..VAR($ENVIRON)
+//*
+//SYSPRINT DD SYSOUT=*
+//*
+//SYSIN    DD *
+ REPRO INFILE($ENVIN) OUTFILE($ENVIRON)
 //*
 //*********************************************************************
 //*   Generate installation JCL for the GenevaERS Performance Engine 
@@ -502,7 +486,7 @@ $TGTHLQ  = $BLDHLQ || "." || $MINREL || ".B" || $BLDNBR
 // SET SITE='N/A'           SITE (MACHINE) ENVIRONMENT
 // SET ENV='$ENVIRON'       PRIMARY DATA ENVIRONMENT
 // SET ENV2='N/A'           SECONDARY DATA ENVIRONMENT
-// SET SGTRCOPT='R'         SCRIPT GENERATOR TRACE OPTION
+// SET SGTRCOPT='O'         SCRIPT GENERATOR TRACE OPTION
 // SET USEFTTRC='N'         USE FILE TAILORING TRACE (Y/N)?
 // SET FTTRCOPT=''          FILE TAILORING TRACE OPTIONS
 //*

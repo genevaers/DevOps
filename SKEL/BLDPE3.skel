@@ -43,7 +43,7 @@ set -o xtrace;
 set -e;
 echo;
 cd &$REPODIR.;
-rm -rf Performance-Engine;
+rm -rf &$REPOPEB.;
 git clone &$RMTPEB.;
 
 //*
@@ -65,7 +65,7 @@ set -o xtrace;
 set -e;
 echo;
 cd &$REPODIR.;
-cd Performance-Engine;
+cd &$REPOPEB.;
 git checkout &$BRCHPEB.;
 //*
 
@@ -88,7 +88,7 @@ set -o xtrace;
 set -e;
 echo;
 cd &$REPODIR.;
-rm -rf Performance-Engine-Extensions;
+rm -rf &$REPOPEX.;
 git clone &$RMTPEX.;
 
 //*
@@ -110,7 +110,7 @@ set -o xtrace;
 set -e;
 echo;
 cd &$REPODIR.;
-cd Performance-Engine-Extensions;
+cd &$REPOPEX.;
 git checkout &$BRCHPEX.;
 //*
 
@@ -132,7 +132,7 @@ sh ;
 set -o xtrace;
 set -e;
 cd &$REPODIR.;
-rm -rf Run-Control-Apps;
+rm -rf &$REPORUN.;
 git clone &$RMTRUN.;
 
 //*
@@ -154,7 +154,7 @@ set -o xtrace;
 set -e;
 echo;
 cd &$REPODIR.;
-cd Run-Control-Apps;
+cd &$REPORUN.;
 git checkout &$BRCHRUN.;
 //*
 
@@ -175,7 +175,7 @@ set -o xtrace;
 set -e;
 echo;
 cd &$REPODIR.;
-rm -rf Run-Control-Apps/PETestFramework/out;
+rm -rf &$REPORUN./PETestFramework/out;
 //*
 )ENDSEL &$CLONRUN. NE Y 
 
@@ -231,13 +231,13 @@ rm -rf Run-Control-Apps/PETestFramework/out;
 
 OGETX '+
  &$REPODIR.+
- /Performance-Engine/TABLE' +
+ /&$REPOPEB./TABLE' +
  '&$ENVHLQ..TABLE' SUFFIX(csv) LC
 
 )SEL    &$INCLPEX. EQ Y 
 OGETX '+
  &$REPODIR.+
- /Performance-Engine-Extensions/TABLE' +
+ /&$REPOPEX./TABLE' +
  '&$ENVHLQ..TABLE' SUFFIX(csv) LC
 )ENDSEL &$INCLPEX. EQ Y 
 

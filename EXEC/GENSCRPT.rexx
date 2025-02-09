@@ -25,13 +25,13 @@
     and limitations under the License.
  
 ***********************************************************************/
- 
+
 signal on syntax     name 9990_FLAG_SYNTAX_ERROR
  
 arg ARG_Use_DEFLIB ARG_Use_VARLIB ARG_Site ,
     ARG_Env ARG_Env2 ARG_SG_Trace ARG_FT_Trace ARG_FT_Trace_Options
  
-/* trace ARG_SG_Trace */
+trace value(ARG_SG_Trace)
  
 address "ISPEXEC"
  
