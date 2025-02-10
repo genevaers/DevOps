@@ -87,10 +87,12 @@ export GERS_MR95_DB2_INPUT='N'
 
 #     The following variables specify the references to remote 
 #     repositories to be used in "git clone" statements:
+#         GERS_REMOTE_DEV - DevOps
 #         GERS_REMOTE_PEB - Performance-Engine (base)
 #         GERS_REMOTE_PEX - Performance-Engine-Extensions
 #         GERS_REMOTE_RUN - Run-Control-Apps
 #
+export GERS_REMOTE_DEV='https://github.com/genevaers/DevOps.git'
 export GERS_REMOTE_PEB='https://github.com/genevaers/Performance-Engine.git'
 export GERS_REMOTE_PEX='https://github.com/genevaers/Performance-Engine-Extensions.git'
 export GERS_REMOTE_RUN='https://github.com/genevaers/Run-Control-Apps.git'
