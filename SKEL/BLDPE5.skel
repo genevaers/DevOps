@@ -76,29 +76,29 @@
 //SYSTSIN  DD *,SYMBOLS=EXECSYS
 OGETX '+
  &$REPODIR.+
- /Performance-Engine/ASM' +
+ /&$REPOPEB./ASM' +
  '&$TGTHLQ..ASM' SUFFIX(asm) LC
 OGETX '+
  &$REPODIR.+
- /Performance-Engine/LINKPARM' +
+ /&$REPOPEB./LINKPARM' +
  '&$TGTHLQ..LINKPARM' SUFFIX(link) LC
 OGETX '+
  &$REPODIR.+
- /Performance-Engine/MAC' +
+ /&$REPOPEB./MAC' +
  '&$TGTHLQ..MAC' SUFFIX(mac) LC
 
 )SEL    &$INCLPEX. EQ Y 
 OGETX '+
  &$REPODIR.+
- /Performance-Engine-Extensions/ASM' +
+ /&$REPOPEX./ASM' +
  '&$TGTHLQ..ASM' SUFFIX(asm) LC
 OGETX '+
  &$REPODIR.+
- /Performance-Engine-Extensions/LINKPARM' +
+ /&$REPOPEX./LINKPARM' +
  '&$TGTHLQ..LINKPARM' SUFFIX(link) LC
 OGETX '+
  &$REPODIR.+
- /Performance-Engine-Extensions/MAC' +
+ /&$REPOPEX./MAC' +
  '&$TGTHLQ..MAC' SUFFIX(mac) LC
 )ENDSEL &$INCLPEX. EQ Y 
 
@@ -187,7 +187,7 @@ echo;
 cd &$JARSDIR.;
 java -cp ./db2jcc4.jar com.ibm.db2.jcc.DB2Jcc -version;
 echo;
-cd &$REPODIR./Run-Control-Apps/;
+cd &$REPODIR./&$REPORUN./;
 chmod +x prebuild/*.sh;
 mvn clean;
 
@@ -215,7 +215,7 @@ touch rcapps-&$MINREL..jar;
 rm rcapps-&$MINREL..jar;
 ln -s rcapps-$rev.jar rcapps-&$MINREL..jar;
 
-cd &$REPODIR./Run-Control-Apps/PETestFramework/;
+cd &$REPODIR./&$REPORUN./PETestFramework/;
 ./target/bin/gerstf;
 //*
 //STDOUT   DD SYSOUT=*
@@ -231,7 +231,7 @@ cd &$REPODIR./Run-Control-Apps/PETestFramework/;
 sh ;
 set -e;
 set -o xtrace;
-cd &$REPODIR./Run-Control-Apps/;
+cd &$REPODIR./&REPORUN./;
 cd PETestFramework/out;
 chtag  -R -c 819 *;
 chtag  -R -t *;
@@ -258,7 +258,7 @@ chtag  -R -t *;
 
 )REXX $REPODIR SRESFL1 SRESFL2 
 Results_File = "'" || $REPODIR || , 
-    "/Run-Control-Apps/PETestFramework/out/fmoverview.txt'"
+    "/&$REPORUN./PETestFramework/out/fmoverview.txt'"
 SRESFL1 = strip(substr(Results_File,1,63))
 SRESFL2 = substr(Results_File,64)
 )ENDREXX

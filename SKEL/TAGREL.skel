@@ -37,16 +37,16 @@ sh ;
 set -e;
 set -o xtrace;
 echo;
-cd &$REPODIR./DevOps/;
+cd &$REPODIR./&$REPODEV./;
 git tag -a "PM_&$RELFMT." 
 -m "Performance Engine release PM &$RELFMT.";   
-cd &$REPODIR./Performance-Engine/;
+cd &$REPODIR./&$REPOPEB./;
 git tag -a "PM_&$RELFMT." 
 -m "Performance Engine release PM &$RELFMT.";   
-cd &$REPODIR./Performance-Engine-Extensions/;
+cd &$REPODIR./&$REPOPEX./;
 git tag -a "PM_&$RELFMT." 
 -m "Performance Engine release PM &$RELFMT.";   
-cd &$REPODIR./Run-Control-Apps/;
+cd &$REPODIR./&$REPORUN./;
 git tag -a "PM_&$RELFMT." 
 -m "Performance Engine release PM &$RELFMT.";   
 //*
