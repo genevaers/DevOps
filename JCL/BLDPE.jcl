@@ -365,6 +365,9 @@ OGETX '+
  DELETE  &ENVHLQ..JCL  PURGE
  IF LASTCC > 0  THEN        /* IF OPERATION FAILED,     */    -
      SET MAXCC = 0          /* PROCEED AS NORMAL ANYWAY */
+ DELETE  &ENVHLQ..STDPARM  PURGE
+ IF LASTCC > 0  THEN        /* IF OPERATION FAILED,     */    -
+     SET MAXCC = 0          /* PROCEED AS NORMAL ANYWAY */
 //*
 //*********************************************************************
 //* Allocate MVS libraries
@@ -390,6 +393,12 @@ OGETX '+
 //            UNIT=&UNITPRM.,DSNTYPE=LIBRARY,
 //            SPACE=(TRK,(100,100)),
 //            DSORG=PO,RECFM=FB,LRECL=80
+//*
+//STDPARM  DD DSN=&ENVHLQ..STDPARM,
+//            DISP=(NEW,CATLG,DELETE),
+//            UNIT=&UNITPRM.,DSNTYPE=LIBRARY,
+//            SPACE=(TRK,(1,1)),
+//            DSORG=PO,RECFM=VB,LRECL=259
 //*
 //*********************************************************************
 //*   Increment the Build Number
@@ -547,6 +556,79 @@ $TGTHLQ  = $BLDHLQ || "." || $MINREL || ".B" || $BLDNBR
 //*
 //DEFLIST  DD *
 BLDPE3
+//*
+//*********************************************************************
+//*   Generate shell scripts for the GenevaERS Performance Engine 
+//*********************************************************************
+//*
+// SET USEDEFLB='N'         USE SCRIPT DEFINITION LIBRARY (Y/N)?
+// SET USEVARLB='Y'         USE ENVIRONMENT VARIABLE LIBRARY (Y/N)?
+// SET SITE='N/A'           SITE (MACHINE) ENVIRONMENT
+// SET ENV='$ENVIRON'       PRIMARY DATA ENVIRONMENT
+// SET ENV2='N/A'           SECONDARY DATA ENVIRONMENT
+// SET SGTRCOPT='O'         SCRIPT GENERATOR TRACE OPTION
+// SET USEFTTRC='N'         USE FILE TAILORING TRACE (Y/N)?
+// SET FTTRCOPT=''          FILE TAILORING TRACE OPTIONS
+//*
+//GENJCL   EXEC PGM=IKJEFT1A,                    Batch TSO program
+// COND=(4,LT),
+// REGION=32M,
+// PARM='ISPSTART CMD(GENSCRPT &USEDEFLB. &USEVARLB. &SITE. &ENV.      X
+//             &ENV2. &SGTRCOPT. &USEFTTRC. &FTTRCOPT.)'
+//*
+//         SET SYM=''                            Dummy symbolic
+//*
+//SYSEXEC  DD DSN=&ENVHLQ..EXEC,
+//            DISP=SHR                           REXX program library
+//*
+//ISPWRK1  DD DISP=(NEW,DELETE,DELETE),
+//            UNIT=VIO,
+//            SPACE=(TRK,(10000,10000)),
+//            LRECL=256,BLKSIZE=2560,RECFM=FB
+//*
+//ISPLOG   DD DUMMY                              ISPF log file
+//*
+//ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile
+//            UNIT=&UNITTMP.,
+//            SPACE=(TRK,(5,5,5)),
+//            DSORG=PO,RECFM=FB,LRECL=80
+//*
+//ISPPLIB  DD DSN=&ISPPLIB.,
+//            DISP=SHR                           ISPF panels
+//*
+//ISPMLIB  DD DSN=&ISPMLIB.,
+//            DISP=SHR                           ISPF menus
+//*
+//ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)
+//            UNIT=&UNITTMP.,
+//            SPACE=(TRK,(5,5,5)),
+//            DSORG=PO,RECFM=FB,LRECL=80
+//         DD DSN=&ENVHLQ..ISPTLIB,
+//            DISP=SHR
+//         DD DSN=&ISPTLIB.,
+//            DISP=SHR
+//*
+//ISPSLIB  DD DSN=&ENVHLQ..SKEL,
+//            DISP=SHR                           JCL skeletons
+//*
+//VARLIB   DD DSN=&ENVHLQ..VAR,
+//            DISP=SHR                           Global variables
+//*
+//SYSTSPRT DD SYSOUT=*
+//*
+//SYSTSIN  DD DUMMY
+//*
+//ISPFILE  DD DSN=&ENVHLQ..STDPARM,
+//            DISP=SHR
+//*
+//ISPTABL  DD DUMMY                              ISPF tables (output)
+//*
+//ISPFTTRC DD SYSOUT=*,RECFM=VB,LRECL=259        TSO output
+//*
+//DEFLIST  DD *
+CLONPEB
+CLONPEX
+CLONRUN
 //*
 //*******************************************************************
 //* Submit the next job 

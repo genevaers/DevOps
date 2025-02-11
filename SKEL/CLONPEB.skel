@@ -1,0 +1,7 @@
+sh ;
+set -o xtrace;
+set -e;
+echo;
+cd &$REPODIR.;
+rm -rf &$REPOPEB.;
+git clone &$RMTPEB.;

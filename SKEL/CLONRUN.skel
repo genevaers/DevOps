@@ -1,0 +1,6 @@
+sh ;
+set -o xtrace;
+set -e;
+cd &$REPODIR.;
+rm -rf &$REPORUN.;
+git clone &$RMTRUN.;

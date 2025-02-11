@@ -37,15 +37,8 @@
 //STDOUT   DD SYSOUT=*
 //STDERR   DD SYSOUT=*
 //*
-//STDPARM  DD *,SYMBOLS=EXECSYS
-sh ;
-set -o xtrace;
-set -e;
-echo;
-cd &$REPODIR.;
-rm -rf &$REPOPEB.;
-git clone &$RMTPEB.;
-
+//STDPARM  DD DSN=&$ENVHLQ..STDPARM(CLONPEB),
+//            DISP=SHR
 //*
 )ENDSEL &$CLONPEB. EQ Y 
 
@@ -82,15 +75,8 @@ git checkout &$BRCHPEB.;
 //STDOUT   DD SYSOUT=*
 //STDERR   DD SYSOUT=*
 //*
-//STDPARM  DD *,SYMBOLS=EXECSYS
-sh ;
-set -o xtrace;
-set -e;
-echo;
-cd &$REPODIR.;
-rm -rf &$REPOPEX.;
-git clone &$RMTPEX.;
-
+//STDPARM  DD DSN=&$ENVHLQ..STDPARM(CLONPEX),
+//            DISP=SHR
 //*
 )ENDSEL &$CLONPEX. EQ Y 
 
@@ -127,14 +113,8 @@ git checkout &$BRCHPEX.;
 //STDOUT   DD SYSOUT=*
 //STDERR   DD SYSOUT=*
 //*
-//STDPARM  DD *,SYMBOLS=EXECSYS
-sh ;
-set -o xtrace;
-set -e;
-cd &$REPODIR.;
-rm -rf &$REPORUN.;
-git clone &$RMTRUN.;
-
+//STDPARM  DD DSN=&$ENVHLQ..STDPARM(CLONRUN),
+//            DISP=SHR
 //*
 )ENDSEL &$CLONRUN. EQ Y 
 
