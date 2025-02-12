@@ -256,9 +256,9 @@ chtag  -R -t *;
 )CM may not fit on one line.  The REXX code tests for this and splits
 )CM the value into two JCL lines if necessary.  
 
-)REXX $REPODIR SRESFL1 SRESFL2 
-Results_File = "'" || $REPODIR || , 
-    "/&$REPORUN./PETestFramework/out/fmoverview.txt'"
+)REXX $REPODIR $REPORUN SRESFL1 SRESFL2 
+Results_File = "'" || $REPODIR || "/" || $REPORUN || , 
+    "/PETestFramework/out/fmoverview.txt'"
 SRESFL1 = strip(substr(Results_File,1,63))
 SRESFL2 = substr(Results_File,64)
 )ENDREXX
