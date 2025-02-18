@@ -37,19 +37,19 @@ sh ;
 set -e;
 set -o xtrace;
 echo;
-cd &$REPODIR./DevOps/;
+cd &$REPODIR./&$REPODEV./;
 git tag -a "PM_&$RELFMT..B&$BLDNBR." 
 -m "Performance Engine build PM &$RELFMT..B&$BLDNBR.";   
 git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
-cd &$REPODIR./Performance-Engine/;
+cd &$REPODIR./&$REPOPEB./;
 git tag -a "PM_&$RELFMT..B&$BLDNBR." 
 -m "Performance Engine build PM &$RELFMT..B&$BLDNBR.";   
 git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
-cd &$REPODIR./Performance-Engine-Extensions/;
+cd &$REPODIR./&$REPOPEX./;
 git tag -a "PM_&$RELFMT..B&$BLDNBR." 
 -m "Performance Engine build PM &$RELFMT..B&$BLDNBR.";   
 git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    
-cd &$REPODIR./Run-Control-Apps/;
+cd &$REPODIR./&$REPORUN./;
 git tag -a "PM_&$RELFMT..B&$BLDNBR." 
 -m "Performance Engine build PM &$RELFMT..B&$BLDNBR.";   
 git push origin tag "PM_&$RELFMT..B&$BLDNBR.";                                    

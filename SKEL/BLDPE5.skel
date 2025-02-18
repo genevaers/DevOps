@@ -76,29 +76,29 @@
 //SYSTSIN  DD *,SYMBOLS=EXECSYS
 OGETX '+
  &$REPODIR.+
- /Performance-Engine/ASM' +
+ /&$REPOPEB./ASM' +
  '&$TGTHLQ..ASM' SUFFIX(asm) LC
 OGETX '+
  &$REPODIR.+
- /Performance-Engine/LINKPARM' +
+ /&$REPOPEB./LINKPARM' +
  '&$TGTHLQ..LINKPARM' SUFFIX(link) LC
 OGETX '+
  &$REPODIR.+
- /Performance-Engine/MAC' +
+ /&$REPOPEB./MAC' +
  '&$TGTHLQ..MAC' SUFFIX(mac) LC
 
 )SEL    &$INCLPEX. EQ Y 
 OGETX '+
  &$REPODIR.+
- /Performance-Engine-Extensions/ASM' +
+ /&$REPOPEX./ASM' +
  '&$TGTHLQ..ASM' SUFFIX(asm) LC
 OGETX '+
  &$REPODIR.+
- /Performance-Engine-Extensions/LINKPARM' +
+ /&$REPOPEX./LINKPARM' +
  '&$TGTHLQ..LINKPARM' SUFFIX(link) LC
 OGETX '+
  &$REPODIR.+
- /Performance-Engine-Extensions/MAC' +
+ /&$REPOPEX./MAC' +
  '&$TGTHLQ..MAC' SUFFIX(mac) LC
 )ENDSEL &$INCLPEX. EQ Y 
 
@@ -187,7 +187,7 @@ echo;
 cd &$JARSDIR.;
 java -cp ./db2jcc4.jar com.ibm.db2.jcc.DB2Jcc -version;
 echo;
-cd &$REPODIR./Run-Control-Apps/;
+cd &$REPODIR./&$REPORUN./;
 chmod +x prebuild/*.sh;
 mvn clean;
 
@@ -215,7 +215,7 @@ touch rcapps-&$MINREL..jar;
 rm rcapps-&$MINREL..jar;
 ln -s rcapps-$rev.jar rcapps-&$MINREL..jar;
 
-cd &$REPODIR./Run-Control-Apps/PETestFramework/;
+cd &$REPODIR./&$REPORUN./PETestFramework/;
 ./target/bin/gerstf;
 //*
 //STDOUT   DD SYSOUT=*
@@ -225,13 +225,14 @@ cd &$REPODIR./Run-Control-Apps/PETestFramework/;
 //*   Tag the Test Framework output files as ASCII
 //**********************************************************************
 //*
-//SETASCII   EXEC PGM=BPXBATCH
+//SETASCII   EXEC PGM=BPXBATCH,
+//          COND=(4,LT)
 //*
 //STDPARM  DD *
 sh ;
 set -e;
 set -o xtrace;
-cd &$REPODIR./Run-Control-Apps/;
+cd &$REPODIR./&REPORUN./;
 cd PETestFramework/out;
 chtag  -R -c 819 *;
 chtag  -R -t *;
@@ -243,7 +244,8 @@ chtag  -R -t *;
 //*   Print the results of the regression tests
 //**********************************************************************
 //*
-//PRTRESLT EXEC PGM=IKJEFT1A,DYNAMNBR=25,REGION=1024K  
+//PRTRESLT EXEC PGM=IKJEFT1A,DYNAMNBR=25,REGION=1024K,
+//          COND=(4,LT)
 //*                                                     
 //INFILE   DD PATHOPTS=(ORDONLY),
 
@@ -256,9 +258,9 @@ chtag  -R -t *;
 )CM may not fit on one line.  The REXX code tests for this and splits
 )CM the value into two JCL lines if necessary.  
 
-)REXX $REPODIR SRESFL1 SRESFL2 
-Results_File = "'" || $REPODIR || , 
-    "/Run-Control-Apps/PETestFramework/out/fmoverview.txt'"
+)REXX $REPODIR $REPORUN SRESFL1 SRESFL2 
+Results_File = "'" || $REPODIR || "/" || $REPORUN || , 
+    "/PETestFramework/out/fmoverview.txt'"
 SRESFL1 = strip(substr(Results_File,1,63))
 SRESFL2 = substr(Results_File,64)
 )ENDREXX
@@ -283,7 +285,8 @@ SRESFL2 = substr(Results_File,64)
 //* Submit the next job 
 //*******************************************************************
 //*
-//SUBJOB   EXEC PGM=IEBGENER
+//SUBJOB   EXEC PGM=IEBGENER,
+//          COND=(4,LT)
 //*
 //SYSIN    DD DUMMY
 //*
