@@ -4,7 +4,7 @@
 )CM SPDX-License-Identifier: Apache-2.0
 )CM 
 )CM Licensed under the Apache License, Version 2.0 (the "License");
-)CM you may not use this file except in compliance with the License.
+)CM you may not use this file except in compliance with the License. 
 )CM You may obtain a copy of the License at
 )CM 
 )CM     http://www.apache.org/licenses/LICENSE-2.0
@@ -34,19 +34,32 @@
 // COND=(4,LT)
 //*
 
-//ASMAOPT  DD *
-ADATA
-ALIGN
-NODECK 
-FLAG(NOALIGN)                     
-GOFF
-LIST(133)
-OBJECT
-OPTABLE(ZS7)
-PC(GEN)
-SECTALGN(256)
-SYSPARM(&$RELFMT.)
-//*
+)SET DONEAOPT = 0
+
+)DOT    ASMPARM
+)SEL  &APID. EQ &PID.
+//ASMAOPT  DD DISP=SHR,DSN=&$TGTHLQ..ASMPARM(&PID.)
+)SET DONEAOPT = 1
+)ENDSEL
+)ENDDOT ASMPARM
+
+)IF DONEAOPT NE 1 THEN
+//ASMAOPT  DD DISP=SHR,&$TGTHLQ..ASMPARM(#DEFAULT)
+
+
+)CM //ASMAOPT  DD *
+)CM ADATA
+)CM ALIGN
+)CM NODECK 
+)CM FLAG(NOALIGN)                     
+)CM GOFF
+)CM LIST(133)
+)CM OBJECT
+)CM OPTABLE(ZS7)
+)CM PC(GEN)
+)CM SECTALGN(256)
+)CM SYSPARM(&$RELFMT.)
+)CM //*
 
 )SET SDB2PRE = N
 )SEL    &PSQL. EQ Y  &&  &$MR95DB2. EQ Y

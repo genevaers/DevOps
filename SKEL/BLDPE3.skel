@@ -223,6 +223,59 @@ OGETX '+
 
 //*
 //*********************************************************************
+//*   Find if there are any ASMPARM members -- or only DEFAULT         
+//*********************************************************************
+//*                                                                    
+//LOADTBL  EXEC PGM=IKJEFT1A,                    Batch TSO program     
+// PARM='ISPSTART CMD(FINDASMP)',                                      
+//            COND=(4,LT)                                              
+//*                                                                    
+//SYSEXEC  DD DSN=GEBT.NEILE.EXEC,                                     
+//            DISP=SHR                           REXX program library  
+//*                                                                    
+//ISPWRK1  DD DISP=(NEW,DELETE,DELETE),                                
+//            UNIT=VIO,                                                
+//            SPACE=(TRK,(1000,1000)),                                 
+//            LRECL=256,BLKSIZE=2560,RECFM=FB                          
+//*                                                                    
+//ISPLIST  DD SYSOUT=*                           ISPF log file         
+//ISPLOG   DD SYSOUT=*,                                                
+//            DCB=(LRECL=131,BLKSIZE=137,RECFM=VBA)                    
+//*                                                                    
+//ISPPROF  DD DISP=(NEW,DELETE,DELETE),          ISPF profile          
+//            UNIT=,                                                   
+//            SPACE=(TRK,(5,5,5)),                                     
+//            DSORG=PO,RECFM=FB,LRECL=80                               
+//*                                                                    
+//ISPPLIB  DD DSN=ISP.SISPPENU,                                        
+//            DISP=SHR                           ISPF panels           
+//*                                                                    
+//ISPMLIB  DD DSN=ISP.SISPMENU,                                        
+//            DISP=SHR                           ISPF menus            
+//*                                                                    
+//ISPTLIB  DD DISP=(NEW,DELETE,DELETE),          ISPF tables (input)   
+//            UNIT=,                                                   
+//            SPACE=(TRK,(5,5,5)),                                     
+//            DSORG=PO,RECFM=FB,LRECL=80                               
+//         DD DSN=ISP.SISPTENU,                                        
+//            DISP=SHR                                                 
+//*                                                                    
+//ISPSLIB  DD DSN=GEBT.NEILE.SKEL,                                     
+//            DISP=SHR                           JCL skeletons         
+//*                                                                    
+//SYSTSPRT DD SYSOUT=*                                                 
+//*                                                                    
+//SYSTSIN  DD DUMMY                                                    
+//*                                                                    
+//ISPTABL  DD DSN=GEBT.NEILE.ISPTLIB,                                  
+//            DISP=SHR                           ISPF tables (output)  
+//*                                                                    
+//ISPFTTRC DD SYSOUT=*,RECFM=VB,LRECL=259        TSO output            
+//*                                                                    
+//ASMPARM  DD DISP=SHR,DSN=GEBT.NEILE.ASMPARM                          
+//DDOUT    DD DISP=SHR,DSN=GEBT.NEILE.TABLE(ASMPARM)                   
+//*                                                                    
+//*********************************************************************
 //*   Load data from source tables to ISPF tables 
 //*********************************************************************
 //*
@@ -277,6 +330,7 @@ BLDDSET
 BLDJOB
 MAC
 PGM
+ASMPARM
 )SEL    &$INCLPEX. EQ Y 
 MACRND
 PGMRND
