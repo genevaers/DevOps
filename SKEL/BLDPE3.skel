@@ -155,7 +155,7 @@ set -o xtrace;
 set -e;
 echo;
 cd &$REPODIR.;
-rm -rf &$REPORUN./PETestFramework/out;
+//*rm -rf &$REPORUN./PETestFramework/out; NXBNXB
 //*
 )ENDSEL &$CLONRUN. NE Y 
 
