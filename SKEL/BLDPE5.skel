@@ -80,6 +80,10 @@ OGETX '+
  '&$TGTHLQ..ASM' SUFFIX(asm) LC
 OGETX '+
  &$REPODIR.+
+ /Performance-Engine/ASMPARM' +
+ '&$TGTHLQ..ASMPARM' SUFFIX(asm) LC
+OGETX '+
+ &$REPODIR.+
  /Performance-Engine/LINKPARM' +
  '&$TGTHLQ..LINKPARM' SUFFIX(link) LC
 OGETX '+
