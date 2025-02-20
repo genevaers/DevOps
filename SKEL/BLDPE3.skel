@@ -221,6 +221,11 @@ OGETX '+
  '&$ENVHLQ..TABLE' SUFFIX(csv) LC
 )ENDSEL &$INCLPEX. EQ Y 
 
+OGETX '+
+ &$REPODIR.+
+ /Performance-Engine/ASMPARM' +
+ '&$TGTHLQ..ASMPARM' SUFFIX(asm) LC
+
 //*
 //*********************************************************************
 //*   Find if there are any ASMPARM members -- or only DEFAULT         
