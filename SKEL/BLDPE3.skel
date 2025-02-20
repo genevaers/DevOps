@@ -214,17 +214,17 @@ OGETX '+
  /&$REPOPEB./TABLE' +
  '&$ENVHLQ..TABLE' SUFFIX(csv) LC
 
+OGETX '+
+ &$REPODIR.+
+ /&$REPOPEB./ASMPARM' +
+ '&$ENVHLQ..ASMPARM' SUFFIX(asm) LC
+
 )SEL    &$INCLPEX. EQ Y 
 OGETX '+
  &$REPODIR.+
  /&$REPOPEX./TABLE' +
  '&$ENVHLQ..TABLE' SUFFIX(csv) LC
 )ENDSEL &$INCLPEX. EQ Y 
-
-OGETX '+
- &$REPODIR.+
- /Performance-Engine/ASMPARM' +
- '&$ENVHLQ..ASMPARM' SUFFIX(asm) LC
 
 //*
 //*********************************************************************
