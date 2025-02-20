@@ -30,8 +30,8 @@
 // PARM=(XREF,LET,LIST,MAP),
 // COND=(4,LT)
 //*
-//SYSLIN   DD DSN=&$TGTHLQ..LINKPARM(&PID.),
-//            DISP=SHR
+//SYSLIN   DD *
+)IM &PID.
 //*
 //SYSLIB   DD DISP=SHR,DSN=&$TGTHLQ..OBJ
 //         DD DISP=SHR,DSN=&$CEERUN.
@@ -39,7 +39,9 @@
 //         DD DISP=SHR,DSN=&$CEELIB.
 //         DD DISP=SHR,DSN=&$CSSLIB.
 //         DD DISP=SHR,DSN=&$LINKLIB.
+)SEL    &PDB2PRE. EQ Y
 //         DD DISP=SHR,DSN=&$DB2LOAD.
+)ENDSEL &PDB2PRE. EQ Y
 //*
 //SYSLMOD  DD DSN=&$TGTHLQ..GVBLOAD(&PID.),
 //            DISP=SHR

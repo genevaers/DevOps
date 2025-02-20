@@ -71,19 +71,19 @@ export GERS_RCA_JAR_DIR='<your-rca-jar-dir>'
 #
 export GERS_INCLUDE_PEX='Y'
 
-#     A value of 'Y' for GERS_RCA_DB2_INPUT will cause Db2 components
-#     to be built into the Run-Control App, allowing it to 
-#     receive input from a Db2 database.  Any other value will cause
-#     the Db2 components to be skipped.  
+#     A value of 'Y' for GERS_DB2_JAVA will cause Db2 components to be 
+#     included in any Java program (such as the Run-Control App) that needs 
+#     to access Db2 data.  Any other value will cause the Db2 components 
+#     to be skipped.  
 #
-export GERS_RCA_DB2_INPUT='N'
+export GERS_DB2_JAVA='N'
 
-#     A value of 'Y' for GERS_MR95_DB2_INPUT will cause Db2 components
-#     to be built into the View Extract Process (GVBMR95), allowing it 
-#     to receive input from a Db2 database.  Any other value will cause
+#     A value of 'Y' for GERS_DB2_ASM will cause Db2 components to be
+#     included in any assembler program (such as the View Extract Process 
+#     (GVBMR95)) that needs to access Db2 data.  Any other value will cause
 #     the Db2 components to be skipped.  
 #
-export GERS_MR95_DB2_INPUT='N'
+export GERS_DB2_ASM='N'
 
 #     The following variables specify the references to remote 
 #     repositories to be used in "git clone" statements:
