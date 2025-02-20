@@ -231,7 +231,7 @@ OGETX '+
 //*   Find if there are any ASMPARM members -- or only DEFAULT         
 //*********************************************************************
 //*                                                                    
-//LOADTBL  EXEC PGM=IKJEFT1A,                    Batch TSO program     
+//FINDAOPT EXEC PGM=IKJEFT1A,                    Batch TSO program     
 // PARM='ISPSTART CMD(FINDASMP)',                                      
 //            COND=(4,LT)                                              
 //*                                                                    

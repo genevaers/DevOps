@@ -368,6 +368,9 @@ OGETX '+
  DELETE  &ENVHLQ..STDPARM  PURGE
  IF LASTCC > 0  THEN        /* IF OPERATION FAILED,     */    -
      SET MAXCC = 0          /* PROCEED AS NORMAL ANYWAY */
+ DELETE  &ENVHLQ..ASMPARM  PURGE                                        
+ IF LASTCC > 0  THEN        /* IF OPERATION FAILED,     */    -         
+     SET MAXCC = 0          /* PROCEED AS NORMAL ANYWAY */
 //*
 //*********************************************************************
 //* Allocate MVS libraries
@@ -399,6 +402,12 @@ OGETX '+
 //            UNIT=&UNITPRM.,DSNTYPE=LIBRARY,
 //            SPACE=(TRK,(1,1)),
 //            DSORG=PO,RECFM=VB,LRECL=259
+//*                                                                    
+//ASMPARM  DD DSN=&ENVHLQ..ASMPARM,                                    
+//            DISP=(NEW,CATLG,DELETE),                                 
+//            UNIT=&UNITPRM.,DSNTYPE=LIBRARY,                          
+//            SPACE=(TRK,(1,1)),                                       
+//            DSORG=PO,RECFM=FB,LRECL=80
 //*
 //*********************************************************************
 //*   Increment the Build Number
