@@ -346,6 +346,9 @@ OGETX '+
 //         EXEC COPYDIR,
 // SUBDIR='TABLE',SUFFIX='csv',LLQ=TABLE,RECFM=VB,LRECL=1004
 //*
+//         EXEC COPYDIR,
+// SUBDIR='ASMPARM',SUFFIX='asm',LLQ=TABLE,RECFM=VB,LRECL=1004
+//*
 //**********************************************************************
 //*   Delete the files created in the next steps 
 //**********************************************************************
