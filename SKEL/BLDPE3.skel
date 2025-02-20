@@ -224,7 +224,7 @@ OGETX '+
 OGETX '+
  &$REPODIR.+
  /Performance-Engine/ASMPARM' +
- '&$TGTHLQ..ASMPARM' SUFFIX(asm) LC
+ '&$ENVHLQ..ASMPARM' SUFFIX(asm) LC
 
 //*
 //*********************************************************************
