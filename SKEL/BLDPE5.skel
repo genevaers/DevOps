@@ -230,7 +230,7 @@ cd &$REPODIR./&$REPORUN./PETestFramework/;
 sh ;
 set -e;
 set -o xtrace;
-cd &$REPODIR./&REPORUN./;
+cd &$REPODIR./&$REPORUN./;
 cd PETestFramework/out;
 chtag  -R -c 819 *;
 chtag  -R -t *;
