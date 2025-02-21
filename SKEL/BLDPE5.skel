@@ -223,8 +223,7 @@ cd &$REPODIR./&$REPORUN./PETestFramework/;
 //*   Tag the Test Framework output files as ASCII
 //**********************************************************************
 //*
-//SETASCII   EXEC PGM=BPXBATCH,
-//          COND=(4,LT)
+//SETASCII   EXEC PGM=BPXBATCH
 //*
 //STDPARM  DD *
 sh ;
@@ -242,8 +241,7 @@ chtag  -R -t *;
 //*   Print the results of the regression tests
 //**********************************************************************
 //*
-//PRTRESLT EXEC PGM=IKJEFT1A,DYNAMNBR=25,REGION=1024K,
-//          COND=(4,LT)
+//PRTRESLT EXEC PGM=IKJEFT1A,DYNAMNBR=25,REGION=1024K
 //*                                                     
 //INFILE   DD PATHOPTS=(ORDONLY),
 
@@ -283,8 +281,7 @@ SRESFL2 = substr(Results_File,64)
 //* Submit the next job 
 //*******************************************************************
 //*
-//SUBJOB   EXEC PGM=IEBGENER,
-//          COND=(4,LT)
+//SUBJOB   EXEC PGM=IEBGENER
 //*
 //SYSIN    DD DUMMY
 //*
