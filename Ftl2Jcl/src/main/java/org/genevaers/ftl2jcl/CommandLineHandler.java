@@ -57,7 +57,7 @@ public class CommandLineHandler {
 	private static void buildAdditionalInfoFromCSV(String[] args) throws IOException {
 		if (args.length == 2) {
 			String csvName = args[1];
-			logger.atInfo().log("Reading csv information from ", csvName);
+			logger.atInfo().log("Reading csv information from %s", csvName);
 			File csvFile = new File(csvName); // or from String, URL etc
 			CsvMapper mapper = new CsvMapper();
 			CsvSchema schema = CsvSchema.emptySchema().withHeader(); // use first row as header; otherwise defaults are
