@@ -5,7 +5,7 @@ BLDHLQ,GERS_BUILD_HLQ,Y,,,GEBT.RHN
 BLDMAJ,,Y,,Y,12
 BLDMIN,,Y,,Y,123
 BLDNBR,,Y,,,1234
-BLDRCA,,Y,,,Y
+BLDJAVA,,Y,,,Y
 BLDVER,,Y,,Y,5
 BRCHPEB,,Y,,Y,main
 BRCHPEX,,Y,,Y,main
@@ -52,6 +52,7 @@ REPODIR,GERS_GIT_REPO_DIR,Y,,,/u/rhness/git/SAFR
 RMTPEB,GERS_REMOTE_PEB,Y,,,https://github.com/genevaers/Performance-Engine.git
 RMTPEX,GERS_REMOTE_PEX,Y,,,https://github.com/genevaers/Performance-Engine-Extensions.git
 RMTRUN,GERS_REMOTE_RUN,Y,,,https://github.com/genevaers/Run-Control-Apps.git
+TESTPE,,Y,,,Y
 TFHLQ,GERS_TEST_HLQ,Y,Y,,GEBT.RTEST
 TFLIST,GERS_TEST_SPEC_LIST,Y,Y,,DefaultSpecList.yaml
 TGTHLQ,GERS_TARGET_HLQ,Y,,,GEBT.RHN.PM512123.B1234

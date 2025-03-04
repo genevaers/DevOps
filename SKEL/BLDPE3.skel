@@ -286,8 +286,8 @@ BLDJOB
 MAC
 PGM
 )SEL    &$INCLPEX. EQ Y 
-MACRND
-PGMRND
+MACEXT
+PGMEXT
 )ENDSEL &$INCLPEX. EQ Y 
 //*
 //*********************************************************************
@@ -362,6 +362,7 @@ PGMRND
 BLDPE4
 BLDPE5
 BLDPE6
+BLDPE7
 TAGBLD
 TAGREL
 //*

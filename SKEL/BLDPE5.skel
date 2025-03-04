@@ -105,12 +105,12 @@ OGETX '+
 )ENDDOT PGM
 
 )SEL    &$INCLPEX. EQ Y
-)DOT    PGMRND
+)DOT    PGMEXT
 )IF &$DB2ASM. EQ Y  THEN
 )IM HLASM
 )ELSE )IF &PDB2PRE. NE Y  THEN
 )IM HLASM
-)ENDDOT PGMRND
+)ENDDOT PGMEXT
 )ENDSEL &$INCLPEX. EQ Y
 
 )DOT    PGM
@@ -120,25 +120,11 @@ OGETX '+
 )ENDDOT PGM
 
 )SEL    &$INCLPEX. EQ Y
-)DOT    PGMRND
+)DOT    PGMEXT
 )SEL    &PMODTYPE. EQ LOADMOD
 )IM LINKEDIT
 )ENDSEL &PMODTYPE. EQ LOADMOD
-)ENDDOT PGMRND
-)ENDSEL &$INCLPEX. EQ Y
-
-)DOT    PGM
-)SEL    &PDB2PRE. EQ Y  &&  &$DB2ASM. EQ Y
-)IM BIND
-)ENDSEL &PDB2PRE. EQ Y  &&  &$DB2ASM. EQ Y
-)ENDDOT PGM
-
-)SEL    &$INCLPEX. EQ Y
-)DOT    PGMRND
-)SEL    &PDB2PRE. EQ Y  &&  &$DB2ASM. EQ Y
-)IM BIND
-)ENDSEL &PDB2PRE. EQ Y  &&  &$DB2ASM. EQ Y
-)ENDDOT PGMRND
+)ENDDOT PGMEXT
 )ENDSEL &$INCLPEX. EQ Y
 
 //*********************************************************************
@@ -169,12 +155,12 @@ OGETX '+
 //SYSPRINT DD SYSOUT=*
 //*
 
-)SEL    &$BLDRCA. EQ Y  
+)SEL    &$BLDJAVA. EQ Y  
 //**********************************************************************
-//*   Execute regression tests 
+//*   Build Java components
 //**********************************************************************
 //*
-//TESTPE    EXEC PGM=BPXBATCH,
+//BLDJAVA  EXEC PGM=BPXBATCH,
 //            COND=(4,LT)
 //*
 //STDPARM  DD *
@@ -213,75 +199,19 @@ touch rcapps-&$MINREL..jar;
 rm rcapps-&$MINREL..jar;
 ln -s rcapps-$rev.jar rcapps-&$MINREL..jar;
 
-cd &$REPODIR./&$REPORUN./PETestFramework/;
-./target/bin/gerstf;
 //*
 //STDOUT   DD SYSOUT=*
 //STDERR   DD SYSOUT=*
 //*
-//**********************************************************************
-//*   Tag the Test Framework output files as ASCII
-//**********************************************************************
-//*
-//SETASCII   EXEC PGM=BPXBATCH
-//*
-//STDPARM  DD *
-sh ;
-set -e;
-set -o xtrace;
-cd &$REPODIR./&$REPORUN./;
-cd PETestFramework/out;
-chtag  -R -c 819 *;
-chtag  -R -t *;
-//*
-//STDOUT   DD SYSOUT=*
-//STDERR   DD SYSOUT=*
-//*
-//**********************************************************************
-//*   Print the results of the regression tests
-//**********************************************************************
-//*
-//PRTRESLT EXEC PGM=IKJEFT1A,DYNAMNBR=25,REGION=1024K
-//*                                                     
-//INFILE   DD PATHOPTS=(ORDONLY),
+)ENDSEL &$BLDJAVA. EQ Y  
 
-)CM The following REXX code deals with the fact that a single-quoted 
-)CM parameter in JCL (such as PATH) must either be contained within
-)CM the first 71 characters of the JCL or be continued starting at 
-)CM position 16 of the next line.  Depending on the length of the name
-)CM user's Git repository, the quoted parameter containing the 
-)CM location of the results file for the PE Test Framework may or
-)CM may not fit on one line.  The REXX code tests for this and splits
-)CM the value into two JCL lines if necessary.  
-
-)REXX $REPODIR $REPORUN SRESFL1 SRESFL2 
-Results_File = "'" || $REPODIR || "/" || $REPORUN || , 
-    "/PETestFramework/out/fmoverview.txt'"
-SRESFL1 = strip(substr(Results_File,1,63))
-SRESFL2 = substr(Results_File,64)
-)ENDREXX
-
-)IF &SRESFL2. EQ &Z.  THEN 
-// PATH=&SRESFL1.
-)ELSE )DO
-// PATH=&SRESFL1.
-//             &SRESFL2.
-)ENDDO
-
-//*                                                     
-//SYSTSPRT DD SYSOUT=*                                  
-//*                                                     
-//RESULTS  DD SYSOUT=*,RECFM=VB,LRECL=164               
-//*                                                     
-//SYSTSIN  DD *                                         
- OCOPY INDD(INFILE) OUTDD(RESULTS) TEXT -              
-  CONVERT((BPXFX311)) TO1047                            
-//*                                                     
+)SEL    &$TESTPE. EQ Y  
 //*******************************************************************
 //* Submit the next job 
 //*******************************************************************
 //*
-//SUBJOB   EXEC PGM=IEBGENER
+//SUBJOB   EXEC PGM=IEBGENER,
+//            COND=(4,LT)
 //*
 //SYSIN    DD DUMMY
 //*
@@ -292,4 +222,4 @@ SRESFL2 = substr(Results_File,64)
 //*
 //SYSPRINT DD DUMMY
 //*
-)ENDSEL &$BLDRCA. EQ Y  
+)ENDSEL &$TESTPE. EQ Y  
