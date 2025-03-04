@@ -25,32 +25,95 @@
 //          MSGLEVEL=&$JMSGLVL.,
 //          MSGCLASS=&$JMSGCLS.
 //*
- 
-//*********************************************************************
-//* Copy the job output from the spool to library members 
-//*********************************************************************
+//**********************************************************************
+//*   Execute regression tests 
+//**********************************************************************
 //*
-//COPYOUT  EXEC PGM=ISFAFD,
-//          PARM='++41,1000',
-//          COND=(4,LT)
+//TESTPE    EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
 //*
-//ISFOUT   DD SYSOUT=*
-//*       
-//ISFIN    DD *,SYMBOLS=EXECSYS
+//STDPARM  DD *
+sh ;
+set -e;
+set -o xtrace;
+echo;
+cd &$REPODIR./&$REPORUN./PETestFramework/;
+export JJOBCLS=&$JJOBCLS.;
+./target/bin/gerstf;
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//**********************************************************************
+//*   Tag the Test Framework output files as ASCII
+//**********************************************************************
+//*
+//SETASCII   EXEC PGM=BPXBATCH
+//*
+//STDPARM  DD *
+sh ;
+set -e;
+set -o xtrace;
+cd &$REPODIR./&$REPORUN./;
+cd PETestFramework/out;
+chtag  -R -c 819 *;
+chtag  -R -t *;
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//**********************************************************************
+//*   Print the results of the regression tests
+//**********************************************************************
+//*
+//PRTRESLT EXEC PGM=IKJEFT1A,DYNAMNBR=25,REGION=1024K
+//*                                                     
+//INFILE   DD PATHOPTS=(ORDONLY),
 
-)DOT    BLDJOB
-)SEL    &JCOPYOUT. EQ Y
-SET DISPLAY
-PREFIX &JJOBNAME.
-OWNER &SYSUID.
-H ALL
-++ALL
-SORT END-DATE D END-TIME D
-H ALL
-++XDC
-++<<='''&$TGTHLQ..LISTJOB(&JJOBNAME.)'''>>, 
-<<=' '>>,
-<<='OLD'>>
-++AFD END
-)ENDSEL &JCOPYOUT. EQ Y
-)ENDDOT BLDJOB
+)CM The following REXX code deals with the fact that a single-quoted 
+)CM parameter in JCL (such as PATH) must either be contained within
+)CM the first 71 characters of the JCL or be continued starting at 
+)CM position 16 of the next line.  Depending on the length of the name
+)CM user's Git repository, the quoted parameter containing the 
+)CM location of the results file for the PE Test Framework may or
+)CM may not fit on one line.  The REXX code tests for this and splits
+)CM the value into two JCL lines if necessary.  
+
+)REXX $REPODIR $REPORUN SRESFL1 SRESFL2 
+Results_File = "'" || $REPODIR || "/" || $REPORUN || , 
+    "/PETestFramework/out/fmoverview.txt'"
+SRESFL1 = strip(substr(Results_File,1,63))
+SRESFL2 = substr(Results_File,64)
+)ENDREXX
+
+)IF &SRESFL2. EQ &Z.  THEN 
+// PATH=&SRESFL1.
+)ELSE )DO
+// PATH=&SRESFL1.
+//             &SRESFL2.
+)ENDDO
+
+//*                                                     
+//SYSTSPRT DD SYSOUT=*                                  
+//*                                                     
+//RESULTS  DD SYSOUT=*,RECFM=VB,LRECL=164               
+//*                                                     
+//SYSTSIN  DD *                                         
+ OCOPY INDD(INFILE) OUTDD(RESULTS) TEXT -              
+  CONVERT((BPXFX311)) TO1047                            
+//*                                                     
+//*******************************************************************
+//* Submit the next job 
+//*******************************************************************
+//*
+//SUBJOB   EXEC PGM=IEBGENER
+//*
+//SYSIN    DD DUMMY
+//*
+//SYSUT1   DD DSN=&$ENVHLQ..JCL(BLDPE7),
+//            DISP=SHR
+//*
+//SYSUT2   DD SYSOUT=(*,INTRDR)
+//*
+//SYSPRINT DD DUMMY
+//*

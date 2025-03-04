@@ -60,15 +60,19 @@
 //             SET CLONPEX='Y'
 //             SET CLONRUN='Y'
 //*
-//*     If set to 'Y', the BLDRCA symbolic parameter will cause
+//*     If set to 'Y', the BLDJAVA symbolic parameter will cause
+//*     the Java programs in the Performance Engine to be built.  
+//*     Any other value will cause them to be skipped.  
+//*      
+//             SET BLDJAVA='Y'
+//*
+//*     If set to 'Y', the TESTPE symbolic parameter will cause
 //*     the following steps to be executed in the build process:
-//*         - Build the Run-Control App (RCA)
-//*         - Build the Test Framework
 //*         - Execute the Test Framework
-//*         - Archiving the JES output of the build jobs
+//*         - Archive the JES output of the build jobs
 //*     Any other value will cause these steps to be skipped.  
 //*      
-//             SET BLDRCA='Y'
+//             SET TESTPE='Y'
 //*
 //*     The following symbolic parameters are used to identify the 
 //*     release of the Performance Engine:
@@ -441,7 +445,7 @@ OGETX '+
 //JCLSYM   DD *,SYMBOLS=EXECSYS
 $BLDMAJ  = '&BLDMAJ.'    
 $BLDMIN  = '&BLDMIN.'    
-$BLDRCA  = '&BLDRCA.'    
+$BLDJAVA = '&BLDJAVA.'    
 $BLDVER  = '&BLDVER.'    
 $BRCHPEB = '&BRCHPEB.' 
 $BRCHPEX = '&BRCHPEX.'
@@ -457,6 +461,7 @@ $MAJREL  = '&MAJREL.'
 $MINREL  = '&MINREL.'
 $RELEASE = '&RELEASE.'
 $RELFMT  = '&RELFMT.'
+$TESTPE  = '&TESTPE.'
 $MAJHLQ  = $BLDHLQ || "." || $MAJREL
 $MINHLQ  = $BLDHLQ || "." || $MINREL
 $TGTHLQ  = $BLDHLQ || "." || $MINREL || ".B" || $BLDNBR

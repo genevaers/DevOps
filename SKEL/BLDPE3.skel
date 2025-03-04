@@ -160,10 +160,10 @@ rm -rf &$REPORUN./PETestFramework/out;
 )ENDSEL &$CLONRUN. NE Y 
 
 //********************************************************************* 
-//*   Copy tables from USS repositories to MVS libraries
+//* Copy source code from USS repositories to MVS libraries
 //********************************************************************* 
 //*
-//COPY     EXEC PGM=IKJEFT1A,
+//REPO2LIB EXEC PGM=IKJEFT1A,
 //          COND=(0,NE)
 //*
 //SYSEXEC  DD DISP=SHR,DSN=&$USSEXEC.
@@ -211,10 +211,18 @@ rm -rf &$REPORUN./PETestFramework/out;
 
 OGETX '+
  &$REPODIR.+
+ /&$REPOPEB./SKEL' +
+ '&$ENVHLQ..SKEL' SUFFIX(skel) LC
+OGETX '+
+ &$REPODIR.+
  /&$REPOPEB./TABLE' +
  '&$ENVHLQ..TABLE' SUFFIX(csv) LC
 
 )SEL    &$INCLPEX. EQ Y 
+OGETX '+
+ &$REPODIR.+
+ /&$REPOPEX./SKEL' +
+ '&$ENVHLQ..SKEL' SUFFIX(skel) LC
 OGETX '+
  &$REPODIR.+
  /&$REPOPEX./TABLE' +
@@ -278,8 +286,8 @@ BLDJOB
 MAC
 PGM
 )SEL    &$INCLPEX. EQ Y 
-MACRND
-PGMRND
+MACEXT
+PGMEXT
 )ENDSEL &$INCLPEX. EQ Y 
 //*
 //*********************************************************************
@@ -354,6 +362,7 @@ PGMRND
 BLDPE4
 BLDPE5
 BLDPE6
+BLDPE7
 TAGBLD
 TAGREL
 //*
