@@ -26,6 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -44,7 +45,7 @@ import freemarker.template.TemplateExceptionHandler;
 public class CommandLineHandler {
 	private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 	private static Configuration cfg;
-	private static List<Map<String, String>> csvrows = new ArrayList<Map<String,String>>();
+	private static List<Map<String, String>> tables = new ArrayList<Map<String,String>>();
 
 	public static void main(String[] args)
 			throws IOException, InterruptedException {
@@ -56,20 +57,24 @@ public class CommandLineHandler {
 
 	private static void buildAdditionalInfoFromCSV(String[] args) throws IOException {
 		if (args.length == 2) {
-			String csvName = args[1];
-			logger.atInfo().log("Reading csv information from %s", csvName);
-			File csvFile = new File(csvName); // or from String, URL etc
-			CsvMapper mapper = new CsvMapper();
-			CsvSchema schema = CsvSchema.emptySchema().withHeader(); // use first row as header; otherwise defaults are
-																		// fine
-			MappingIterator<Map<String, String>> it = mapper.readerFor(Map.class)
-					.with(schema)
-					.readValues(csvFile);
-			mapper.enable(CsvParser.Feature.WRAP_AS_ARRAY);
-			while (it.hasNext()) {
-				csvrows.add(it.next());
-			}
+			String tablesCsv = args[1];
+			logger.atInfo().log("Reading tables information from %s", tablesCsv);
+			fillTableFromCsv(tablesCsv, tables);
 		}
+	}
+
+	private static void fillTableFromCsv(String tablesCsv, List<Map<String, String>> table) throws IOException {
+		File csvFile = new File(tablesCsv + ".csv"); 
+		CsvMapper mapper = new CsvMapper();
+		CsvSchema schema = CsvSchema.emptySchema().withHeader(); // use first row as header
+		MappingIterator<Map<String, String>> it = mapper.readerFor(Map.class)
+						.with(schema)
+						.readValues(csvFile);
+		mapper.enable(CsvParser.Feature.WRAP_AS_ARRAY);
+		while(it.hasNext()) {
+			table.add(it.next());
+		}
+		return;
 	}
 
 	private static void writeTemplatedOutput(String name) {
@@ -82,11 +87,28 @@ public class CommandLineHandler {
 		}
 	}
 
-	private static Map<String, Object> buildTemplateModel(String name) {
+	private static Map<String, Object> buildTemplateModel(String name) throws IOException {
+		Iterator<Map<String, String>> tablesIt = tables.iterator();
 		Map<String, Object> nodeMap = new HashMap<>();
 		nodeMap.put("env", System.getenv());
-		nodeMap.put("csvrows", csvrows);
+		while(tablesIt.hasNext()) {
+			Map<String, String> mytables = tablesIt.next(); //first is the header
+			Iterator<String> tableNamesIt = mytables.values().iterator();
+			while (tableNamesIt.hasNext()) {
+				String tableName = tableNamesIt.next();
+				addTableToTemplateMap(tableName, nodeMap);
+			}
+		}
 		return nodeMap;
+	}
+
+	private static void addTableToTemplateMap(String tableName, Map<String, Object> nodeMap) throws IOException {
+		List<Map<String, String>> namedTableRows = new ArrayList<Map<String,String>>();
+		fillTableFromCsv(tableName, namedTableRows);
+		// while (tableIt.hasNext()) {
+		// 	namedTableRows.add(tableIt.next());
+		// }
+		nodeMap.put(tableName, namedTableRows);
 	}
 
 	public static String readVersion() {
