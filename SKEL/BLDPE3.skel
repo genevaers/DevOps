@@ -102,6 +102,8 @@ git checkout &$BRCHPEX.;
 
 )ENDSEL &$INCLPEX. EQ Y 
 
+)SEL    &$BLDJAVA. EQ Y 
+
 )SEL    &$CLONRUN. EQ Y 
 //*********************************************************************
 //*   Clone Run-Control-Apps repository
@@ -137,6 +139,8 @@ cd &$REPODIR.;
 cd &$REPORUN.;
 git checkout &$BRCHRUN.;
 //*
+
+)ENDSEL &$BLDJAVA. EQ Y 
 
 )SEL    &$CLONRUN. NE Y 
 //*********************************************************************
