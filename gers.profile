@@ -99,7 +99,7 @@ export GERS_REMOTE_RUN='https://github.com/genevaers/Run-Control-Apps.git'
 
 #     GERS_JVM_PROC_LIB is the name of the Java Virtual Machine proc library.
 #
-export GERS_JVM_PROC_LIB='AJV.V11R0M0.SIEALNKE'
+export GERS_JVM_PROC_LIB='AJV.V11R0M0.PROCLIB'
 
 #     GERS_JZOS_LOAD_LIB is the name of the JZOS load library.
 #
