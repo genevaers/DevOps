@@ -97,6 +97,10 @@ export GERS_REMOTE_PEB='https://github.com/genevaers/Performance-Engine.git'
 export GERS_REMOTE_PEX='https://github.com/genevaers/Performance-Engine-Extensions.git'
 export GERS_REMOTE_RUN='https://github.com/genevaers/Run-Control-Apps.git'
 
+#     GERS_JAVA_HOME is the directory where Java is installed.
+#
+export GERS_JAVA_HOME='/Java/J17.0_64'
+
 #     GERS_JVM_PROC_LIB is the name of the Java Virtual Machine proc library.
 #
 export GERS_JVM_PROC_LIB='AJV.V11R0M0.PROCLIB'
@@ -275,6 +279,6 @@ export LIBPATH;
 #     Your Maven and Java options must be set to these values. 
 #
 export MAVEN_OPTS=-Dfile.encoding=IBM-1047 
-export JAVA_HOME=/Java/J11.0_64            
+export JAVA_HOME=/Java/J17.0_64
 export JAVA_OPTS=-Dfile.encoding=ISO8859-1 
 export IBM_JAVA_OPTIONS=                   
