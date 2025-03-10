@@ -38,7 +38,6 @@ set -e;
 set -o xtrace;
 echo;
 cd &$REPODIR./&$REPORUN./PETestFramework/;
-export JJOBCLS=&$JJOBCLS.;
 ./target/bin/gerstf;
 //*
 //STDOUT   DD SYSOUT=*
