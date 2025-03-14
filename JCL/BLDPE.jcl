@@ -60,11 +60,16 @@
 //             SET CLONPEX='Y'
 //             SET CLONRUN='Y'
 //*
-//*     If set to 'Y', the BLDJAVA symbolic parameter will cause
-//*     the Java programs in the Performance Engine to be built.  
-//*     Any other value will cause them to be skipped.  
+//*     The BLDJAVA symbolic parameter determines how the Java programs
+//*     in the Performance Engine are dealt with.  If it is set to
+//*     'ZOS', the Java programs will be built on z/OS.  If it is set
+//*     to 'WIN', the PE build process assumes that the Java programs
+//*     have already been built on a Windows platform and that the 
+//*     executables have been added to the Run-Control-Apps 
+//*     repository and should be copied to a USS directory.  
+//*     Any other value will the Java build tasks to be skipped.  
 //*      
-//             SET BLDJAVA='Y'
+//             SET BLDJAVA='ZOS'
 //*
 //*     If set to 'Y', the TESTPE symbolic parameter will cause
 //*     the following steps to be executed in the build process:
