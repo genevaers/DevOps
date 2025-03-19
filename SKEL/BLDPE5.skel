@@ -245,8 +245,11 @@ cd PETestFramework/target;
 chtag -b  *.jar;
 chmod 755 *.jar;
 cd bin;
-iconv -f"ISO8859-1" -t"IBM-1047" gerstf;
-chtag -c"IBM-1047" -t gerstf;
+mv gerstf gerstf.old;
+iconv -f"ISO8859-1" -t"IBM-1047" gerstf.old > gerstf;
+chtag -t -c"IBM-1047" gerstf;
+chmod 755 gerstf;
+rm gerstf.old;
 //*
 //STDOUT   DD SYSOUT=*
 //STDERR   DD SYSOUT=*
