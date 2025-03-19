@@ -102,7 +102,7 @@ git checkout &$BRCHPEX.;
 
 )ENDSEL &$INCLPEX. EQ Y 
 
-)SEL    &$BLDJAVA. EQ Y 
+)SEL    &$BLDJAVA. EQ ZOS | &$BLDJAVA. EQ WIN
 
 )SEL    &$CLONRUN. EQ Y 
 //*********************************************************************
@@ -140,7 +140,7 @@ cd &$REPORUN.;
 git checkout &$BRCHRUN.;
 //*
 
-)ENDSEL &$BLDJAVA. EQ Y 
+)ENDSEL &$BLDJAVA. EQ ZOS | &$BLDJAVA. EQ WIN
 
 )SEL    &$CLONRUN. NE Y 
 //*********************************************************************

@@ -155,7 +155,7 @@ OGETX '+
 //SYSPRINT DD SYSOUT=*
 //*
 
-)SEL    &$BLDJAVA. EQ Y  
+)SEL    &$BLDJAVA. EQ ZOS
 //**********************************************************************
 //*   Build Java components
 //**********************************************************************
@@ -203,7 +203,58 @@ ln -s rcapps-$rev.jar rcapps-&$MINREL..jar;
 //STDOUT   DD SYSOUT=*
 //STDERR   DD SYSOUT=*
 //*
-)ENDSEL &$BLDJAVA. EQ Y  
+)ENDSEL &$BLDJAVA. EQ ZOS
+
+)SEL    &$BLDJAVA. EQ WIN
+//**********************************************************************
+//*   Copy Java components
+//**********************************************************************
+//*
+//COPYJAVA EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDPARM  DD *
+sh ;
+set -e;
+set -o xtrace;
+echo;
+cd &$REPODIR./&$REPORUN./;
+
+export rev=`grep "<<revision>>" pom.xml 
+|| awk -F'<<revision>>||<</revision>>' '{print $2}'`;
+echo RCA release number $rev;
+
+cd RCApps/target;
+chtag -b *.jar;
+chmod 755 *.jar;
+cp rcapps-$rev-jar-with-dependencies.jar 
+&$RCAJDIR./rcapps-$rev.jar;
+
+cd &$RCAJDIR.;
+
+touch rcapps-latest.jar;
+rm rcapps-latest.jar;
+ln -s rcapps-$rev.jar rcapps-latest.jar;
+
+touch rcapps-&$MINREL..jar;
+rm rcapps-&$MINREL..jar;
+ln -s rcapps-$rev.jar rcapps-&$MINREL..jar;
+
+cd &$REPODIR./&$REPORUN./;
+cd PETestFramework/target;
+chtag -b  *.jar;
+chmod 755 *.jar;
+cd bin;
+mv gerstf gerstf.old;
+iconv -f"ISO8859-1" -t"IBM-1047" gerstf.old > gerstf;
+chtag -t -c"IBM-1047" gerstf;
+chmod 755 gerstf;
+rm gerstf.old;
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+)ENDSEL &$BLDJAVA. EQ ZOS
 
 )SEL    &$TESTPE. EQ Y  
 //*******************************************************************
