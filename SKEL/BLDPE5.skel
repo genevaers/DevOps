@@ -246,10 +246,10 @@ chtag -b  *.jar;
 chmod 755 *.jar;
 cd bin;
 mv gerstf gerstf.old;
-iconv -f"ISO8859-1" -t"IBM-1047" gerstf.old > gerstf;
+iconv -f"ISO8859-1" -t"IBM-1047" gerstf.old >> gerstf;
+rm gerstf.old;
 chtag -t -c"IBM-1047" gerstf;
 chmod 755 gerstf;
-rm gerstf.old;
 //*
 //STDOUT   DD SYSOUT=*
 //STDERR   DD SYSOUT=*
