@@ -47,7 +47,7 @@
 //            COND=(4,LT)
 //*
 <#list BLDDSET as row>
-<#if  row.BDSORG = "PO">
+<#if  row.BDSORG == "PO">
     <#assign SDSNTYPE = ",DSNTYPE=LIBRARY">
 <#else>
     <#assign SDSNTYPE = "">

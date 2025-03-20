@@ -20,16 +20,15 @@
 * ******************************************************************
 * -->
 <#assign RELFMT = "5.01.001">
-<#list PGM as programTable>
-    <#assign SPGMSFX = programTable.PID[4..]>
-<#if  programTable.PSQL = "Y" && env["GERS_MR95_DB2_INPUT"] = "Y">
+<#assign pgmSuffix = pgmTable.PID[3..]>
+<#if  pgmTable.PSQL == "Y" && env["GERS_MR95_DB2_INPUT"] == "Y">
     <#include "HLASMSQL.ftl">
 </#if>
 //*********************************************************************
 //*  Assemble module
 //*********************************************************************
 //*
-//ASM${SPGMSFX} EXEC PGM=ASMA90,
+//ASM${pgmSuffix} EXEC PGM=ASMA90,
 // COND=(4,LT)
 //*
 //ASMAOPT  DD *
@@ -45,56 +44,53 @@ PC(GEN)
 SECTALGN(256)
 SYSPARM(${RELFMT})
 //*
-<#if  programTable.PSQL = "Y" && env["GERS_MR95_DB2_INPUT"] = "Y">
+<#if  pgmTable.PSQL == "Y" && env["GERS_MR95_DB2_INPUT"] = "Y">
     <#assign SDB2PRE = "Y">
 <#else>
     <#assign SDB2PRE = "N">
 </#if>
-<#if SDB2PRE = "Y">
-//SYSIN    DD DSN=&&DB2PS,
+<#if SDB2PRE == "Y">
+//SYSIN    DD DSN=&&DB2PS,    from pre-compile 
 //            DISP=(OLD,DELETE)
 <#else>
-//SYSIN    DD DISP=SHR,DSN=${env["GERS_TARGET_HLQ"]}.ASM(${programTable.PID})
-</#if>
-<#-- //*
-//SYSLIB   DD DISP=SHR,DSN=&$TGTHLQ..MAC
-//         DD DISP=SHR,DSN=&$ASMMAC2.
+//SYSIN    DD DISP=SHR,DSN=${env["GERS_TARGET_HLQ"]}.ASM(${pgmTable.PID})
+//SYSLIB   DD DISP=SHR,DSN=${env["GERS_TARGET_HLQ"]}.MAC
+//         DD DISP=SHR,DSN=${env["GERS_HLASM_TK_MAC_LIB"]}
 //         DD DISP=SHR,DSN=SYS1.MACLIB
 //         DD DISP=SHR,DSN=SYS1.MODGEN
-//         DD DISP=SHR,DSN=&$CEEMAC.
+//         DD DISP=SHR,DSN=${env["GERS_LE_MAC_LIB"]}
 //*
-//SYSUT1   DD DSN=&&&&SYSUT1,
+//SYSUT1   DD DSN=&&SYSUT1,
 //            UNIT=SYSDA,
 //            SPACE=(1024,(300,300),,,ROUND),
 //            BUFNO=1
 //*
-//SYSLIN   DD DSN=&$TGTHLQ..OBJ(&PID.),
+//SYSLIN   DD DSN=${env["GERS_TARGET_HLQ"]}.OBJ(${pgmTable.PID}),
 //            DISP=SHR
 //*
-//SYSPRINT DD DSN=&$TGTHLQ..LISTASM(&PID.),
+//SYSPRINT DD DSN=${env["GERS_TARGET_HLQ"]}.LISTASM(${pgmTable.PID}),
 //            DISP=SHR
 //*
-//SYSADATA DD DSN=&$TGTHLQ..ADATA(&PID.),
+//SYSADATA DD DSN=${env["GERS_TARGET_HLQ"]}.ADATA(${pgmTable.PID}),
 //            DISP=SHR
 //*
 //*********************************************************************
 //*   Prepare Assembler Extract file 
 //*********************************************************************
 //*
-//LGX&SPGMSFX. !EXEC PGM=IKJEFT1A,DYNAMNBR=25,REGION=4096K,
-// PARM='ASMLANGX &PID. (ASM LOUD ERROR',
+//LGX${pgmSuffix} EXEC PGM=IKJEFT1A,DYNAMNBR=25,REGION=4096K,
+// PARM='ASMLANGX ${pgmTable.PID} (ASM LOUD ERROR',
 // COND=(4,LT)
 //*
-//STEPLIB  DD DISP=SHR,DSN=&$ASMMOD2.
+//STEPLIB  DD DISP=SHR,DSN=${env["GERS_HLASM_TK_MOD_LIB"]}
 //*
 //SYSTSIN  DD *
 //*
-//SYSADATA DD DSN=&$TGTHLQ..ADATA(&PID.),
+//SYSADATA DD DSN=${env["GERS_TARGET_HLQ"]}.ADATA(${pgmTable.PID}),
 //            DISP=SHR
 //*
-//ASMLANGX DD DSN=&$TGTHLQ..ASMLANGX(&PID.),
+//ASMLANGX DD DSN=${env["GERS_TARGET_HLQ"]}.ASMLANGX(${pgmTable.PID}),
 //            DISP=SHR
 //*
 //SYSTSPRT DD SYSOUT=*
-//* -->
-</#list> 
+</#if>

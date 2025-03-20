@@ -31,27 +31,27 @@ Create script to check out the required repositories
 
 -->
 cd ${env["GERS_GIT_REPO_DIR"]} ;
-<#if env["CLONEPE"] = "Y">
+<#if env["CLONE_PE"] == "Y">
 <#-- option -o xtrace prints commands as they run -->
 rm -rf ${PE_REPO};
 git clone ${env["GERS_REMOTE_PEB"]};
 </#if>
 cd ${PE_REPO}
-git checkout ${env["BRCHPEB"]};
-<#if env["GERS_INCLUDE_PEX"] = "Y"> 
+git checkout ${env["BRANCH_PE"]};
+<#if env["GERS_INCLUDE_PEX"] == "Y"> 
 cd ${env["GERS_GIT_REPO_DIR"]};
-    <#if env["CLONEPEX"] = "Y">
+    <#if env["CLONE_PEX"] == "Y">
 rm -rf ${PEX_REPO};
 git clone ${env["GERS_REMOTE_PEX"]};
     </#if>
 cd ${PEX_REPO}
-git checkout ${env["BRCHPEX"]};
+git checkout ${env["BRANCH_PEX"]};
 </#if>
 
 cd ${env["GERS_GIT_REPO_DIR"]};
-<#if env["CLONERUN"] = "Y">
+<#if env["CLONE_RCA"] == "Y">
 rm -rf ${RCA_REPO};
 git clone ${env["GERS_REMOTE_RUN"]};
 </#if>
 cd ${RCA_REPO}
-git checkout ${env["BRCHRUN"]};
+git checkout ${env["BRANCH_RCA"]};

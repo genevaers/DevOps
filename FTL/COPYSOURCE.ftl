@@ -19,10 +19,28 @@
 * 
 * ******************************************************************
 * -->
+<#-- this is going to be a script -->
 <#assign RELFMT = "5.01.001">
+<#--
+ get the repository names from the remote address string 
+ -->
+<#assign PE_REPO = env["GERS_REMOTE_PEB"]?keep_after_last("/")?keep_before(".")>
+<#assign PEX_REPO = env["GERS_REMOTE_PEX"]?keep_after_last("/")?keep_before(".")>
+<#assign RCA_REPO = env["GERS_REMOTE_RUN"]?keep_after_last("/")?keep_before(".")>
+<#--
+ change to repository directory
+ -->
+cd ${env["GERS_GIT_REPO_DIR"]} ;
+<#if env["CLONE_PE"] = "Y">
+cd ${PE_REPO} ;
+
+
+
 <#list PGM as programTable>
 cp ${programTable.PID} "//'${env["GERS_TARGET_HLQ"]}.ASM(${programTable.PID})'"
 </#list> 
 <#list MAC as macroTable>
 cp ${macroTable.CID} "//'${env["GERS_TARGET_HLQ"]}.MAC(${macroTable.CID})'"
 </#list> 
+
+</#if>

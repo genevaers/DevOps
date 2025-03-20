@@ -19,38 +19,36 @@
 * 
 * ******************************************************************
 * 
-
+-->
 //**********************************************************************
 //*   Pre-compile SQL statements
 //**********************************************************************
 //*
-//DB2&SPGMSFX. !EXEC PGM=DSNHPC,
+//DB2${pgmSuffix} EXEC PGM=DSNHPC,
 //            COND=(4,LT),
 //            REGION=32M,
 //            PARM='HOST(ASM),STDSQL(NO),VERSION(PM&$RELEASE.)'    
 //*
-//STEPLIB  DD DISP=SHR,DSN=&$DB2EXIT.
-//         DD DISP=SHR,DSN=&$DB2LOAD.
+//STEPLIB  DD DISP=SHR,DSN=${env["GERS_DB2_EXIT_LIB"]}
+//         DD DISP=SHR,DSN=${env["GERS_DB2_LOAD_LIB"]}
 //*
-//SYSIN    DD DISP=SHR,DSN=&$TGTHLQ..ASM(&PID.)
+//SYSIN    DD DISP=SHR,DSN=${env["GERS_TARGET_HLQ"]}.ASM(${pgmTable.PID})
 //*
-//SYSLIB   DD DISP=SHR,DSN=&$TGTHLQ..MAC
+//SYSLIB   DD DISP=SHR,DSN=${env["GERS_TARGET_HLQ"]}.MAC
 //*
-//SYSCIN   DD DSN=&&&&DB2PS,
+//SYSCIN   DD DSN=&&DB2PS,
 //            DISP=(NEW,PASS),
 //            UNIT=SYSDA,
 //            SPACE=(TRK,(5,5))
 //*
-//DBRMLIB  DD DSN=&$TGTHLQ..GVBDBRM(&PID.),
+//DBRMLIB  DD DSN=${env["GERS_TARGET_HLQ"]}.GVBDBRM(${pgmTable.PID}),
 //            DISP=SHR
 //*
 //SYSUT1   DD SPACE=(800,(500,500)),UNIT=SYSDA
 //SYSUT2   DD SPACE=(800,(500,500)),UNIT=SYSDA
 //*
-//SYSPRINT DD DSN=&$TGTHLQ..LISTDB2(&PID.),
+//SYSPRINT DD DSN=${env["GERS_TARGET_HLQ"]}.LISTDB2(${pgmTable.PID}),
 //            DISP=SHR
 //*
 //SYSTERM  DD SYSOUT=*
 //*
--->
-hello HLASMSQL
