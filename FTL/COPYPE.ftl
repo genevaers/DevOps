@@ -19,38 +19,19 @@
 * 
 * ******************************************************************
 * -->
+#!/bin/bash
 <#--
  get the repository names from the remote address string 
  -->
 <#assign PE_REPO = env["GERS_REMOTE_PEB"]?keep_after_last("/")?keep_before(".")>
-<#assign PEX_REPO = env["GERS_REMOTE_PEX"]?keep_after_last("/")?keep_before(".")>
-<#assign RCA_REPO = env["GERS_REMOTE_RUN"]?keep_after_last("/")?keep_before(".")>
 <#--
  change to repository directory
  -->
-cd ${env["GERS_GIT_REPO_DIR"]} ;
-<#-- change to PE repo -->
-cd ${PE_REPO} ;
+cd ${env["GERS_GIT_REPO_DIR"]}/${PE_REPO} ;
 <#-- create copy commands for all source elements -->
 <#list PGM as programTable>
 cp ASM/${programTable.PID} "//'${env["GERS_TARGET_HLQ"]}.ASM(${programTable.PID})'"
 </#list> 
-
 <#list MAC as macroTable>
 cp MAC/${macroTable.CID} "//'${env["GERS_TARGET_HLQ"]}.MAC(${macroTable.CID})'"
 </#list> 
-
-<#if env["GERS_INCLUDE_PEX"] == "Y">
-
-<#-- change to PEX repo -->
-cd ${PEX_REPO} ;
-<#-- create copy commands for all source elements -->
-<#list PGMRND as programTable>
-cp ASM/${programTable.PID} "//'${env["GERS_TARGET_HLQ"]}.ASM(${programTable.PID})'"
-</#list> 
-
-<#list MACRND as macroTable>
-cp MAC/${macroTable.CID} "//'${env["GERS_TARGET_HLQ"]}.MAC(${macroTable.CID})'"
-</#list> 
-
-</#if>

@@ -8,26 +8,36 @@ export CLONE_RCA=Y
 export BRANCH_PE="main"
 export BRANCH_PEX="main"
 export BRANCH_RCA="main"
+export UNITPRM=SYSDA
+export BLDRCA=N
 # increment build number
 # create data set HLQ
 # $TGTHLQ  = $BLDHLQ || "." || $MINREL || ".B" || $BLDNBR
+# generates JCL to allocate data sets
+java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar ALLOC ../TABLE/tablesDevOps ;
+# Submit this JCL - hmm could be timing issues - how do we wait for completion? ps command?
+submit ALLOC.jcl
+wait ???
+#
 # Create script to Clone and checkout branches - PE/PEX/RCA
-cd ../FTL
-java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar CLONE tablesDevOps
-cp CLONE.jcl CLONE.sh
-# Clone Repositories (run generated script)
-./CLONE.sh
-# Create script to copy ASM/MAC in USS to data sets - use TABLE in clones repo
-# Copy to data sets (run generated script)
-./COPYSOURCE.sh 
-# Generate JCL for build (ASMA,LINK,Bind etc)
-cd FTL
-# Generate for PE
-java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar BUILDPE ../../Performance-Engine/TABLE/tablesPE
-# Generate for PEX
-If PEX required
-java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar HLASM ../../Performance-Engine-Extensions/TABLE/tablesPEX
-# Run built JCL - two seperate jobs, or concantinate
-./BUILD.sh 
+#
+java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar CLONE ;
+#  Run the Clone Repositories generated script
+chmod +x CLONE.jcl;
+. CLONE.sh  
+#
+# Next stuff uses TABLES in the PE and PEX repos
+#
+# Generate script to call java to generate script and JCL 
+java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar GenBuild ;
+#
+### there are some issues here with how the tables in PE and PEX are pointed to. 
+### We need to ability to point to different tables
+./GenBuild.sh
 # Set aliases
+java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar ALIAS ../TABLE/tablesDevOps ;
+submit ALIAS.jcl
+wait ??
 # Run regression suite
+java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar RunReg 
+./RunReg 

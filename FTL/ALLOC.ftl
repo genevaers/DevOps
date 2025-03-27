@@ -19,11 +19,11 @@
 * 
 * ******************************************************************
 * -->
-//BLDPE4   JOB (${env["GERS_JOB_ACCT_INFO"]}),
+//ALLOC    JOB (${env["GERS_JOB_ACCT_INFO"]}),
 //          'Build GenevaERS PE  ',
-//          NOTIFY= ${env["USER"]},
+//          NOTIFY=${env["USER"]},
 //          CLASS=${env["GERS_JOB_CLASS"]},REGION=0M,
-//          MSGLEVEL=${env["GERS_TEST"]},
+//          MSGLEVEL=${env["GERS_MSG_LEVEL"]},
 //          MSGCLASS=${env["GERS_MSG_CLASS"]}
 //*
 //*********************************************************************
@@ -39,6 +39,9 @@
      IF LASTCC = 8 THEN               /* IF OPERATION FAILED,     */ -
          SET MAXCC = 0                /* PROCEED AS NORMAL ANYWAY */
 </#list> 
+//*                    
+//SYSPRINT DD SYSOUT=* 
+//*
 //*********************************************************************
 //*   Create new build data sets
 //*********************************************************************
@@ -52,8 +55,8 @@
 <#else>
     <#assign SDSNTYPE = "">
 </#if>
-<#if row.BBLKSIZE??>
-    <#assign SBLKSIZE = ",BLKSIZE=BBLKSIZE">
+<#if row.BBLKSIZE != "">
+    <#assign SBLKSIZE = ",BLKSIZE=${row.BBLKSIZE}">
 <#else>
     <#assign SBLKSIZE = "">
 </#if>
@@ -64,19 +67,3 @@
 //            DSORG=${row.BDSORG},RECFM=${row.BRECFM},LRECL=${row.BLRECL}${SBLKSIZE}
 //*
 </#list> 
-//*******************************************************************
-//* Submit the next job 
-//*******************************************************************
-//*
-//SUBJOB   EXEC PGM=IEBGENER,
-//            COND=(4,LT)
-//*
-//SYSIN    DD DUMMY
-//*
-//SYSUT1   DD DSN=${env["GERS_TARGET_HLQ"]}.JCL(BLDPE5),
-//            DISP=SHR
-//*
-//SYSUT2   DD SYSOUT=(*,INTRDR)
-//*
-//SYSPRINT DD DUMMY
-//* 

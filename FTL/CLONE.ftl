@@ -22,13 +22,12 @@
 <#--
  get the repository names from the remote address string 
  -->
+ #!/bin/bash
 <#assign PE_REPO = env["GERS_REMOTE_PEB"]?keep_after_last("/")?keep_before(".")>
 <#assign PEX_REPO = env["GERS_REMOTE_PEX"]?keep_after_last("/")?keep_before(".")>
 <#assign RCA_REPO = env["GERS_REMOTE_RUN"]?keep_after_last("/")?keep_before(".")>
 <#-- 
-
 Create script to check out the required repositories 
-
 -->
 cd ${env["GERS_GIT_REPO_DIR"]} ;
 <#if env["CLONE_PE"] == "Y">
@@ -38,6 +37,7 @@ git clone ${env["GERS_REMOTE_PEB"]};
 </#if>
 cd ${PE_REPO}
 git checkout ${env["BRANCH_PE"]};
+<#-- including extensions? -->
 <#if env["GERS_INCLUDE_PEX"] == "Y"> 
 cd ${env["GERS_GIT_REPO_DIR"]};
     <#if env["CLONE_PEX"] == "Y">
@@ -47,11 +47,13 @@ git clone ${env["GERS_REMOTE_PEX"]};
 cd ${PEX_REPO}
 git checkout ${env["BRANCH_PEX"]};
 </#if>
-
+<#-- Including RCA? -->
+<#if env["BLDRCA"] == "Y"> 
 cd ${env["GERS_GIT_REPO_DIR"]};
-<#if env["CLONE_RCA"] == "Y">
+    <#if env["CLONE_RCA"] == "Y">
 rm -rf ${RCA_REPO};
 git clone ${env["GERS_REMOTE_RUN"]};
-</#if>
+    </#if>
 cd ${RCA_REPO}
 git checkout ${env["BRANCH_RCA"]};
+</#if>
