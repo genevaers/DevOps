@@ -7,7 +7,7 @@
 ####  tsocmd "LISTDS 'GEBT.NEILB.PM501001.*.GVBLOAD'"
 
 # Find last index of test we're searching for
-endidx=$(awk -F".GVBLOAD" '{print length($0) - length($NF)}' < "tstlist.txt");
+endidx=$(awk -F".GVBLOAD" '{print length($0) - length($NF)}' < "lst.txt");
 echo "Ending index $endidx";
 
 # Calculate starting index
@@ -15,7 +15,7 @@ startidx=$((endidx-12));
 echo "startidx $startidx";
 
 # Extract numerical value after "B"
-bnumber=$(awk '{print substr($0,'$startidx',13)}' "tstlist.txt");
+bnumber=$(awk '{print substr($0,'$startidx',13)}' "lst.txt");
 echo "Build number and GVBLOAD string: $bnumber";
 
 # === DISABLED AS I CAN'T GET SQUARE BRACKETS TO WORK ON USS
