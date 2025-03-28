@@ -27,10 +27,10 @@
 // PARM=(XREF,LET,LIST,MAP),
 // COND=(4,LT)
 //*
-//SYSLIN   DD DSN=${env["GERS_TARGET_HLQ"]}.LINKPARM(${pgmTable.PID}),
+//SYSLIN   DD DSN=${TARGET_HLQ}.LINKPARM(${pgmTable.PID}),
 //            DISP=SHR
 //*
-//SYSLIB   DD DISP=SHR,DSN=${env["GERS_TARGET_HLQ"]}.OBJ
+//SYSLIB   DD DISP=SHR,DSN=${TARGET_HLQ}.OBJ
 //         DD DISP=SHR,DSN=${env["GERS_LE_RUN_LIB"]}
 //         DD DISP=SHR,DSN=${env["GERS_LE_CALL_LIB"]}
 //         DD DISP=SHR,DSN=${env["GERS_LE_DLL_LIB"]}
@@ -38,9 +38,9 @@
 //         DD DISP=SHR,DSN=${env["GERS_LINK_LIB"]}
 //         DD DISP=SHR,DSN=${env["GERS_DB2_LOAD_LIB"]}
 //*
-//SYSLMOD  DD DSN=${env["GERS_TARGET_HLQ"]}.GVBLOAD(${pgmTable.PID}),
+//SYSLMOD  DD DSN=${TARGET_HLQ}.GVBLOAD(${pgmTable.PID}),
 //            DISP=SHR
 //*
-//SYSPRINT DD DSN=${env["GERS_TARGET_HLQ"]}.LISTLINK(${pgmTable.PID}),
+//SYSPRINT DD DSN=${TARGET_HLQ}.LISTLINK(${pgmTable.PID}),
 //            DISP=SHR
 //*

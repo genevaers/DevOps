@@ -19,6 +19,7 @@
 * 
 * ******************************************************************
 * -->
+<#include "SETVARS.ftl">
 //ALLOC    JOB (${env["GERS_JOB_ACCT_INFO"]}),
 //          'Build GenevaERS PE  ',
 //          NOTIFY=${env["USER"]},
@@ -35,7 +36,7 @@
 //*
 //SYSIN    DD *
 <#list BLDDSET as row>
- DELETE ${env["GERS_TARGET_HLQ"]}.${row["BDS"]} PURGE
+ DELETE ${TARGET_HLQ}.${row["BDS"]} PURGE
      IF LASTCC = 8 THEN               /* IF OPERATION FAILED,     */ -
          SET MAXCC = 0                /* PROCEED AS NORMAL ANYWAY */
 </#list> 
@@ -60,7 +61,7 @@
 <#else>
     <#assign SBLKSIZE = "">
 </#if>
-//${row["BDS"]} DD DSN=${env["GERS_TARGET_HLQ"]}.${row.BDS},
+//${row["BDS"]} DD DSN=${TARGET_HLQ}.${row.BDS},
 //            DISP=(NEW,CATLG,DELETE),
 //            UNIT=${env["UNITPRM"]}${SDSNTYPE},
 //            SPACE=(TRK,(${row.BTRKSPRI},${row.BTRKSSEC}),RLSE),

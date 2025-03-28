@@ -24,14 +24,15 @@
  get the repository names from the remote address string 
  -->
 <#assign PE_REPO = env["GERS_REMOTE_PEB"]?keep_after_last("/")?keep_before(".")>
+<#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
 <#--
  change to repository directory
  -->
 cd ${env["GERS_GIT_REPO_DIR"]}/${PE_REPO} ;
 <#-- create copy commands for all source elements -->
 <#list PGM as programTable>
-cp ASM/${programTable.PID} "//'${env["GERS_TARGET_HLQ"]}.ASM(${programTable.PID})'"
+cp ASM/${programTable.PID} "//'${TARGET_HLQ}.ASM(${programTable.PID})'"
 </#list> 
 <#list MAC as macroTable>
-cp MAC/${macroTable.CID} "//'${env["GERS_TARGET_HLQ"]}.MAC(${macroTable.CID})'"
+cp MAC/${macroTable.CID} "//'${TARGET_HLQ}.MAC(${macroTable.CID})'"
 </#list> 

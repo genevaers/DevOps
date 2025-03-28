@@ -18,6 +18,7 @@
  
  ******************************************************************
  -->
+ <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
 //*********************************************************************
 //*   Set aliases for the build data sets 
 //*********************************************************************
@@ -27,18 +28,18 @@
 //*
 //SYSIN    DD *
 <#list BLDDSET as row>
- DELETE ${env["MAJOR_HLQ"]}.${row["BDS"]} ALIAS
+ DELETE ${MAJOR_HLQ}.${row["BDS"]} ALIAS
      IF LASTCC = 8 THEN               /* IF OPERATION FAILED,     */ -
          SET MAXCC = 0                /* PROCEED AS NORMAL ANYWAY */
- DELETE ${env["ENV_HLQ"]}.${row["BDS"]} ALIAS
+ DELETE ${env["GERS_ENV_HLQ"]}.${row["BDS"]} ALIAS
      IF LASTCC = 8 THEN               /* IF OPERATION FAILED,     */ -
          SET MAXCC = 0                /* PROCEED AS NORMAL ANYWAY */
 </#list> 
 <#list BLDDSET as row>
- DEFINE ALIAS (NAME(${env["MAJOR_HLQ"]}.${row["BDS"]}) -     
-     RELATE(${env["GERS_TARGET_HLQ"]}.${row["BDS"]}))       
- DEFINE ALIAS (NAME(${env["ENV_HLQ"]}.${row["BDS"]}) -     
-     RELATE(${env["GERS_TARGET_HLQ"]}.${row["BDS"]}))       
+ DEFINE ALIAS (NAME(${MAJOR_HLQ}.${row["BDS"]}) -     
+     RELATE(${TARGET_HLQ}.${row["BDS"]}))       
+ DEFINE ALIAS (NAME(${env["GERS_ENV_HLQ"]}.${row["BDS"]}) -     
+     RELATE(${TARGET_HLQ}.${row["BDS"]}))       
 </#list> 
 //*
 //SYSPRINT DD SYSOUT=*

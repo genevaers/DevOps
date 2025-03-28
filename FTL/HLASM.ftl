@@ -19,7 +19,6 @@
 * 
 * ******************************************************************
 * -->
-<#assign RELFMT = "5.01.001">
 <#assign pgmSuffix = pgmTable.PID[3..]>
 <#if  pgmTable.PSQL == "Y" && env["GERS_MR95_DB2_INPUT"] == "Y">
     <#include "HLASMSQL.ftl">
@@ -53,8 +52,8 @@ SYSPARM(${RELFMT})
 //SYSIN    DD DSN=&&DB2PS,    from pre-compile 
 //            DISP=(OLD,DELETE)
 <#else>
-//SYSIN    DD DISP=SHR,DSN=${env["GERS_TARGET_HLQ"]}.ASM(${pgmTable.PID})
-//SYSLIB   DD DISP=SHR,DSN=${env["GERS_TARGET_HLQ"]}.MAC
+//SYSIN    DD DISP=SHR,DSN=${TARGET_HLQ}.ASM(${pgmTable.PID})
+//SYSLIB   DD DISP=SHR,DSN=${TARGET_HLQ}.MAC
 //         DD DISP=SHR,DSN=${env["GERS_HLASM_TK_MAC_LIB"]}
 //         DD DISP=SHR,DSN=SYS1.MACLIB
 //         DD DISP=SHR,DSN=SYS1.MODGEN
@@ -65,13 +64,13 @@ SYSPARM(${RELFMT})
 //            SPACE=(1024,(300,300),,,ROUND),
 //            BUFNO=1
 //*
-//SYSLIN   DD DSN=${env["GERS_TARGET_HLQ"]}.OBJ(${pgmTable.PID}),
+//SYSLIN   DD DSN=${TARGET_HLQ}.OBJ(${pgmTable.PID}),
 //            DISP=SHR
 //*
-//SYSPRINT DD DSN=${env["GERS_TARGET_HLQ"]}.LISTASM(${pgmTable.PID}),
+//SYSPRINT DD DSN=${TARGET_HLQ}.LISTASM(${pgmTable.PID}),
 //            DISP=SHR
 //*
-//SYSADATA DD DSN=${env["GERS_TARGET_HLQ"]}.ADATA(${pgmTable.PID}),
+//SYSADATA DD DSN=${TARGET_HLQ}.ADATA(${pgmTable.PID}),
 //            DISP=SHR
 //*
 //*********************************************************************
@@ -86,10 +85,10 @@ SYSPARM(${RELFMT})
 //*
 //SYSTSIN  DD *
 //*
-//SYSADATA DD DSN=${env["GERS_TARGET_HLQ"]}.ADATA(${pgmTable.PID}),
+//SYSADATA DD DSN=${TARGET_HLQ}.ADATA(${pgmTable.PID}),
 //            DISP=SHR
 //*
-//ASMLANGX DD DSN=${env["GERS_TARGET_HLQ"]}.ASMLANGX(${pgmTable.PID}),
+//ASMLANGX DD DSN=${TARGET_HLQ}.ASMLANGX(${pgmTable.PID}),
 //            DISP=SHR
 //*
 //SYSTSPRT DD SYSOUT=*

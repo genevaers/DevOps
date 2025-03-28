@@ -32,22 +32,22 @@
 //STEPLIB  DD DISP=SHR,DSN=${env["GERS_DB2_EXIT_LIB"]}
 //         DD DISP=SHR,DSN=${env["GERS_DB2_LOAD_LIB"]}
 //*
-//SYSIN    DD DISP=SHR,DSN=${env["GERS_TARGET_HLQ"]}.ASM(${pgmTable.PID})
+//SYSIN    DD DISP=SHR,DSN=${TARGET_HLQ}.ASM(${pgmTable.PID})
 //*
-//SYSLIB   DD DISP=SHR,DSN=${env["GERS_TARGET_HLQ"]}.MAC
+//SYSLIB   DD DISP=SHR,DSN=${TARGET_HLQ}.MAC
 //*
 //SYSCIN   DD DSN=&&DB2PS,
 //            DISP=(NEW,PASS),
 //            UNIT=SYSDA,
 //            SPACE=(TRK,(5,5))
 //*
-//DBRMLIB  DD DSN=${env["GERS_TARGET_HLQ"]}.GVBDBRM(${pgmTable.PID}),
+//DBRMLIB  DD DSN=${TARGET_HLQ}.GVBDBRM(${pgmTable.PID}),
 //            DISP=SHR
 //*
 //SYSUT1   DD SPACE=(800,(500,500)),UNIT=SYSDA
 //SYSUT2   DD SPACE=(800,(500,500)),UNIT=SYSDA
 //*
-//SYSPRINT DD DSN=${env["GERS_TARGET_HLQ"]}.LISTDB2(${pgmTable.PID}),
+//SYSPRINT DD DSN=${TARGET_HLQ}.LISTDB2(${pgmTable.PID}),
 //            DISP=SHR
 //*
 //SYSTERM  DD SYSOUT=*

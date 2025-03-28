@@ -45,7 +45,7 @@
 //*
 //STEPLIB  DD DISP=SHR,DSN=${env["GERS_DB2_LOAD_LIB"]}
 //*
-//DBRMLIB  DD DSN=${env["GERS_TARGET_HLQ"]}.GVBDBRM,
+//DBRMLIB  DD DSN=${TARGET_HLQ}.GVBDBRM,
 //            DISP=SHR
 //*
 //SYSTSPRT DD SYSOUT=*
@@ -53,7 +53,7 @@
 //SYSTSIN  DD *
  DSN SYSTEM(${env["GERS_DB2_SUBSYSTEM"]})                                                      
   BIND PLAN(${pgmTable.PID}${env["GERS_DB2_PLAN_SUFFIX"]}) MEM(${pgmTable.PID}) ACT(REP) ISOLATION(CS) -             
-  LIB('${env["GERS_TARGET_HLQ"]}.GVBDBRM') QUALIFIER(${env["GERS_DB2_QUALIFIER"]}) -             
+  LIB('${TARGET_HLQ}.GVBDBRM') QUALIFIER(${env["GERS_DB2_QUALIFIER"]}) -             
   OWNER(${env["GERS_DB2_QUALIFIER"]})
 //*
 //*********************************************************************
