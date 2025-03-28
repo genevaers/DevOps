@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 import com.fasterxml.jackson.databind.MappingIterator;
@@ -45,7 +46,8 @@ import freemarker.template.TemplateExceptionHandler;
 public class CommandLineHandler {
 	private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 	private static Configuration cfg;
-	private static List<Map<String, String>> tables = new ArrayList<Map<String,String>>();
+	private static List<Map<String, String>> tables = new ArrayList<Map<String, String>>();
+	private static Path parent;
 
 	public static void main(String[] args)
 			throws IOException, InterruptedException {
@@ -57,22 +59,29 @@ public class CommandLineHandler {
 
 	private static void buildAdditionalInfoFromCSV(String[] args) throws IOException {
 		if (args.length == 2) {
-			String tablesCsv = args[1];
-			logger.atInfo().log("Reading tables information from %s", tablesCsv);
-			fillTableFromCsv(tablesCsv, tables);
+			Path tablesPath = Paths.get(args[1] + ".csv");
+			logger.atInfo().log("Reading tables information from %s", tablesPath);
+			fillTableFromCsv(tablesPath, tables);
 		}
 	}
 
-	private static void fillTableFromCsv(String tablesCsv, List<Map<String, String>> table) throws IOException {
-		File csvFile = new File(tablesCsv + ".csv"); 
+	private static void fillTableFromCsv(Path csvPath, List<Map<String, String>> table) throws IOException {
+		parent = csvPath.getParent();
+
+		logger.atInfo().log("Reading from %s", csvPath);
 		CsvMapper mapper = new CsvMapper();
 		CsvSchema schema = CsvSchema.emptySchema().withHeader(); // use first row as header
 		MappingIterator<Map<String, String>> it = mapper.readerFor(Map.class)
-						.with(schema)
-						.readValues(csvFile);
+				.with(schema)
+				.readValues(csvPath.toFile());
 		mapper.enable(CsvParser.Feature.WRAP_AS_ARRAY);
-		while(it.hasNext()) {
-			table.add(it.next());
+		while (it.hasNext()) {
+			// Map<String, String> entry = it.next();
+			// for (Entry<String, String> e : entry.entrySet()) {
+			// 	Map<String, String> tablePath = new HashMap<String, String>();
+			// 	tablePath.put(e.getKey(), e.getValue());
+				table.add(it.next());
+			//}
 		}
 		return;
 	}
@@ -91,8 +100,8 @@ public class CommandLineHandler {
 		Iterator<Map<String, String>> tablesIt = tables.iterator();
 		Map<String, Object> nodeMap = new HashMap<>();
 		nodeMap.put("env", System.getenv());
-		while(tablesIt.hasNext()) {
-			Map<String, String> mytables = tablesIt.next(); //first is the header
+		while (tablesIt.hasNext()) {
+			Map<String, String> mytables = tablesIt.next(); // first is the header
 			Iterator<String> tableNamesIt = mytables.values().iterator();
 			while (tableNamesIt.hasNext()) {
 				String tableName = tableNamesIt.next();
@@ -103,11 +112,8 @@ public class CommandLineHandler {
 	}
 
 	private static void addTableToTemplateMap(String tableName, Map<String, Object> nodeMap) throws IOException {
-		List<Map<String, String>> namedTableRows = new ArrayList<Map<String,String>>();
-		fillTableFromCsv(tableName, namedTableRows);
-		// while (tableIt.hasNext()) {
-		// 	namedTableRows.add(tableIt.next());
-		// }
+		List<Map<String, String>> namedTableRows = new ArrayList<Map<String, String>>();
+		fillTableFromCsv(parent.resolve(tableName + ".csv"), namedTableRows);
 		nodeMap.put(tableName, namedTableRows);
 	}
 
@@ -131,10 +137,21 @@ public class CommandLineHandler {
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 	}
 
-    public static void generateTestTemplatedOutput(Template temp, Map<String, Object> templateModel, Path target) throws IOException, TemplateException {
+	public static void generateTestTemplatedOutput(Template temp, Map<String, Object> templateModel, Path target)
+			throws IOException, TemplateException {
 		logger.atInfo().log("Write to %s", target.toString());
-        FileWriter cfgWriter = new FileWriter(target.toFile());
-        temp.process(templateModel, cfgWriter);
-        cfgWriter.close();
-    }
+		FileWriter cfgWriter = new FileWriter(target.toFile());
+		temp.process(templateModel, cfgWriter);
+		cfgWriter.close();
+	}
+
+	public static String removeFileExtension(String filename, boolean removeAllExtensions) {
+		if (filename == null || filename.isEmpty()) {
+			return filename;
+		}
+
+		String extPattern = "(?<!^)[.]" + (removeAllExtensions ? ".*" : "[^.]*$");
+		return filename.replaceAll(extPattern, "");
+	}
+
 }
