@@ -1,15 +1,19 @@
 set -x;
 set -e;
 echo;
-echo hello
 export CLONE_PE=Y
 export CLONE_PEX=Y
 export CLONE_RCA=Y
 export BRANCH_PE="main"
 export BRANCH_PEX="main"
 export BRANCH_RCA="main"
-export UNITPRM=SYSDA
 export BLDRCA=N
+export BLDVER='5'
+export BLDMAJ='01'
+export BLDMIN='001'
+export UNITPRM=SYSDA
+export UNITTMP=SYSDA
+
 # increment build number
 # create data set HLQ
 # $TGTHLQ  = $BLDHLQ || "." || $MINREL || ".B" || $BLDNBR
