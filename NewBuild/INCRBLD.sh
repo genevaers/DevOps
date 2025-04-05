@@ -1,39 +1,64 @@
 #!/bin/bash
 
-#### THIS SCRIPT MUST BE DOTTED IN TO EXECUTE INLINE WITH CALLING SCRIPT
+#### THIS SCRIPT CAN NOW BE EXECUTED WITHOUT BEING DOTTED IN.
 ####
 #### IT PROCESSES THE OUTPUT OF AN MVS DATASET LIST
 ####
 ####  tsocmd "LISTDS 'GEBT.NEILB.PM501001.*.GVBLOAD'"
 
-# Find last index of test we're searching for
-endidx=$(awk -F".GVBLOAD" '{print length($0) - length($NF)}' < "lst.txt");
-echo "Ending index $endidx";
+#!/bin/sh
 
-# Calculate starting index
-startidx=$((endidx-12));
-echo "startidx $startidx";
+FILE="lst.txt";
 
-# Extract numerical value after "B"
-bnumber=$(awk '{print substr($0,'$startidx',13)}' "lst.txt");
-echo "Build number and GVBLOAD string: $bnumber";
+if [ ! -f "$FILE" ]; then
+  echo "Error: File '$FILE' not found.";
+  exit 1;
+fi
 
-# === DISABLED AS I CAN'T GET SQUARE BRACKETS TO WORK ON USS
+while IFS= read -r line; do
+  # Process each line (record) here
+  # echo "Record: $line";
 
-# Extract the corresponding B000n part that precedes .GVBLOAD
-# if [[ $bnumber == *([B][0-9][0-9][0-9][0-9])* ]]; then
-#     echo "Matched pattern B000n.GVBLOAD: $bnumber";
-# else
-#     echo "No match found";
-# fi
+  # Example: Split the line into fields (assuming comma-separated)
 
-echo "bnumber $bnumber";
+  # Find last index of test we're searching for
+  echo $line > temp.txt;
+  endidx=$(awk -F".GVBLOAD" '{print length($0) - length($NF)}' "temp.txt" );
+  # echo "Endidx: $endidx";
 
-number=$(expr substr "$bnumber" 2 4);
+  if [ $endidx -gt 0 ]; then
 
-echo "Last build number: $number";
+    # Calculate starting index
+    startidx=$((endidx-12));
+    echo "startidxi :startidx";
+
+    # Extract numerical value after "B"
+    bnumber=$(awk '{print substr($0,'$startidx',13)}' "temp.txt" );
+    echo "Build number and GVBLOAD string: $bnumber";
+    echo "bnumber: $bnumber";
+
+number4=$(expr substr "$bnumber" 1 5);
+echo "number4: $number4";
+
+    if [[ "$number4" == '([B][0-9][0-9][0-9][0-9])' ]]; then
+      echo "Matched pattern B000n.GVBLOAD: $bnumber";
+    else
+      echo "Pattern does not match: $bnumber";
+    fi
+
+    number=$(expr substr "$bnumber" 2 4);
+    echo "Last build number: $number";
+
+  fi
+
+  # Add more processing logic as needed
+done < "$FILE"
 
 nextnumber=$(echo "$number" | awk '{ printf "%04.0f\n", $1+1 }');
 echo "Next build qualifier: B$nextnumber";
 
 export BLD_Nbr=B$nextnumber;
+
+echo "Finished processing file and BLD_Nbr exported: $BLD_Nbr"
+
+exit 0
