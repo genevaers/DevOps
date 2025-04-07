@@ -19,16 +19,13 @@
 //STDPARM  DD *,SYMBOLS=EXECSYS                                        
 sh ;                                                                   
 set -o xtrace;                                                         
+set -e;
 echo;                                                                  
 touch temp.txt;                                                        
 touch lst.txt;                                                         
-touch lst.cmd;                                                         
 rm temp.txt;                                                           
 rm lst.txt;                                                            
-rm lst.cmd;                                                            
 /*                                                                     
-//*                                                                    
-//*set -e;                                                             
 //*                                                                    
 //*********************************************************************
 //*   Produce the list of datasets                                     
