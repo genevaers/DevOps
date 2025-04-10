@@ -11,6 +11,8 @@ while IFS= read -r line; do
   # Process each line (record) here
   # echo "Record: $line";
 
+  # Example: Split the line into fields (assuming comma-separated)
+
   # Find last index of test we're searching for
   echo $line > temp.txt;
   endidx=$(awk -F".GVBLOAD" '{print length($0) - length($NF)}' "temp.txt" );
@@ -25,24 +27,24 @@ while IFS= read -r line; do
     # Extract numerical value after "B"
     bnumber=$(awk '{print substr($0,'$startidx',13)}' "temp.txt" );
     echo "Build number and GVBLOAD string: $bnumber";
-    echo "bnumber: $bnumber";
 
-number4=$(expr substr "$bnumber" 1 5);
-echo "number4: $number4";
-#    # Extract the corresponding B000n part that precedes .GVBLOAD
-#    if [[  "$number4" == *([B][0-9][0-9][0-9][0-9])*  ]]; then
-#      echo "Matched pattern B000n.GVBLOAD: $bnumber";
-#    else
-#      echo "No match found";
-#    fi
+    b=$(expr substr "$bnumber" 1 1 );
+    # echo "b: $b";
+    number=$(expr substr "$bnumber" 2 4 );
+    # echo "number: $number";
 
-    if [[ "$number4" == '([B][0-9][0-9][0-9][0-9])' ]]; then
-      echo "Matched pattern B000n.GVBLOAD: $bnumber";
-    else
-      echo "Pattern does not match: $bnumber";
+    NUMTEST.sh $number;
+    status=$?;
+    echo "Status numtest $status";
+    if [[ $b -ne "B" ]]; then
+      echo "Build number is not a proper build number: $b";
+      exit 1;
+    fi
+    if [[ "$status" -ne 0 ]]; then
+      echo "Build number not numeric $number";
+      exit 1;
     fi
 
-    number=$(expr substr "$bnumber" 2 4);
     echo "Last build number: $number";
 
   fi
