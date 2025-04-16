@@ -12,11 +12,11 @@
 Create commands to create scripts to copy ASM/MAC in z/OS UNIX to data sets
 Use TABLE in cloned repositories
 -->
-java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar COPYPE ../../${PE_REPO}/TABLE/tablesPE
+java -jar env["GERS_RCA_JAR_DIR"]/ftl2jcl-latest.jar COPYPE ../../${PE_REPO}/TABLE/tablesPE
 <#-- run the script -->
 . COPYPE.sh
 <#if  env["GERS_INCLUDE_PEX"] == "Y">
-java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar COPYPEX ../../${PEX_REPO}/TABLE/tablesPEX
+java -jar env["GERS_RCA_JAR_DIR"]/ftl2jcl-latest.jar COPYPEX ../../${PEX_REPO}/TABLE/tablesPEX
 <#-- run the script -->
 . COPYPEX.sh 
 </#if>
@@ -24,10 +24,10 @@ java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar COPYPEX ../../${PEX_REPO}/TABLE/table
 Create commands to create build JCL from templates
 -->
 <#-- Generate for PE -->
-java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar BUILDPE ../../${PE_REPO}/TABLE/tablesPE
+java -jar env["GERS_RCA_JAR_DIR"]/ftl2jcl-latest.jar BUILDPE ../../${PE_REPO}/TABLE/tablesPE
 submit BUILDPE.jcl 
 <#-- Generate for PEX, if required -->
 <#if  env["GERS_INCLUDE_PEX"] == "Y">
-java -jar ~/FTL2JCL_jar/ftl2jcl-latest.jar BUILDPEX ../../${PEX_REPO}/TABLE/tablesPEX
+java -jar env["GERS_RCA_JAR_DIR"]/ftl2jcl-latest.jar BUILDPEX ../../${PEX_REPO}/TABLE/tablesPEX
 submit BUILDPEX.jcl 
 </#if>
