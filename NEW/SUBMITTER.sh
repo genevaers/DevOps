@@ -3,6 +3,9 @@
 # Invoke as follows: SUBMITTER.sh '//GEBT.RTC22964.JCL(LISTDS)' lockdone
 # Where submitter job includes last job step:
 #
+#.
+#. lots of JCL
+#.
 # //*********************************************************************
 # //*   Signal completion to calling job
 # //*********************************************************************
@@ -22,7 +25,7 @@
 # echo "Touchstatus: $status";
 # /*
 #
-# Then invoke: WAITER.sh 60 lockdone
+# Then after, in the script invoke: WAITER.sh 60 lockdone
 
 echo "Arg0: $0";
 echo "Arg1: $1";
