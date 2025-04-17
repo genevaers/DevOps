@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo "Arg0: $0"; # script name
-echo "Arg1: $1"; # time period to wait for job to complete
-echo "Arg2: $2"; # lock signal filename
+echo "Arg0: $0";
+echo "Arg1: $1"; # wiating time (seconds)
+echo "Arg2: $2"; # name of signal lock
 
 timeout="$1";
 
@@ -24,7 +24,7 @@ if [[ "$Filel" = "" ]]; then
   Filel="lockdone";
 fi
 
-current_time_ms=$(date +"%H:%M:%S");
+current_time_ms=$(date +"%H:%M:%S");                  
 echo "Job sibmitted at: $current_time_ms";
 
 # timeout=$(input); # Timeout in seconds
