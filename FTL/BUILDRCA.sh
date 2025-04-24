@@ -12,8 +12,7 @@ if [ "$BLDRCA" == "Y" ]; then
   else
     mvn -B install -DskipTests;
   fi 
-  export rev=`grep "<<revision>>" pom.xml 
-  || awk -F'<<revision>>||<</revision>>' '{print $2}'`;
+  export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $2}'`;
   echo RCA release number $rev;
 
   cp RCApps/target/rcapps-$rev-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/rcapps-$rev.jar;

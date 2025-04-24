@@ -4,6 +4,7 @@
 
 main() {
 
+save_pwd=$(pwd);
 # extract repository names
 PE_REPO=$(basename $GERS_REMOTE_PEB .git);
 echo $PE_REPO
@@ -50,6 +51,8 @@ cd $RCA_REPO;
 git checkout $BRANCH_RCA;
 exitIfError;
 cd ..
+
+cd $(save_pwd);
 
 }
 

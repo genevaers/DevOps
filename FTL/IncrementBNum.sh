@@ -10,7 +10,7 @@ if test $x -eq 0 ; then
 . INCRBLD.sh;
 else
     if test $x -eq 8 ; then
-       BLDNBR="0000";
+       export BLDNBR="0000";
     else
         cat lst.txt;
         echo "*** Process Terminated in IncrementBNum.sh ***" ;

@@ -20,6 +20,7 @@
 * ******************************************************************
 * -->
 <#include "SETVARS.ftl">
+<#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>
 //ALLOC    JOB (${env["GERS_JOB_ACCT_INFO"]}),
 //          'Build GenevaERS PE  ',
 //          NOTIFY=${env["USER"]},
@@ -82,7 +83,8 @@
 sh ;
 set -o xtrace;
 set -e;
-touch lockdone;
+cd ${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/NEW 
+touch allocdone;
 status=$?;
 echo "Touchstatus: $status";
 /*
