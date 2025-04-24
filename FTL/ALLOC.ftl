@@ -68,3 +68,21 @@
 //            DSORG=${row.BDSORG},RECFM=${row.BRECFM},LRECL=${row.BLRECL}${SBLKSIZE}
 //*
 </#list> 
+//*********************************************************************
+//*   Signal completion to calling job
+//*********************************************************************
+//*
+//STEP99   EXEC PGM=BPXBATCH,
+//            COND=(4,LT)
+//*
+//STDOUT   DD SYSOUT=*
+//STDERR   DD SYSOUT=*
+//*
+//STDPARM  DD *,SYMBOLS=EXECSYS
+sh ;
+set -o xtrace;
+set -e;
+touch lockdone;
+status=$?;
+echo "Touchstatus: $status";
+/*
