@@ -92,7 +92,7 @@ htrustdaemon_objects = 	$(CSIOBJ)/GVBMR95.o     \
 			$(CSIOBJ)/GVBMRSU.o   \
 			$(CSIOBJ)/GVBMRVK.o    \
 			$(CSIOBJ)/GVBSRCHR.o    \
-			$(CSIOBJ)/GVBUR90.o    \
+			$(CSIOBJ)/GVBTP90.o    \
 			$(CSIOBJ)/GVBUR20.o     \
 			$(CSIOBJ)/GVBUR33.o    \
 			$(CSIOBJ)/GVBUR35.o    \
