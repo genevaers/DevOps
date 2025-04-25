@@ -1,0 +1,289 @@
+.SUFFIXES:
+
+CSIDIR      =  ..
+DEL         = rm -f
+MKDIR       = mkdir
+RMDIR       = rmdir
+MV          = mv
+CP          = cp
+
+#-------------------------------
+# Uncomment the following line
+# for a debug build.
+# BUILD_DEBUG=1
+
+.IF $(CSIINC) == $(NULL)
+CSIINC      = $(CSIDIR)/src/inc
+.END
+.IF $(CSISAM) == $(NULL)
+CSISAM      = .
+.END
+.IF $(CSIOBJ) == $(NULL)
+CSIOBJ     = $(CSISAM)/obj
+.END
+.IF $(CSILST) == $(NULL)
+CSILST     = $(CSISAM)/build
+.END
+CSIBIN = $(CSILST)
+.IF $(CSILIB) == $(NULL)
+CSILIB      = $(CSISAM)/lib
+.END
+
+USRLIB = //PRIVATE.MACLIB
+SYSLMOD = //PRIVATE.LOADLIB
+#SYSDEFSD = //PRIVATE.EXP
+#SYSLMOD = $(CSIBIN)
+
+# might be /DOPT_WIDE here
+# DEFS        = /D_MBCS /D_X86_=1 /DWIN32 /D_WIN32 /D_WIN32_WINNT=0x0500
+# DEFS        = /DUNICODE /D_UNICODE /DWIDE /D_WIDE /DOPT_WIDE /DWIN32 /D_WIN32 /D_CRT_SECURE_NO_DEPRECATE
+# DEFS        = /DUNICODE /D_UNICODE /DOPT_WIDE /DWIN32 /D_WIN32 /D_CRT_SECURE_NO_DEPRECATE
+
+DEFS = -D_ISOC99_SOURCE -D_CRT_SECURE_NO_DEPRECATE \
+       -D_USE_32BIT_TIME_T -D_CRT_NON_CONFORMING_SWPRINTFS -D_OPEN_THREADS \
+       -D_ALL_SOURCE=1 -DFD_SETSIZE=2048 -U_NO_PROTO -DOPT_ZOS -DOPT_VAR_MACS -DOPT_ICONV_HIDDEN
+
+ASM_FLAGS   = -c -Wa,"LINECOUNT(54),LIST,RENT,SYSPARM(MVS,31BIT,POSIX),USING(NOLIMIT,MAP,WARN(7)),XREF(SHORT),ESD,RLD"
+ASM_DEFS    =
+#ASM_VARS    = _C89_SSUFFIX="asm" _C89_WORK_SPACE="(64000,(60,60))" _xx_="Test";
+
+# C_FLAGS     = $(opt) /c /nologo /D_CRT_SECURE_NO_DEPRECATE
+C_FLAGS     = $(opt) -c -V -Wc,"DLL,TARGET(LE,zOSV1R7),GONUM,NOMAR,NOSEQ,NOSHOW,SSCOMM,NOSHOWINC,LANG(LONGLONG,EXTENDED)" -D_CRT_SECURE_NO_DEPRECATE $(DEFS) $(ADDFLAGS) -I"$(CSIINC)"
+C_DLLFLAGS  = -W c,"EXPORTALL,CSECT($@)"
+CDFLAGS     = -Zi -MDd -Fd"$(*:"=).pdb_"
+CRFLAGS     =
+AFLAGS      = $(ASM_FLAGS) $(ASM_DEFS)
+.IF $(BUILD_DEBUG)
+CFLAGS      = $(C_FLAGS) $(CDFLAGS)
+.ELSE
+CFLAGS      = $(C_FLAGS) $(CRFLAGS)
+.END
+
+SFLAGS      = -c -Wc,SSCOMM,"LANG(LONGLONG,EXTENDED)" -D_CRT_SECURE_NO_DEPRECATE $(DEFS) -I"$(CSIINC)"
+
+LIBS        = -l skrb
+L_OC_LIBS = '//PRIVATE.EXP(htrust)'
+
+# L_FLAGS     = -V -W l,p,map,"AC=1"
+L_FLAGS     = -Wl,"AC=1"
+DLL_FLAGS   = -V -W l,dll,map
+DAEMON_FLAGS   = -V -W l,p,map,"AC=1"
+LDFLAGS     =
+LRFLAGS     =
+.IF $(BUILD_DEBUG)
+LFLAGS      = $(L_FLAGS) $(LDFLAGS)
+.ELSE
+LFLAGS      = $(L_FLAGS) $(LRFLAGS)
+.END
+
+directories = "$(CSILIB)" "$(CSIOBJ)" "$(CSILST)"
+
+targets_exe     = "$(CSISAM)/$(OBJDIR)/htrustct" "$(CSISAM)/$(OBJDIR)/htrustd" \
+   "$(CSISAM)/$(OBJDIR)/htrustoc"
+
+htrust_dll	= "$(CSILIB)/htrust"
+
+targets_dll = $(htrust_dll)
+
+# Target module object lists
+htrustclient_objects = 	$(CSIOBJ)/dcutil.o     \
+			$(CSIOBJ)/dctrace.o    \
+			$(CSIOBJ)/utilmisc.o   \
+			$(CSIOBJ)/csigets.o    \
+			$(CSIOBJ)/utilstr.o    \
+			$(CSIOBJ)/iputil.o     \
+			$(CSIOBJ)/udpfunc.o    \
+			$(CSIOBJ)/mtfunc.o     \
+			$(CSIOBJ)/csimath.o    \
+			$(CSIOBJ)/dnsfunc.o    \
+			$(CSIOBJ)/csilogger.o
+
+htrustdaemon_objects = 	$(CSIOBJ)/daemon.o     \
+			$(CSIOBJ)/dutil.o      \
+			$(CSIOBJ)/dtable.o     \
+			$(CSIOBJ)/dparm.o      \
+			$(CSIOBJ)/dtrace.o     \
+			$(CSIOBJ)/dlisten.o    \
+			$(CSIOBJ)/dticket.o    \
+			$(CSIOBJ)/csiqmgr.o    \
+			$(CSIOBJ)/utilmisc.o   \
+			$(CSIOBJ)/utilzos.o    \
+			$(CSIOBJ)/csigets.o    \
+			$(CSIOBJ)/utilstr.o    \
+			$(CSIOBJ)/iputil.o     \
+			$(CSIOBJ)/udpfunc.o    \
+			$(CSIOBJ)/tcpfunc.o    \
+			$(CSIOBJ)/dnsfunc.o    \
+			$(CSIOBJ)/rc4func.o    \
+			$(CSIOBJ)/csikrb5.o    \
+			$(CSIOBJ)/csiauthn.o   \
+			$(CSIOBJ)/csiauthz.o   \
+			$(CSIOBJ)/csisaf.o     \
+			$(CSIOBJ)/csigsec.o    \
+			$(CSIOBJ)/csigsecb.o   \
+			$(CSIOBJ)/csigetu.o    \
+			$(CSIOBJ)/csigetm.o    \
+			$(CSIOBJ)/csifreem.o   \
+			$(CSIOBJ)/csiirr.o     \
+			$(CSIOBJ)/csitauth.o   \
+			$(CSIOBJ)/csioprn.o    \
+			$(CSIOBJ)/csitsoc.o    \
+			$(CSIOBJ)/csimath.o    \
+			$(CSIOBJ)/getdate.o    \
+			$(CSIOBJ)/csiext.o     \
+			$(CSIOBJ)/mtfunc.o     \
+			$(CSIOBJ)/csiopern.o   \
+			$(CSIOBJ)/csiorje.o    \
+			$(CSIOBJ)/csilogger.o  \
+			/usr/lib/EUVFKDLL.x
+
+htrustoper_objects = $(CSIOBJ)/dcoc.o
+
+htrustapi_objects = $(CSIOBJ)/dapi.o           \
+					$(CSIOBJ)/dutil.o      \
+					$(CSIOBJ)/dtable.o     \
+					$(CSIOBJ)/dctrace.o    \
+					$(CSIOBJ)/utilmisc.o   \
+					$(CSIOBJ)/utilzos.o    \
+					$(CSIOBJ)/utilstr.o    \
+					$(CSIOBJ)/dnsfunc.o    \
+					$(CSIOBJ)/csilogger.o  \
+					$(CSIOBJ)/csikrb5.o    \
+					$(CSIOBJ)/csiauthn.o   \
+					$(CSIOBJ)/csiauthz.o   \
+					$(CSIOBJ)/csisaf.o     \
+					$(CSIOBJ)/csigetu.o    \
+					$(CSIOBJ)/csigetm.o    \
+					$(CSIOBJ)/csifreem.o   \
+					$(CSIOBJ)/csiirr.o     \
+					$(CSIOBJ)/csitauth.o   \
+					$(CSIOBJ)/csioprn.o    \
+					$(CSIOBJ)/csimath.o    \
+					$(CSIOBJ)/csiext.o     \
+					$(CSIOBJ)/udpfunc.o    \
+					$(CSIOBJ)/tcpfunc.o    \
+					$(CSIOBJ)/iputil.o     \
+					$(CSIOBJ)/mtfunc.o     \
+					$(CSIOBJ)/csiopern.o   \
+					/usr/lib/EUVFKDLL.x
+
+sources =	./daemon/com/daemon.c        \
+			./daemon/com/dutil.c         \
+			./daemon/mf/dtable.c         \
+			./daemon/com/dcutil.c        \
+			./daemon/com/dparm.c         \
+			./daemon/com/dtrace.c        \
+			./daemon/com/dctrace.c       \
+			./daemon/com/dlisten.c       \
+			./daemon/com/dticket.c       \
+			./daemon/com/dcoc.c          \
+			./util/ip/com/udpfunc.c      \
+			./util/ip/com/tcpfunc.c      \
+			./util/ip/zos/iputil.c       \
+			./util/misc/com/csilogger.c  \
+			./util/misc/com/utilmisc.c   \
+			./util/misc/com/csiqmgr.c    \
+			./util/misc/zos/csioprn.c    \
+			./util/rc4/com/rc4func.c     \
+			./util/smp/zos/mtfunc.c      \
+			./util/ip/com/dnsfunc.c      \
+			./util/kerb/zos/csikrb5.c    \
+			./util/misc/zos/utilzos.c    \
+			./util/string/com/utilstr.c  \
+			./util/auth/zos/csiext.c     \
+			./util/auth/zos/csiauthn.c   \
+			./util/auth/zos/csiauthz.c   \
+			./util/kerb/zos/csigsec.c    \
+			./util/misc/zos/csitsoc.c
+
+export_sources = ./daemon/com/dapi.c
+
+asm_sources = 	./util/misc/zos/csifreem.asm \
+			./util/misc/zos/csigetm.asm  \
+			./util/misc/zos/csigetu.asm  \
+			./util/misc/zos/csigets.asm  \
+			./util/auth/zos/csisaf.asm   \
+			./util/auth/zos/csiirr.asm   \
+			./util/auth/zos/csigsecb.asm \
+			./util/misc/zos/csitauth.asm \
+			./util/misc/zos/csiopern.asm \
+			./util/misc/zos/csiorje.asm  \
+			./util/misc/zos/csimath.asm  \
+			./util/misc/zos/getdate.asm
+
+
+asm_macros =		csiequ.mac
+asm_macrodir = 		$(CSIINC)/asm
+
+#-------------------------------
+# Target 'all'
+
+.PHONY : all
+all:	$(directories) BUILD_OBJ $(targets_dll) $(targets_exe)
+
+MKDIR: $(directories)
+
+$(directories):
+	-$(MKDIR) $@
+
+TEST:
+	echo ${asm_sources:${@D}.asm=$(CSIOBJ).o}
+	echo $(@D)
+
+BUILD_OBJ: $(export_sources:.c=.o) $(sources:.c=.o) $(asm_sources:.asm=.o)
+
+BUILD_C:  $(sources:.c=.o)
+
+BUILD_ASM: $(asm_sources:.asm=.o)
+
+$(CSISAM)/$(OBJDIR)/htrustct: $(htrustclient_objects)
+	$(LD) $(LFLAGS) -o'$(SYSLMOD)($(@F))' $^ >$(CSILST)/$(@F).map 2>$(CSILST)/$(@F).lerr
+
+$(htrust_dll): $(htrustapi_objects)
+	$(LD) $(DLL_FLAGS) -o'$(SYSLMOD)($(@F))' $^ $(LIBS) >$(CSILST)/$(@F).map 2>$(CSILST)/$(@F).lerr
+
+$(CSISAM)/$(OBJDIR)/htrustoc: $(htrustoper_objects)
+	$(LD) $(LFLAGS) -o'$(SYSLMOD)($(@F))' $^ $(L_OC_LIBS) >$(CSILST)/$(@F).map 2>$(CSILST)/$(@F).lerr
+
+$(CSISAM)/$(OBJDIR)/htrustd: $(htrustdaemon_objects)
+	$(LD) $(LFLAGS) $(DAEMON_FLAGS) -o'$(SYSLMOD)($(@F))' $^ $(LIBS) >$(CSILST)/$(@F).map 2>$(CSILST)/$(@F).lerr
+
+# $(asm_sources:$(<D).asm=$(CSIOBJ).o): $(asm_sources:.asm=.o)
+
+# $(sources:$(<D).c=$(CSIOBJ).o): $(sources:.c=.o)
+
+# $(export_sources:$(<D).c=$(CSIOBJ).o): $(export_sources:.c=.o)
+
+$(sources:.c=.o): $(sources)
+	-$(CC) $(CFLAGS) -o$@ $(@:.o=.c) >$(CSILST)/$(@F:.o=.lst) 2>$(CSILST)/$(@F:.o=.err)
+	-$(CP) $@ $(CSIOBJ)/$(@F)
+
+$(export_sources:.c=.o): $(export_sources)
+	-$(CC) $(C_DLLFLAGS) $(CFLAGS) -o$@ $(@:.o=.c) >$(CSILST)/$(@F:.o=.lst) 2>$(CSILST)/$(@F:.o=.err)
+	-$(CP) $@ $(CSIOBJ)/$(@F)
+
+COPY_MACROS:
+	@for h in $(asm_macros); do \
+		$(CP) -ACTv $(asm_macrodir)/$$h '$(USRLIB)';\
+	done
+
+$(asm_sources:.asm=.o): $(asm_sources) COPY_MACROS
+	-$(CC) $(AFLAGS) -o$@ $(@:.o=.asm) >$(CSILST)/$(@F:.o=.lst) 2>$(CSILST)/$(@F:.o=.err)
+	-$(CP) $@ $(CSIOBJ)/$(@F)
+
+SINGLE:
+	-$(DEL) $(CSIOBJ)/$(SRC:b:+".o")
+	-$(CC) $(SFLAGS) -o$(SRC:.c=.o) $(SRC)
+	-$(CP) $(SRC:.c=.o) $(CSIOBJ)/$(SRC:b:+".o")
+
+clean:
+	-$(DEL) $(CSIOBJ)/*.o $(CSILST)/*.lst $(CSILST)/*.err $(CSILST)/*.map $(CSILST)/*.lerr
+	-$(DEL) $(targets_exe)
+	-$(DEL) $(sources:.c=.o) $(asm_sources:.asm=.o)
+	-$(DEL) $(asm_sources:.asm=.lst)
+	-$(DEL) $(export_sources:.c=.o)
+.IF $(BUILD_DEBUG)
+	-$(DEL) $(CSIOBJ)/*.pdb_
+.END
+	-$(RMDIR) $(directories)
+
