@@ -103,28 +103,28 @@ htrustdaemon_objects = 	$(CSIOBJ)/GVBMR95.o     \
 			$(CSIOBJ)/GVBUTMUE.o
 
 
-asm_sources = 	./ASM/GVBDAYS.asm \
-			./ASM/GVBDL96.asm  \
-			./ASM/GVBMR95.asm  \
-			./ASM/GVBMR96.asm  \
-			./ASM/GVBMRAD.asm   \
-			./ASM/GVBMRBS.asm   \
-			./ASM/GVBMRHPU.asm \
-			./ASM/GVBMRSQ.asm \
-			./ASM/GVBMRSU.asm \
-			./ASM/GVBMRVK.asm  \
-			./ASM/GVBSRCHR.asm  \
-			./ASM/GVBTP90.asm  \
-			./ASM/GVBUR20.asm  \
-			./ASM/GVBUR33.asm  \
-			./ASM/GVBUR35.asm  \
-			./ASM/GVBUR39.asm  \
-			./ASM/GVBURALI.asm  \
-			./ASM/GVBURZTM.asm  \
-			./ASM/GVBUT99.asm  \
-			./ASM/GVBUTHDR.asm  \
-			./ASM/GVBUTMSG.asm  \
-			./ASM/GVBUTMUE.asm
+asm_sources = 	./ASM/GVBDAYS.s \
+			./ASM/GVBDL96.s  \
+			./ASM/GVBMR95.s  \
+			./ASM/GVBMR96.s  \
+			./ASM/GVBMRAD.s   \
+			./ASM/GVBMRBS.s   \
+			./ASM/GVBMRHPU.s \
+			./ASM/GVBMRSQ.s \
+			./ASM/GVBMRSU.s \
+			./ASM/GVBMRVK.s  \
+			./ASM/GVBSRCHR.s  \
+			./ASM/GVBTP90.s  \
+			./ASM/GVBUR20.s  \
+			./ASM/GVBUR33.s  \
+			./ASM/GVBUR35.s  \
+			./ASM/GVBUR39.s  \
+			./ASM/GVBURALI.s  \
+			./ASM/GVBURZTM.s  \
+			./ASM/GVBUT99.s  \
+			./ASM/GVBUTHDR.s  \
+			./ASM/GVBUTMSG.s  \
+			./ASM/GVBUTMUE.s
 
 
 # asm_macros =		csiequ.mac
