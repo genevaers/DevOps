@@ -82,7 +82,7 @@ targets_exe     = "$(CSISAM)/$(OBJDIR)/htrustd"
 # Target module object lists
 
 htrustdaemon_objects = 	$(CSIOBJ)/GVBMR95.o     \
-			$(CSIOBJ)/GVBMR95.o      \
+			$(CSIOBJ)/GVBMR96.o      \
 			$(CSIOBJ)/GVBDAYS.o     \
 			$(CSIOBJ)/GVBDL96.o      \
 			$(CSIOBJ)/GVBMRAD.o     \
@@ -98,7 +98,7 @@ htrustdaemon_objects = 	$(CSIOBJ)/GVBMR95.o     \
 			$(CSIOBJ)/GVBUR35.o    \
 			$(CSIOBJ)/GVBUR39.o    \
 			$(CSIOBJ)/GVBUR99.o    \
-			$(CSIOBJ)/GVBURHDR.o    \
+			$(CSIOBJ)/GVBUTHDR.o    \
 			$(CSIOBJ)/GVBUTMSG.o   \
 			$(CSIOBJ)/GVBUTMUE.o
 
@@ -122,7 +122,7 @@ asm_sources = 	./ASM/GVBDAYS.asm \
 			./ASM/GVBURALI.asm  \
 			./ASM/GVBURZTM.asm  \
 			./ASM/GVBUT99.asm  \
-			./ASM/GVBURHDR.asm  \
+			./ASM/GVBUTHDR.asm  \
 			./ASM/GVBUTMSG.asm  \
 			./ASM/GVBUTMUE.asm
 
