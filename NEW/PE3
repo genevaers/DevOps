@@ -143,7 +143,7 @@ $(directories):
 	-$(MKDIR) $@
 
 TEST:
-	echo ${asm_sources:${@D}.asm=$(CSIOBJ).o}
+	echo ${asm_sources:${@D}.s=$(CSIOBJ).o}
 	echo $(@D)
 
 BUILD_OBJ: $(asm_sources:.s=.o)
@@ -152,9 +152,6 @@ BUILD_ASM: $(asm_sources:.s=.o)
 
 $(CSISAM)/$(OBJDIR)/htrustd: $(htrustdaemon_objects)
 	$(LD) $(LFLAGS) $(DAEMON_FLAGS) -o'$(SYSLMOD)($(@F))' $^ $(LIBS) >$(CSILST)/$(@F).map 2>$(CSILST)/$(@F).lerr
-
-
-# $(asm_sources:$(<D).asm=$(CSIOBJ).o): $(asm_sources:.asm=.o)
 
 
 COPY_MACROS:
