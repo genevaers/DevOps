@@ -119,9 +119,7 @@ COPY_MACROS:
 		$(CP) -ACTv $(asm_macrodir)/$$h '$(USRLIB)';\
 	done
 
-$(asm_sources:.s=.o): $(asm_sources) COPY_MACROS
-	-$(CC) $(AFLAGS) -o$@ $(@:.o=.s) >$(CSILST)/$(@F:.o=.lst) 2>$(CSILST)/$(@F:.o=.err)
-	-$(CP) $@ $(CSIOBJ)/$(@F)
+$(asm_sources:$(<D).s=$(JNIOBJ).o): $(asm_sources:.s=.o)
 
 SINGLE:
 	-$(DEL) $(CSIOBJ)/$(SRC:b:+".o")
