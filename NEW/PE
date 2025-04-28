@@ -97,7 +97,7 @@ htrustdaemon_objects	=	$(CSIOBJ)/GVBMR95.o	\
 			$(CSIOBJ)/GVBUR33.o	\
 			$(CSIOBJ)/GVBUR35.o	\
 			$(CSIOBJ)/GVBUR39.o	\
-			$(CSIOBJ)/GVBUR99.o	\
+			$(CSIOBJ)/GVBUT99.o	\
 			$(CSIOBJ)/GVBURALI.o	\
 			$(CSIOBJ)/GVBURZTM.o	\
 			$(CSIOBJ)/GVBUTHDR.o	\
@@ -121,7 +121,7 @@ asm_sources	=	./ASM/GVBMR95.asm	\
 			./ASM/GVBUR33.asm	\
 			./ASM/GVBUR35.asm	\
 			./ASM/GVBUR39.asm	\
-			./ASM/GVBUR99.asm	\
+			./ASM/GVBUT99.asm	\
 			./ASM/GVBURALI.asm	\
 			./ASM/GVBURZTM.asm	\
 			./ASM/GVBUTHDR.asm	\
