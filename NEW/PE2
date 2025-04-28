@@ -29,8 +29,8 @@ CSIBIN = $(CSILST)
 CSILIB      = $(CSISAM)/lib
 .END
 
-USRLIB = //PRIVATE.MACLIB
-SYSLMOD = //PRIVATE.LOADLIB
+USRLIB = //LATEST.MACLIB
+SYSLMOD = //LATEST.LOADLIB
 #SYSDEFSD = //PRIVATE.EXP
 #SYSLMOD = $(CSIBIN)
 
@@ -77,17 +77,15 @@ LFLAGS      = $(L_FLAGS) $(LRFLAGS)
 
 directories = "$(CSILIB)" "$(CSIOBJ)" "$(CSILST)"
 
-targets_exe     = "$(CSISAM)/$(OBJDIR)/htrustd"
+targets_exe     = "$(CSISAM)/$(OBJDIR)/gvbmr95"
 
 # Target module object lists
 
 htrustdaemon_objects = 	$(CSIOBJ)/GVBMR95.o	\
-			$(CSIOBJ)/GVBMR96.o			\
-
+			$(CSIOBJ)/GVBMR96.o
 
 asm_sources = 	./ASM/GVBMR95.s	\
 			./ASM/GVBMR96.s
-
 
 # asm_macros =		csiequ.mac
 asm_macrodir = 		$(CSIINC)/asm
@@ -111,7 +109,7 @@ BUILD_OBJ: $(asm_sources:.asm=.o)
 
 BUILD_ASM: $(asm_sources:.asm=.o)
 
-$(CSISAM)/$(OBJDIR)/htrustd: $(htrustdaemon_objects)
+$(CSISAM)/$(OBJDIR)/gvbmr95: $(htrustdaemon_objects)
 	$(LD) $(LFLAGS) $(DAEMON_FLAGS) -o'$(SYSLMOD)($(@F))' $^ $(LIBS) >$(CSILST)/$(@F).map 2>$(CSILST)/$(@F).lerr
 
 
