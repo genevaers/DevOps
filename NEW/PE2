@@ -105,15 +105,12 @@ TEST:
 	echo ${asm_sources:${@D}.asm=$(CSIOBJ).o}
 	echo $(@D)
 
-BUILD_OBJ: $(asm_sources:.asm=.o)
+BUILD_OBJ: $(asm_sources:.s=.o)
 
-BUILD_ASM: $(asm_sources:.asm=.o)
+BUILD_ASM: $(asm_sources:.s=.o)
 
 $(CSISAM)/$(OBJDIR)/gvbmr95: $(htrustdaemon_objects)
 	$(LD) $(LFLAGS) $(DAEMON_FLAGS) -o'$(SYSLMOD)($(@F))' $^ $(LIBS) >$(CSILST)/$(@F).map 2>$(CSILST)/$(@F).lerr
-
-
-# $(asm_sources:$(<D).asm=$(CSIOBJ).o): $(asm_sources:.asm=.o)
 
 
 COPY_MACROS:
@@ -121,8 +118,8 @@ COPY_MACROS:
 		$(CP) -ACTv $(asm_macrodir)/$$h '$(USRLIB)';\
 	done
 
-$(asm_sources:.asm=.o): $(asm_sources) COPY_MACROS
-	-$(CC) $(AFLAGS) -o$@ $(@:.o=.asm) >$(CSILST)/$(@F:.o=.lst) 2>$(CSILST)/$(@F:.o=.err)
+$(asm_sources:.s=.o): $(asm_sources) COPY_MACROS
+	-$(CC) $(AFLAGS) -o$@ $(@:.o=.s) >$(CSILST)/$(@F:.o=.lst) 2>$(CSILST)/$(@F:.o=.err)
 	-$(CP) $@ $(CSIOBJ)/$(@F)
 
 SINGLE:
@@ -133,8 +130,8 @@ SINGLE:
 clean:
 	-$(DEL) $(CSIOBJ)/*.o $(CSILST)/*.lst $(CSILST)/*.err $(CSILST)/*.map $(CSILST)/*.lerr
 	-$(DEL) $(targets_exe)
-	-$(DEL) $(asm_sources:.asm=.o)
-	-$(DEL) $(asm_sources:.asm=.lst)
+	-$(DEL) $(asm_sources:.s=.o)
+	-$(DEL) $(asm_sources:.s=.lst)
 .IF $(BUILD_DEBUG)
 	-$(DEL) $(CSIOBJ)/*.pdb_
 .END
