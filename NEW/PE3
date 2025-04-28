@@ -153,6 +153,7 @@ BUILD_ASM: $(asm_sources:.s=.o)
 $(CSISAM)/$(OBJDIR)/htrustd: $(htrustdaemon_objects)
 	$(LD) $(LFLAGS) $(DAEMON_FLAGS) -o'$(SYSLMOD)($(@F))' $^ $(LIBS) >$(CSILST)/$(@F).map 2>$(CSILST)/$(@F).lerr
 
+$(asm_sources:$(<D).s=$(CSIOBJ).o): $(asm_sources:.s=.o)
 
 COPY_MACROS:
 	@for h in $(asm_macros); do \
