@@ -167,13 +167,13 @@ $(asm_sources:.s=.o): $(asm_sources) COPY_MACROS
 SINGLE:
 	-$(DEL) $(CSIOBJ)/$(SRC:b:+".o")
 	-$(CC) $(SFLAGS) -o$(SRC:.c=.o) $(SRC)
-	-$(CP) $(SRC:.c=.o) $(CSIOBJ)/$(SRC:b:+".o")
+	-$(CP) $(SRC:.s=.o) $(CSIOBJ)/$(SRC:b:+".o")
 
 clean:
 	-$(DEL) $(CSIOBJ)/*.o $(CSILST)/*.lst $(CSILST)/*.err $(CSILST)/*.map $(CSILST)/*.lerr
 	-$(DEL) $(targets_exe)
-	-$(DEL) $(asm_sources:.asm=.o)
-	-$(DEL) $(asm_sources:.asm=.lst)
+	-$(DEL) $(asm_sources:.s=.o)
+	-$(DEL) $(asm_sources:.s=.lst)
 .IF $(BUILD_DEBUG)
 	-$(DEL) $(CSIOBJ)/*.pdb_
 .END
