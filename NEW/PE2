@@ -84,8 +84,8 @@ targets_exe     = "$(CSISAM)/$(OBJDIR)/gvbmr95"
 htrustdaemon_objects = 	$(CSIOBJ)/GVBMR95.o	\
 			$(CSIOBJ)/GVBMR96.o
 
-asm_sources = 	./ASM/GVBMR95.s	\
-			./ASM/GVBMR96.s
+asm_sources = 	./ASM/GVBMR95.asm	\
+			./ASM/GVBMR96.asm
 
 # asm_macros =		csiequ.mac
 asm_macrodir = 		$(CSIINC)/asm
