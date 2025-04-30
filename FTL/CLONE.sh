@@ -60,8 +60,8 @@ exitIfError() {
 
 if [ $? != 0 ]
 then
-    echo "*** Process terminated: see error message above"
-    exit 1
+    echo "*** Process terminated: see error message above";
+    exit 1;
 fi 
 
 }

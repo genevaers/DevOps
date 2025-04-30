@@ -20,13 +20,6 @@
 * ******************************************************************
 * -->
 <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
-//BLDPEX    JOB (${env["GERS_JOB_ACCT_INFO"]}),
-//          'Build GenevaERS PE  ',
-//          NOTIFY=${env["USER"]},
-//          CLASS=${env["GERS_JOB_CLASS"]},REGION=0M,
-//          MSGLEVEL=${env["GERS_MSG_LEVEL"]},
-//          MSGCLASS=${env["GERS_MSG_CLASS"]}
-//*
 <#-- Generate assembler JCL -->
 <#list PGMRND as pgmTable>
 <#include "HLASM.ftl">

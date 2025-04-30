@@ -25,14 +25,30 @@
  -->
 <#assign PE_REPO = env["GERS_REMOTE_PEB"]?keep_after_last("/")?keep_before(".")>
 <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
+main() {
+save_pwd=$(pwd);
 <#--
  change to repository directory
  -->
 cd ${env["GERS_GIT_REPO_DIR"]}/${PE_REPO} ;
+exitIfError;
 <#-- create copy commands for all source elements -->
 <#list PGM as programTable>
-cp ASM/${programTable.PID} "//'${TARGET_HLQ}.ASM(${programTable.PID})'"
+cp ASM/${programTable.PID}.asm "//'${TARGET_HLQ}.ASM(${programTable.PID})'"
+exitIfError;
 </#list> 
 <#list MAC as macroTable>
-cp MAC/${macroTable.CID} "//'${TARGET_HLQ}.MAC(${macroTable.CID})'"
+cp MAC/${macroTable.CID}.mac "//'${TARGET_HLQ}.MAC(${macroTable.CID})'"
+exitIfError;
 </#list> 
+cd $(save_pwd);
+}
+
+exitIfError() {
+if [ $? != 0 ]
+then
+    echo "*** Process terminated: see error message above";
+    exit 1;
+fi 
+}
+main "$@"
