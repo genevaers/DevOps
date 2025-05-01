@@ -2,8 +2,7 @@
 main() {
 save_pwd=$(pwd) ;
 # Copy from USS directory to data sets
-./COPYPE.jcl ;
-./COPYPEX.jcl ;
+. ./COPY.sh ;
 cd $save_pwd ;
 # Submit the JCL
 ./SUBMITTER.sh './BUILD.JCL' asmdone;
