@@ -18,8 +18,8 @@
  
  ******************************************************************
  -->
- <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
- <#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>
+<#include "SETVARS.ftl">
+<#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>
 //ALIAS    JOB (${env["GERS_JOB_ACCT_INFO"]}),
 //          'Build GenevaERS PE  ',
 //          NOTIFY=${env["USER"]},
