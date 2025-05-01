@@ -28,6 +28,6 @@ export UNITTMP=SYSDA
 . ./SubBuild.sh ;
 # Generate and submit JCL to set aliases
 . ./ALIAS.sh ;
-# Generate   - Run regression suite (could  be just a script)
-# java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar RunReg 
+# Build RCA and Run regression suite 
+. ./BUILDRCA.sh ;
 #

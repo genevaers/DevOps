@@ -1,17 +1,29 @@
 #!/bin/bash
+# RunReg.sh Run the regression suite
+#######################################
+main() {
+
 if [ "$BLDRCA" == "Y" ]; then 
+
+  RCA_REPO=$(basename $GERS_REMOTE_RUN .git);
+  echo $RCA_REPO ;
+
   cd $GERS_JARS;
+  exitIfError ;
   java -cp ./db2jcc4.jar com.ibm.db2.jcc.DB2Jcc -version;
   echo;
   cd $GERS_GIT_REPO_DIR/$RCA_REPO;
+  exitIfError ;
   chmod +x prebuild/*.sh;
   mvn clean;
+  exitIfError ;
 # Build RCA, checking for Db2 requirement
   if [ "$GERS_RCA_DB2_INPUT" == "Y" ]; then
     mvn -B install -DskipTests -Pdb2;
   else
     mvn -B install -DskipTests;
   fi 
+  exitIfError ;
   export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $2}'`;
   echo RCA release number $rev;
 
@@ -31,3 +43,17 @@ if [ "$BLDRCA" == "Y" ]; then
   cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
   ./target/bin/gerstf;
 fi  
+
+}
+
+exitIfError() {
+
+if [ $? != 0 ]
+then
+    echo "*** Process terminated: see error message above";
+    exit 1;
+fi 
+
+}
+
+main "$@"
