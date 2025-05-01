@@ -52,7 +52,7 @@ git checkout $BRANCH_RCA;
 exitIfError;
 cd ..
 
-cd $(save_pwd);
+cd $save_pwd ;
 
 }
 

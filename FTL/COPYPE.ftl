@@ -41,7 +41,7 @@ exitIfError;
 cp MAC/${macroTable.CID}.mac "//'${TARGET_HLQ}.MAC(${macroTable.CID})'"
 exitIfError;
 </#list> 
-cd $(save_pwd);
+cd $save_pwd;
 }
 
 exitIfError() {
