@@ -53,6 +53,7 @@ SYSPARM(${RELFMT})
 //            DISP=(OLD,DELETE)
 <#else>
 //SYSIN    DD DISP=SHR,DSN=${TARGET_HLQ}.ASM(${pgmTable.PID})
+</#if>
 //SYSLIB   DD DISP=SHR,DSN=${TARGET_HLQ}.MAC
 //         DD DISP=SHR,DSN=${env["GERS_HLASM_TK_MAC_LIB"]}
 //         DD DISP=SHR,DSN=SYS1.MACLIB
@@ -92,4 +93,3 @@ SYSPARM(${RELFMT})
 //            DISP=SHR
 //*
 //SYSTSPRT DD SYSOUT=*
-</#if>
