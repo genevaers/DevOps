@@ -3,12 +3,12 @@
 ########################################################
 
 main() {
-
+save_pwd=$(pwd);
 java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ALLOC ../TABLE/tablesDevOps ;    
 exitIfError;
 
-../NEW/SUBMITTER.sh './ALLOC.jcl' allocdone;
-../NEW/WAITER.sh 60 allocdone;
+./SUBMITTER.sh './ALLOC.jcl' allocdone;
+./WAITER.sh 60 allocdone;
 
 }
 

@@ -83,7 +83,7 @@
 sh ;
 set -o xtrace;
 set -e;
-cd ${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/NEW 
+cd ${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO} ;
 touch allocdone;
 status=$?;
 echo "Touchstatus: $status";
