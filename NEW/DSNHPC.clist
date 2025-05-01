@@ -1,0 +1,17 @@
+ALLOC FI(SYSIN) DA('GEBT.NEILB.PM501001.B0002.ASM(GVBMRSQ)') SHR;            
+ALLOC FI(SYSLIB) DA('GEBT.NEILB.PM501001.B0002.MAC') SHR;                    
+ALLOC FI(SYSCIN) DA('GEBT.NEILB.PM501001.B0002.SYSCIN(GVBMRSQ)') SHR;        
+ALLOC FI(SYSPRINT) DA('GEBT.NEILB.PM501001.B0002.LISTDB2(GVBMRSQ)') SHR;     
+ALLOC FI(DBRMLIB) DA('GEBT.NEILB.PM501001.B0002.GVBDBRM(GVBMRSQ)') SHR;      
+ALLOC FI(SYSUT1) DA('GEBT.NEILB.PM501001.B0002.SYSUT1') SHR;                 
+ALLOC FI(SYSUT2) DA('GEBT.NEILB.PM501001.B0002.SYSUT2') SHR;                 
+ALLOC FI(SYSTERM) DA('NBEESLE.SYSOUT') SHR;                                  
+CALL 'DSN.V13R1M0.SDSNLOAD(DSNHPC)' 'HOST(ASM),STDSQL(NO),VERSION(PM501001)';
+FREE FI(SYSIN);                                                              
+FREE FI(SYSLIB);                                                             
+FREE FI(SYSCIN);                                                             
+FREE FI(SYSPRINT);                                                           
+FREE FI(DBRMLIB);                                                            
+FREE FI(SYSUT1);                                                             
+FREE FI(SYSUT2);                                                             
+FREE FI(SYSTERM);                                                            
