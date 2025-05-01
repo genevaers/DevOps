@@ -44,7 +44,9 @@ exitIfError;
 if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then 
   java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar BUILDPEX $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX;
   exitIfError;
-  ConcatJCL BIG.JCL BUILDPE.jcl BUILDPEX.jcl;
+  ConcatJCL BUILD.JCL BUILDPE.jcl BUILDPEX.jcl ASMDONE.jcl;
+else
+  ConcatJCL BUILD.JCL BUILDPE.jcl ASMDONE.jcl;
 fi 
 
 }

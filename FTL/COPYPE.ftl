@@ -25,8 +25,6 @@
  -->
 <#assign PE_REPO = env["GERS_REMOTE_PEB"]?keep_after_last("/")?keep_before(".")>
 <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
-main() {
-save_pwd=$(pwd);
 <#--
  change to repository directory
  -->
@@ -41,14 +39,3 @@ exitIfError;
 cp MAC/${macroTable.CID}.mac "//'${TARGET_HLQ}.MAC(${macroTable.CID})'"
 exitIfError;
 </#list> 
-cd $save_pwd;
-}
-
-exitIfError() {
-if [ $? != 0 ]
-then
-    echo "*** Process terminated: see error message above";
-    exit 1;
-fi 
-}
-main "$@"
