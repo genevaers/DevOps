@@ -7,11 +7,11 @@ main() {
 save_pwd=$(pwd);
 # extract repository names
 PE_REPO=$(basename $GERS_REMOTE_PEB .git);
-echo $PE_REPO
+echo $PE_REPO ;
 PEX_REPO=$(basename $GERS_REMOTE_PEX .git);
-echo $PEX_REPO
+echo $PEX_REPO ;
 RCA_REPO=$(basename $GERS_REMOTE_RUN .git);
-echo $RCA_REPO
+echo $RCA_REPO ;
 # Change into local directory where you want to clone to
 cd $GERS_GIT_REPO_DIR ;
 exitIfError;

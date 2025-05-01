@@ -12,6 +12,8 @@
 sh ;
 set -o xtrace;
 set -e;
+DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
+echo $DEV_REPO ;
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL ;
 touch asmdone;
 status=$?;

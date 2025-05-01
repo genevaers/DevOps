@@ -34,7 +34,11 @@ if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then
 
   java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar COPYPEX $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX ;
   exitIfError;
+  ConcatJCL COPY.sh COPYPE.jcl COPYPEX.jcl ;
+else  
+  ConcatJCL COPY.sh COPYPE.jcl ;
 fi 
+chmod 777 COPY.sh ;
 #
 # Create build JCL from templates
 #  -- Generate for PE 
