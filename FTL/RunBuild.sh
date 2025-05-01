@@ -26,10 +26,8 @@ export UNITTMP=SYSDA
 # These read tables in the PE and PEX repositories
 . ./GenBuild.sh ;
 . ./SubBuild.sh ;
-# Generate JCL to set aliases
-java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ALIAS ../TABLE/tablesDevOps ;
+# Generate and submit JCL to set aliases
+. ./ALIAS.sh ;
 # Generate   - Run regression suite (could  be just a script)
-java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar RunReg 
-#
-# copy all generated JCL to one big job and submit
+# java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar RunReg 
 #
