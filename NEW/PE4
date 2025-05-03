@@ -82,10 +82,20 @@ targets_exe     = "$(CSISAM)/$(OBJDIR)/htrustd"
 # Target module object lists
 
 htrustdaemon_objects	=	$(CSIOBJ)/GVBMR88.o	\
-			$(CSIOBJ)/GVBMR87.o
+			$(CSIOBJ)/GVBMR87.o	\
+			$(CSIOBJ)/GVBDL96.o	\
+			$(CSIOBJ)/GVBTP90.o	\
+			$(CSIOBJ)/GVBUTMSG.o	\
+			$(CSIOBJ)/GVBUTHDR.o	\
+			$(CSIOBJ)/GVBUTMUE.o
 
 asm_sources	=	./ASM/GVBMR88.s	\
 			./ASM/GVBMR87.s
+			./ASM/GVBDL96.s	\
+			./ASM/GVBTP90.s	\
+			./ASM/GVBUTMSG.s	\
+			./ASM/GVBUTHDR.s	\
+			./ASM/GVBUTMUE.s
 
 # asm_macros =		csiequ.mac
 asm_macrodir = 		$(CSIINC)/asm
