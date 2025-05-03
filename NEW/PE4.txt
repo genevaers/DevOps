@@ -1,0 +1,140 @@
+.SUFFIXES:
+
+CSIDIR      =  ..
+DEL         = rm -f
+MKDIR       = mkdir
+RMDIR       = rmdir
+MV          = mv
+CP          = cp
+
+#-------------------------------
+# Uncomment the following line
+# for a debug build.
+# BUILD_DEBUG=1
+
+.IF $(CSIINC) == $(NULL)
+CSIINC      = $(CSIDIR)/src/inc
+.END
+.IF $(CSISAM) == $(NULL)
+CSISAM      = .
+.END
+.IF $(CSIOBJ) == $(NULL)
+CSIOBJ     = $(CSISAM)/obj
+.END
+.IF $(CSILST) == $(NULL)
+CSILST     = $(CSISAM)/build
+.END
+CSIBIN = $(CSILST)
+.IF $(CSILIB) == $(NULL)
+CSILIB      = $(CSISAM)/lib
+.END
+
+USRLIB = //PRIVATE.MACLIB
+SYSLMOD = //PRIVATE.LOADLIB
+#SYSDEFSD = //PRIVATE.EXP
+#SYSLMOD = $(CSIBIN)
+
+# might be /DOPT_WIDE here
+# DEFS        = /D_MBCS /D_X86_=1 /DWIN32 /D_WIN32 /D_WIN32_WINNT=0x0500
+# DEFS        = /DUNICODE /D_UNICODE /DWIDE /D_WIDE /DOPT_WIDE /DWIN32 /D_WIN32 /D_CRT_SECURE_NO_DEPRECATE
+# DEFS        = /DUNICODE /D_UNICODE /DOPT_WIDE /DWIN32 /D_WIN32 /D_CRT_SECURE_NO_DEPRECATE
+
+DEFS = -D_ISOC99_SOURCE -D_CRT_SECURE_NO_DEPRECATE \
+       -D_USE_32BIT_TIME_T -D_CRT_NON_CONFORMING_SWPRINTFS -D_OPEN_THREADS \
+       -D_ALL_SOURCE=1 -DFD_SETSIZE=2048 -U_NO_PROTO -DOPT_ZOS -DOPT_VAR_MACS -DOPT_ICONV_HIDDEN
+
+ASM_FLAGS   = -c -Wa,"LINECOUNT(54),LIST,GOFF,NORENT,SYSPARM(MVS,31BIT,POSIX),USING(NOLIMIT,MAP,WARN(7)),XREF(SHORT),ESD,RLD"
+ASM_DEFS    =
+#ASM_VARS    = _C89_SSUFFIX="asm" _C89_WORK_SPACE="(64000,(60,60))" _xx_="Test";
+
+# C_FLAGS     = $(opt) /c /nologo /D_CRT_SECURE_NO_DEPRECATE
+C_FLAGS     = $(opt) -c -V -Wc,"DLL,TARGET(LE,zOSV1R7),GONUM,NOMAR,NOSEQ,NOSHOW,SSCOMM,NOSHOWINC,LANG(LONGLONG,EXTENDED)" -D_CRT_SECURE_NO_DEPRECATE $(DEFS) $(ADDFLAGS) -I"$(CSIINC)"
+C_DLLFLAGS  = -W c,"EXPORTALL,CSECT($@)"
+CDFLAGS     = -Zi -MDd -Fd"$(*:"=).pdb_"
+CRFLAGS     =
+AFLAGS      = $(ASM_FLAGS) $(ASM_DEFS)
+.IF $(BUILD_DEBUG)
+CFLAGS      = $(C_FLAGS) $(CDFLAGS)
+.ELSE
+CFLAGS      = $(C_FLAGS) $(CRFLAGS)
+.END
+
+SFLAGS      = -c -Wc,SSCOMM,"LANG(LONGLONG,EXTENDED)" -D_CRT_SECURE_NO_DEPRECATE $(DEFS) -I"$(CSIINC)"
+
+LIBS        = -l skrb
+
+# L_FLAGS     = -V -W l,p,map,"AC=1"
+L_FLAGS     = -Wl,"AC=1"
+DLL_FLAGS   = -V -W l,dll,map
+DAEMON_FLAGS   = -V -W l,p,map,"AC=1"
+LDFLAGS     =
+LRFLAGS     =
+.IF $(BUILD_DEBUG)
+LFLAGS      = $(L_FLAGS) $(LDFLAGS)
+.ELSE
+LFLAGS      = $(L_FLAGS) $(LRFLAGS)
+.END
+
+directories = "$(CSILIB)" "$(CSIOBJ)" "$(CSILST)"
+
+targets_exe     = "$(CSISAM)/$(OBJDIR)/htrustd"
+
+# Target module object lists
+
+htrustdaemon_objects	=	$(CSIOBJ)/GVBMR88.o	\
+			$(CSIOBJ)/GVBMR87.o
+
+asm_sources	=	./ASM/GVBMR88.s	\
+			./ASM/GVBMR87.s
+
+# asm_macros =		csiequ.mac
+asm_macrodir = 		$(CSIINC)/asm
+
+#-------------------------------
+# Target 'all'
+
+.PHONY : all
+all:	$(directories) BUILD_OBJ $(targets_exe)
+
+MKDIR: $(directories)
+
+$(directories):
+	-$(MKDIR) $@
+
+TEST:
+	echo ${asm_sources:${@D}.s=$(CSIOBJ).o}
+	echo $(@D)
+
+BUILD_OBJ: $(asm_sources:.s=.o)
+
+BUILD_ASM: $(asm_sources:.s=.o)
+
+$(CSISAM)/$(OBJDIR)/htrustd: $(htrustdaemon_objects)
+	$(LD) $(LFLAGS) $(DAEMON_FLAGS) -o'$(SYSLMOD)($(@F))' $^ $(LIBS) >$(CSILST)/$(@F).map 2>$(CSILST)/$(@F).lerr
+
+$(asm_sources:$(<D).s=$(CSIOBJ).o): $(asm_sources:.s=.o)
+
+COPY_MACROS:
+	@for h in $(asm_macros); do \
+		$(CP) -ACTv $(asm_macrodir)/$$h '$(USRLIB)';\
+	done
+
+$(asm_sources:.s=.o): $(asm_sources) COPY_MACROS
+	-$(CC) $(AFLAGS) -o$@ $(@:.o=.s) >$(CSILST)/$(@F:.o=.lst) 2>$(CSILST)/$(@F:.o=.err)
+	-$(CP) $@ $(CSIOBJ)/$(@F)
+
+SINGLE:
+	-$(DEL) $(CSIOBJ)/$(SRC:b:+".o")
+	-$(CC) $(SFLAGS) -o$(SRC:.c=.o) $(SRC)
+	-$(CP) $(SRC:.s=.o) $(CSIOBJ)/$(SRC:b:+".o")
+
+clean:
+	-$(DEL) $(CSIOBJ)/*.o $(CSILST)/*.lst $(CSILST)/*.err $(CSILST)/*.map $(CSILST)/*.lerr
+	-$(DEL) $(targets_exe)
+	-$(DEL) $(asm_sources:.s=.o)
+	-$(DEL) $(asm_sources:.s=.lst)
+.IF $(BUILD_DEBUG)
+	-$(DEL) $(CSIOBJ)/*.pdb_
+.END
+	-$(RMDIR) $(directories)
+
