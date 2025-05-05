@@ -66,7 +66,7 @@ LIBS        = -l skrb
 # L_FLAGS     = -V -W l,p,map,"AC=1"
 L_FLAGS     = -Wl,"AC=1"
 DLL_FLAGS   = -V -W l,dll,map
-DAEMON_FLAGS   = -V -W -e// l,p,map,"AC=1"
+DAEMON_FLAGS   = -e// -V -W l,p,map,"AC=1"
 LDFLAGS     =
 LRFLAGS     =
 .IF $(BUILD_DEBUG)
