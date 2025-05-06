@@ -3,10 +3,11 @@
 #######################################
 main() {
 
-if [ "$BLDRCA" == "Y" ]; then 
+RCA_REPO=$(basename $GERS_REMOTE_RUN .git);
+echo $RCA_REPO ;
 
-  RCA_REPO=$(basename $GERS_REMOTE_RUN .git);
-  echo $RCA_REPO ;
+# Are we building on zOS ?
+if [ "$BLDRCA" == "ZOS" ]; then 
 
   cd $GERS_JARS;
   exitIfError ;
@@ -42,7 +43,34 @@ if [ "$BLDRCA" == "Y" ]; then
 
   cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
   ./target/bin/gerstf;
-fi  
+
+elif [ "$BLDRCA" == "WIN" ]; then 
+# already built on Windows and uploaded to zOS
+  cd $GERS_GIT_REPO_DIR/$RCA_REPO;
+  exitIfError ;
+
+  export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $2}'`;
+  echo RCA release number $rev;
+
+  cd RCApps/target ;
+  chtag -b *.jar ;
+  chmod 755 *.jar ;
+
+  cp rcapps-$rev-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/rcapps-$rev.jar;
+  cd $GERS_RCA_JAR_DIR;
+
+  touch rcapps-latest.jar;
+  rm rcapps-latest.jar;
+  ln -s rcapps-$rev.jar rcapps-latest.jar;
+
+  touch rcapps-$MINOR_REL.jar;
+  rm rcapps-$MINOR_REL.jar;
+  ln -s rcapps-$rev.jar rcapps-$MINOR_REL.jar;
+
+  cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
+  ./target/bin/gerstf;
+
+fi 
 
 }
 
