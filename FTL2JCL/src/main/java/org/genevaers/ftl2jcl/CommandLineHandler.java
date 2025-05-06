@@ -48,17 +48,25 @@ public class CommandLineHandler {
 	private static Configuration cfg;
 	private static List<Map<String, String>> tables = new ArrayList<Map<String, String>>();
 	private static Path parent;
+	private static Path outputPath = null;
 
 	public static void main(String[] args)
 			throws IOException, InterruptedException {
 		initFreeMarkerConfiguration();
-		buildAdditionalInfoFromCSV(args);
-		writeTemplatedOutput(args[0]);
-		logger.atInfo().log("Process %s.ftl to produce %s.jcl", args[0], args[0]);
+		if (args.length == 3) {
+			logger.atInfo().log("Process %s.ftl, with tables from %s to produce %s", args[0], args[1], args[2]);
+			buildAdditionalInfoFromCSV(args);
+			outputPath = Paths.get(args[2]);
+			outputPath.getParent().toFile().mkdirs();
+			writeTemplatedOutput(args[0]);
+			logger.atInfo().log("Process %s.ftl to produce %s", args[0], args[2]);
+		} else {
+			logger.atSevere().log("Expected 3 arguments. Only received\n %d", args.length);
+		}
 	}
 
 	private static void buildAdditionalInfoFromCSV(String[] args) throws IOException {
-		if (args.length == 2) {
+		if (args.length > 1) {
 			Path tablesPath = Paths.get(args[1] + ".csv");
 			logger.atInfo().log("Reading tables information from %s", tablesPath);
 			fillTableFromCsv(tablesPath, tables);
@@ -88,9 +96,8 @@ public class CommandLineHandler {
 
 	private static void writeTemplatedOutput(String name) {
 		try {
-			String targetStr = name + ".jcl";
 			Template template = cfg.getTemplate(name + ".ftl");
-			generateTestTemplatedOutput(template, buildTemplateModel(name), Paths.get(targetStr));
+			generateTestTemplatedOutput(template, buildTemplateModel(name), outputPath);
 		} catch (IOException | TemplateException e) {
 			logger.atSevere().log("Template generation failed.\n %s", e.getMessage());
 		}
