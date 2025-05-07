@@ -9,6 +9,7 @@ exitIfError;
 
 ./SUBMITTER.sh '../JCL/ALLOC.jcl' allocdone;
 ./WAITER.sh 60 allocdone;
+exitIfError;
 
 }
 

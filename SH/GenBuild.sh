@@ -4,8 +4,6 @@
 
 main() {
 
-source ./ConcatJCL.sh;
-
 # extract repository names
 PE_REPO=$(basename $GERS_REMOTE_PEB .git);
 echo $PE_REPO
@@ -35,11 +33,14 @@ if  [ "$INCLUDE_PEX" == "Y" ]; then
 
   java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/COPYPEX $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX ./COPYPEX.sh ;
   exitIfError;
-  ConcatJCL COPY.sh COPYPE.sh COPYPEX.sh ;
+  cat COPYPE.sh COPYPEX.sh > COPY.sh ;
+  exitIfError;
 else  
-  ConcatJCL COPY.sh COPYPE.sh ;
+  cat COPYPE.sh > COPY.sh ;
+  exitIfError;
 fi 
 chmod 777 COPY.sh ;
+exitIfError;
 #
 # Create build JCL from templates
 #  -- Generate for PE 
@@ -50,11 +51,13 @@ if  [ "$INCLUDE_PEX" == "Y" ]; then
   java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BUILDPEX $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX ../JCL/BUILDPEX.jcl;
   exitIfError;
   cd ../JCL;
-  ConcatJCL BUILD.JCL BUILDPE.jcl BUILDPEX.jcl ASMDONE.jcl;
+  cat BUILDPEX.jcl ASMDONE.jcl >> BUILDPE.jcl ;
+  exitIfError;
   cd ../SH;
 else
   cd ../JCL;
-  ConcatJCL BUILD.JCL BUILDPE.jcl ASMDONE.jcl;
+  cat ASMDONE.jcl >> BUILDPE.jcl ;
+  exitIfError;
   cd ../SH;
 fi 
 

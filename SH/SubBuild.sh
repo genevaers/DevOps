@@ -5,7 +5,7 @@ save_pwd=$(pwd) ;
 . ./COPY.sh ;
 cd $save_pwd ;
 # Submit the JCL
-./SUBMITTER.sh '../JCL/BUILD.JCL' asmdone;
+./SUBMITTER.sh '../JCL/BUILDPE.JCL' asmdone;
 ./WAITER.sh 120 asmdone;
 
 }

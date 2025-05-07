@@ -25,7 +25,7 @@ if [[ "$Filel" = "" ]]; then
 fi
 
 current_time_ms=$(date +"%H:%M:%S");                  
-echo "Job sibmitted at: $current_time_ms";
+echo "Job submitted at: $current_time_ms";
 
 # timeout=$(input); # Timeout in seconds
 elapsed_time=0;

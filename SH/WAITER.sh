@@ -1,23 +1,25 @@
 #!/bin/bash
 
-echo "Arg0: $0";
-echo "Arg1: $1"; # wiating time (seconds)
-echo "Arg2: $2"; # name of signal lock
+if [ "$msgLevel"  == "verbose" ]; then
+  echo "Arg0: $0";
+  echo "Arg1: $1"; # waiting time (seconds)
+  echo "Arg2: $2"; # name of signal lock
+fi 
 
 timeout="$1";
 
 if [[ "$timeout" =~ ^-?[0-9]+(\.[0-9]+)?$ ]]; then
-  echo "numeric timeout: $timeout";
+  echo "Timeout (s): $timeout";
 else
   if [[ "$timeout" = "" ]]; then
-    echo "timeout value blank, so use default (300)";
+    echo "Default Timeout (s): 300";
     timeout=300;
   else
     echo "timeout value not numeric: $input";
     exit 1; # It's not numeric (false)
   fi
 fi
-echo "timeout: $timeout";
+# echo "timeout: $timeout";
 
 Filel="$2";
 if [[ "$Filel" = "" ]]; then
@@ -31,13 +33,14 @@ echo "Job submitted at: $current_time_ms";
 elapsed_time=0;
 
 # Filel="lockdone";
-echo "Filel: $Filel";
+echo "Signal lock name: $Filel";
 
 while [ ! ]; do
   # test for existence of done lock
+  echo "Checking signal lock: $File1";
   ls $Filel;
   status=$?;
-  echo "status: $status";
+#  echo "status: $status";
   if [ $status -eq 0 ]; then
     current_time_ms=$(date +"%H:%M:%S");
     echo "Job completed: $current_time_ms";

@@ -9,7 +9,7 @@ exitIfError;
 
 ./SUBMITTER.sh '../JCL/ALIAS.jcl' aliasdone;
 ./WAITER.sh 60 aliasdone;
-
+exitIfError;
 }
 
 exitIfError() {

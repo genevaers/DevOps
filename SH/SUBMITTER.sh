@@ -24,9 +24,11 @@
 #
 # Then invoke: WAITER.sh 60 lockdone
 
-echo "Arg0: $0";
-echo "Arg1: $1";
-echo "Arg2: $2";
+if [ "$msgLevel"  == "verbose" ]; then
+  echo "Arg0: $0";
+  echo "Arg1: $1";
+  echo "Arg2: $2";
+fi 
 
 Cmd1="$1";
 if [[ "$Cmd1" = "" ]]; then
@@ -49,5 +51,5 @@ rm $Filel;
 
 submit $Cmd1 # > out.txt;
 job_rc=$?;
-echo "job_rc: $job_rc";
+echo "RC from submit: $job_rc";
 
