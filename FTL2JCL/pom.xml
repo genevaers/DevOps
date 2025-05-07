@@ -41,7 +41,7 @@ under the License.
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 		<!-- our apps -->
-		<revision>1.0.0</revision>
+		<revision>1.0.1</revision>
 	</properties>
 
 	<groupId>org.genevaers</groupId>

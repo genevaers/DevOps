@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -52,9 +53,8 @@ public class CommandLineHandler {
 
 	public static void main(String[] args)
 			throws IOException, InterruptedException {
-		initFreeMarkerConfiguration();
 		if (args.length == 3) {
-			logger.atInfo().log("Process %s.ftl, with tables from %s to produce %s", args[0], args[1], args[2]);
+			logger.atInfo().log("FTL2JCL %s\nProcess %s.ftl, with tables from %s to produce %s", readVersion(), args[0], args[1], args[2]);
 			buildAdditionalInfoFromCSV(args);
 			outputPath = Paths.get(args[2]);
 			outputPath.getParent().toFile().mkdirs();
@@ -84,19 +84,17 @@ public class CommandLineHandler {
 				.readValues(csvPath.toFile());
 		mapper.enable(CsvParser.Feature.WRAP_AS_ARRAY);
 		while (it.hasNext()) {
-			// Map<String, String> entry = it.next();
-			// for (Entry<String, String> e : entry.entrySet()) {
-			// 	Map<String, String> tablePath = new HashMap<String, String>();
-			// 	tablePath.put(e.getKey(), e.getValue());
 				table.add(it.next());
-			//}
 		}
 		return;
 	}
 
 	private static void writeTemplatedOutput(String name) {
 		try {
-			Template template = cfg.getTemplate(name + ".ftl");
+			Path tempFilePath = Paths.get(name+".ftl");
+			initFreeMarkerConfiguration(tempFilePath.getParent());
+			Template template = cfg.getTemplate(tempFilePath.getFileName().toString());
+			//Template template = cfg.getTemplate(tn + ".ftl");
 			generateTestTemplatedOutput(template, buildTemplateModel(name), outputPath);
 		} catch (IOException | TemplateException e) {
 			logger.atSevere().log("Template generation failed.\n %s", e.getMessage());
@@ -130,16 +128,16 @@ public class CommandLineHandler {
 		Properties properties = new Properties();
 		try (InputStream resourceStream = loader.getResourceAsStream("application.properties")) {
 			properties.load(resourceStream);
-			version = properties.getProperty("build.version") + " (" + properties.getProperty("build.timestamp") + ")";
+			version = properties.getProperty("build.version");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return version;
 	}
 
-	private static void initFreeMarkerConfiguration() throws IOException {
+	private static void initFreeMarkerConfiguration(Path templatDir) throws IOException {
 		cfg = new Configuration(Configuration.VERSION_2_3_30);
-		cfg.setDirectoryForTemplateLoading(new File("./"));
+		cfg.setDirectoryForTemplateLoading(templatDir.toFile());
 		cfg.setDefaultEncoding("UTF-8");
 		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 	}
