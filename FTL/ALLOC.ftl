@@ -64,7 +64,7 @@
 </#if>
 //${row["BDS"]} DD DSN=${TARGET_HLQ}.${row.BDS},
 //            DISP=(NEW,CATLG,DELETE),
-//            UNIT=${env["UNITPRM"]}${SDSNTYPE},
+//            UNIT=${env["GERS_PERM_UNIT_NAME"]}${SDSNTYPE},
 //            SPACE=(TRK,(${row.BTRKSPRI},${row.BTRKSSEC}),RLSE),
 //            DSORG=${row.BDSORG},RECFM=${row.BRECFM},LRECL=${row.BLRECL}${SBLKSIZE}
 //*
@@ -83,7 +83,7 @@
 sh ;
 set -o xtrace;
 set -e;
-cd ${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/FTL ;
+cd ${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/SH ;
 touch allocdone;
 status=$?;
 echo "Touchstatus: $status";

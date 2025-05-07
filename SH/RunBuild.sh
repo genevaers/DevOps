@@ -2,20 +2,21 @@
 # set -x;
 # set -e;
 echo;
+source ./AddEnvVars ;
+env | grep 'GERS_' ;
+export INCLUDE_PEX=Y
 export CLONE_PE=Y
 export CLONE_PEX=Y
 export CLONE_RCA=N
 export BRANCH_PE="AddBuildTable"
 export BRANCH_PEX="AddBuildTable"
 export BRANCH_RCA="main"
-export BLDRCA=N
-export BLDVER='5'
-export BLDMAJ='01'
-export BLDMIN='009'
-export UNITPRM=SYSDA
-export UNITTMP=SYSDA
-
-# Increment build number - this sets env var $BLDNBR
+export BUILD_RCA=ZOS 
+export BUILD_VERSION='5'
+export BUILD_MAJOR='01'
+export BUILD_MINOR='009'
+#
+# Increment build number - this sets env var $BUILD_NBR
 . ./IncrementBNum.sh ;
 # generate JCL to allocate data sets, then submit and wait for completion
 . ./ALLOC.sh ;

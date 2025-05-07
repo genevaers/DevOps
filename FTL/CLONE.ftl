@@ -38,7 +38,7 @@ git clone ${env["GERS_REMOTE_PEB"]};
 cd ${PE_REPO}
 git checkout ${env["BRANCH_PE"]};
 <#-- including extensions? -->
-<#if env["GERS_INCLUDE_PEX"] == "Y"> 
+<#if env["INCLUDE_PEX"] == "Y"> 
 cd ${env["GERS_GIT_REPO_DIR"]};
     <#if env["CLONE_PEX"] == "Y">
 rm -rf ${PEX_REPO};
@@ -48,7 +48,7 @@ cd ${PEX_REPO}
 git checkout ${env["BRANCH_PEX"]};
 </#if>
 <#-- Including RCA? -->
-<#if env["BLDRCA"] == "Y"> 
+<#if env["BUILD_RCA"] == "Y"> 
 cd ${env["GERS_GIT_REPO_DIR"]};
     <#if env["CLONE_RCA"] == "Y">
 rm -rf ${RCA_REPO};

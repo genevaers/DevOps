@@ -4,10 +4,10 @@
 
 main() {
 save_pwd=$(pwd);
-java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ALLOC ../TABLE/tablesDevOps ;    
+java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALLOC ../TABLE/tablesDevOps ../JCL/ALLOC.jcl ; 
 exitIfError;
 
-./SUBMITTER.sh './ALLOC.jcl' allocdone;
+./SUBMITTER.sh '../JCL/ALLOC.jcl' allocdone;
 ./WAITER.sh 60 allocdone;
 
 }

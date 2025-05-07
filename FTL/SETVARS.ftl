@@ -22,27 +22,27 @@
 <#--
  Set all the different variables needed
  -->
-<#-- BLDVER is the Version Number (1 digit).
-     BLDMAJ is the Major Release Number (2 digits).
-     BLDMIN is the Minor Release Number (3 digits). -->
+<#-- BUILD_VERSION is the Version Number (1 digit).
+     BUILD_MAJOR is the Major Release Number (2 digits).
+     BUILD_MINOR is the Minor Release Number (3 digits). -->
 <#-- The grouping of these three pieces is known as the 
  Release Number.  
  (Example: 501001) -->
-<#assign RELEASE = env["BLDVER"] + env["BLDMAJ"] + env["BLDMIN"]>
+<#assign RELEASE = env["BUILD_VERSION"] + env["BUILD_MAJOR"] + env["BUILD_MINOR"]>
 <#-- Sometimes the number is formatted with dots. 
  (Example: 5.01.001) -->
-<#assign RELFMT = env["BLDVER"] + "." + env["BLDMAJ"] + "." + env["BLDMIN"]>
+<#assign RELFMT = env["BUILD_VERSION"] + "." + env["BUILD_MAJOR"] + "." + env["BUILD_MINOR"]>
  
 <#-- The Component ID for this product is "PM" for "Performance 
  Engine - MVS". 
  The Major Release Name is the Component ID grouped with the 
  Version Number and the Major Release Number.  
  (Example: PM501) -->
-<#assign MAJOR_REL = "PM" + env["BLDVER"] + env["BLDMAJ"]>
+<#assign MAJOR_REL = "PM" + env["BUILD_VERSION"] + env["BUILD_MAJOR"]>
 <#-- The Minor Release Name is the Release Number prefixed by the 
  Component ID.  
  (Example: PM501001) -->
-<#assign MINOR_REL = "PM" + env["BLDVER"] + env["BLDMAJ"] + env["BLDMIN"]>
+<#assign MINOR_REL = "PM" + env["BUILD_VERSION"] + env["BUILD_MAJOR"] + env["BUILD_MINOR"]>
 
 <#-- The Major HLQ is used for setting the ALIASes 
  ( Example: GEBT.BOB.PM512 ) -->
@@ -52,7 +52,7 @@
 (Example: GEBT.BOB.PM512123) -->
 <#assign MINOR_HLQ  = env["GERS_BUILD_HLQ"] + "." + MINOR_REL>
 
-<#assign TARGET_HLQ  = env["GERS_BUILD_HLQ"] + "." + MINOR_REL + ".B" + env["BLDNBR"]>
+<#assign TARGET_HLQ  = env["GERS_BUILD_HLQ"] + "." + MINOR_REL + ".B" + env["BUILD_NBR"]>
 
 <#-- Release ${RELEASE}
 RELFMT ${RELFMT}

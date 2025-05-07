@@ -7,7 +7,7 @@ RCA_REPO=$(basename $GERS_REMOTE_RUN .git);
 echo $RCA_REPO ;
 
 # Are we building on zOS ?
-if [ "$BLDRCA" == "ZOS" ]; then 
+if [ "$BUILD_RCA" == "ZOS" ]; then 
 
   cd $GERS_JARS;
   exitIfError ;
@@ -19,7 +19,7 @@ if [ "$BLDRCA" == "ZOS" ]; then
   mvn clean;
   exitIfError ;
 # Build RCA, checking for Db2 requirement
-  if [ "$GERS_RCA_DB2_INPUT" == "Y" ]; then
+  if [ "$GERS_DB2_JAVA" == "Y" ]; then
     mvn -B install -DskipTests -Pdb2;
   else
     mvn -B install -DskipTests;
@@ -35,7 +35,7 @@ if [ "$BLDRCA" == "ZOS" ]; then
   rm rcapps-latest.jar;
   ln -s rcapps-$rev.jar rcapps-latest.jar;
 
-  MINOR_REL="PM"$BLDVER$BLDMAJ$BLDMIN;
+  MINOR_REL="PM"$BLDVER$BLDMAJ$BUILD_MINOR;
 
   touch rcapps-$MINOR_REL.jar;
   rm rcapps-$MINOR_REL.jar;
@@ -44,7 +44,7 @@ if [ "$BLDRCA" == "ZOS" ]; then
   cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
   ./target/bin/gerstf;
 
-elif [ "$BLDRCA" == "WIN" ]; then 
+elif [ "$BUILD_RCA" == "WIN" ]; then 
 # already built on Windows and uploaded to zOS
   cd $GERS_GIT_REPO_DIR/$RCA_REPO;
   exitIfError ;

@@ -4,7 +4,7 @@
 
 main() {
 save_pwd=$(pwd);
-java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ALIAS ../TABLE/tablesDevOps ;
+java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALIAS ../TABLE/tablesDevOps ../JCL/ALIAS.jcl ;
 exitIfError;
 
 ./SUBMITTER.sh './ALIAS.jcl' aliasdone;

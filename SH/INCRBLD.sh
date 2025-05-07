@@ -51,8 +51,8 @@ echo "number4: $number4";
 done < "$FILE"
 
 nextnumber=$(echo "$number" | awk '{ printf "%04.0f\n", $1+1 }');
-echo "Next build qualifier: B$nextnumber";
+# echo "Next build qualifier: B$nextnumber";
 
-export BLDNBR=$nextnumber;
+export BUILD_NBR=$nextnumber;
 
-echo "Finished processing file and BLD_Nbr exported: $BLDNBR"
+# echo "Finished processing file and BLD_Nbr exported: $BUILD_NBR"
