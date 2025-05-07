@@ -6,7 +6,7 @@ rm lst.txt;
 tsocmd "LISTDS '$GERS_BUILD_HLQ.PM$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR.*.GVBLOAD';" > lst.txt;
 x=$?;
 if test $x -eq 0 ; then
- echo $x;
+# echo $x;
 . INCRBLD.sh;
 else
     if test $x -eq 8 ; then
@@ -16,4 +16,4 @@ else
         echo "*** Process Terminated in IncrementBNum.sh ***" ;
     fi
 fi
-echo "HLQ for this build: $GERS_BUILD_HLQ.PM$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR.$BUILD_NBR";
+echo "HLQ for this build: $GERS_BUILD_HLQ.PM$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR.B$BUILD_NBR";

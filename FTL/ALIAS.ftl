@@ -66,7 +66,7 @@
 sh ;
 set -o xtrace;
 set -e;
-cd ${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/FTL ;
+cd ${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/SH ;
 touch aliasdone;
 status=$?;
 echo "Touchstatus: $status";

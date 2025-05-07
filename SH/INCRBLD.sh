@@ -20,30 +20,23 @@ while IFS= read -r line; do
 
     # Calculate starting index
     startidx=$((endidx-12));
-    echo "startidxi :startidx";
+#    echo "startidxi :startidx";
 
     # Extract numerical value after "B"
     bnumber=$(awk '{print substr($0,'$startidx',13)}' "temp.txt" );
-    echo "Build number and GVBLOAD string: $bnumber";
-    echo "bnumber: $bnumber";
+#    echo "Build number and GVBLOAD string: $bnumber";
+#    echo "bnumber: $bnumber";
 
-number4=$(expr substr "$bnumber" 1 5);
-echo "number4: $number4";
-#    # Extract the corresponding B000n part that precedes .GVBLOAD
-#    if [[  "$number4" == *([B][0-9][0-9][0-9][0-9])*  ]]; then
+# number4=$(expr substr "$bnumber" 1 5);
+
+#    if [[ "$number4" == '([B][0-9][0-9][0-9][0-9])' ]]; then
 #      echo "Matched pattern B000n.GVBLOAD: $bnumber";
 #    else
-#      echo "No match found";
+#      echo "Pattern does not match: $bnumber";
 #    fi
 
-    if [[ "$number4" == '([B][0-9][0-9][0-9][0-9])' ]]; then
-      echo "Matched pattern B000n.GVBLOAD: $bnumber";
-    else
-      echo "Pattern does not match: $bnumber";
-    fi
-
     number=$(expr substr "$bnumber" 2 4);
-    echo "Last build number: $number";
+#    echo "Last build number: $number";
 
   fi
 
