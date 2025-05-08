@@ -4,6 +4,7 @@
 
 main() {
 
+echo "Start process of cloning the repositories";
 save_pwd=$(pwd);
 # extract repository names
 PE_REPO=$(basename $GERS_REMOTE_PEB .git);
@@ -54,7 +55,7 @@ cd $RCA_REPO;
 git checkout $BRANCH_RCA;
 exitIfError;
 cd ..
-
+echo "Repositories cloned and branches checked out";
 cd $save_pwd ;
 
 }

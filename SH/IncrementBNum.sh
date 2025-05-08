@@ -3,7 +3,7 @@ touch temp.txt;
 touch lst.txt;
 rm temp.txt;
 rm lst.txt;
-tsocmd "LISTDS '$GERS_BUILD_HLQ.PM$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR.*.GVBLOAD';" > lst.txt;
+tsocmd "LISTDS '$GERS_BUILD_HLQ.PM$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR.*.GVBLOAD';" > lst.txt 2>> err.log;
 x=$?;
 if test $x -eq 0 ; then
 # echo $x;

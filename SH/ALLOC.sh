@@ -3,14 +3,17 @@
 ########################################################
 
 main() {
-save_pwd=$(pwd);
-java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALLOC ../TABLE/tablesDevOps ../JCL/ALLOC.jcl ; 
+
+echo "Generate JCL to allocate the build data sets";
+java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALLOC ../TABLE/tablesDevOps ../JCL/ALLOC.jcl 2>> err.log; 
 exitIfError;
 
-./SUBMITTER.sh '../JCL/ALLOC.jcl' allocdone;
-./WAITER.sh 60 allocdone;
+echo "Submit JCL to allocate the build data sets";
+. ./SUBMITTER.sh '../JCL/ALLOC.jcl' allocdone 1>> out.log 2>> err.log;
+echo "Job number: $jobno" ;
+. ./WAITER.sh 60 allocdone 1>> out.log 2>> err.log;
 exitIfError;
-
+echo "Job complete: $jobno" ;
 }
 
 exitIfError() {

@@ -3,13 +3,17 @@
 ########################################################
 
 main() {
-save_pwd=$(pwd);
-java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALIAS ../TABLE/tablesDevOps ../JCL/ALIAS.jcl ;
+
+echo "Generate JCL to set aliases for the build data sets";
+java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALIAS ../TABLE/tablesDevOps ../JCL/ALIAS.jcl 2>> err.log;
 exitIfError;
 
-./SUBMITTER.sh '../JCL/ALIAS.jcl' aliasdone;
-./WAITER.sh 60 aliasdone;
+echo "Submit JCL to set aliases for the build data sets";
+. ./SUBMITTER.sh '../JCL/ALIAS.jcl' aliasdone  1>> out.log 2>> err.log;
+echo "Job number: $jobno" ;
+. ./WAITER.sh 60 aliasdone 1>> out.log 2>> err.log;
 exitIfError;
+echo "Job complete: $jobno" ;
 }
 
 exitIfError() {

@@ -71,19 +71,19 @@ export GERS_RCA_JAR_DIR='<your-rca-jar-dir>'
 #
 export GERS_INCLUDE_PEX='Y'
 
-#     A value of 'Y' for GERS_RCA_DB2_INPUT will cause Db2 components
-#     to be built into the Run-Control App, allowing it to 
-#     receive input from a Db2 database.  Any other value will cause
-#     the Db2 components to be skipped.  
+#     A value of 'Y' for GERS_DB2_JAVA will cause Db2 components to be 
+#     included in any Java program (such as the Run-Control App) that needs 
+#     to access Db2 data.  Any other value will cause the Db2 components 
+#     to be skipped.  
 #
-export GERS_RCA_DB2_INPUT='N'
+export GERS_DB2_JAVA='N'
 
-#     A value of 'Y' for GERS_MR95_DB2_INPUT will cause Db2 components
-#     to be built into the View Extract Process (GVBMR95), allowing it 
-#     to receive input from a Db2 database.  Any other value will cause
+#     A value of 'Y' for GERS_DB2_ASM will cause Db2 components to be
+#     included in any assembler program (such as the View Extract Process 
+#     (GVBMR95)) that needs to access Db2 data.  Any other value will cause
 #     the Db2 components to be skipped.  
 #
-export GERS_MR95_DB2_INPUT='N'
+export GERS_DB2_ASM='N'
 
 #     The following variables specify the references to remote 
 #     repositories to be used in "git clone" statements:
@@ -96,6 +96,18 @@ export GERS_REMOTE_DEV='https://github.com/genevaers/DevOps.git'
 export GERS_REMOTE_PEB='https://github.com/genevaers/Performance-Engine.git'
 export GERS_REMOTE_PEX='https://github.com/genevaers/Performance-Engine-Extensions.git'
 export GERS_REMOTE_RUN='https://github.com/genevaers/Run-Control-Apps.git'
+
+#     GERS_JAVA_HOME is the directory where Java is installed.
+#
+export GERS_JAVA_HOME='/Java/J17.0_64'
+
+#     GERS_JVM_PROC_LIB is the name of the Java Virtual Machine proc library.
+#
+export GERS_JVM_PROC_LIB='AJV.V11R0M0.PROCLIB'
+
+#     GERS_JZOS_LOAD_LIB is the name of the JZOS load library.
+#
+export GERS_JZOS_LOAD_LIB='AJV.V11R0M0.SIEALNKE'
 
 #     GERS_ISPF_LOAD_LIB is the name of the ISPF load library.
 #
@@ -193,6 +205,50 @@ export GERS_DB2_QUALIFIER='SDATRT01'
 #
 export GERS_DB2_UTILITY='DSNTIA13'
 
+#     GERS_JOB_ACCT_INFO is used in the job accounting information 
+#     area of the JOB card in generated JCL.  
+#
+export GERS_JOB_ACCT_INFO='ACCT'
+
+#     GERS_JOB_CLASS is the job class to be used in
+#     the JOB card in generated JCL.  
+#
+export GERS_JOB_CLASS='A'
+
+#     GERS_MSG_CLASS is the message class to be used in
+#     the JOB card in generated JCL.  
+#
+export GERS_MSG_CLASS='H'
+
+#     GERS_MSG_LEVEL is the message level to be used in
+#     the JOB card in generated JCL.  
+#
+export GERS_MSG_LEVEL='(1,1)'
+
+#     GERS_TEMP_UNIT_NAME is the name to be used in the UNIT parameter
+#     of all DD statements for temporary data sets.  
+#
+#     Example: 
+#
+#         GERS_TEMP_UNIT_NAME='TEMPDISK' yields: 
+#             UNIT=TEMPDISK
+#
+export GERS_TEMP_UNIT_NAME='SYSDA'
+
+#     GERS_PERM_UNIT_NAME is the name to be used in the UNIT parameter
+#     of all DD statements for permanent data sets.  A Retention Period
+#     can optionally be appended to the end of the name.
+#
+#     Examples: 
+#
+#         GERS_PERM_UNIT_NAME='DISK' yields: 
+#             UNIT=DISK                     (without retention period)
+#
+#         GERS_PERM_UNIT_NAME='DISK,RETPD=9999' yields: 
+#             UNIT=DISK,RETPD=9999          (with retention period)
+#
+export GERS_PERM_UNIT_NAME='SYSDA'
+
 #     The following environment variables set values that are needed
 #     to run UNIX System Services process from MVS batch JCL.  
 #
@@ -207,7 +263,7 @@ export _MAKE_BI='NO'
 TEMP=$PATH                             
 PATH=''                                
 PATH=$PATH:/safr/apache-maven-3.8.4/bin
-PATH=$PATH:/Java/J11.0_64/bin          
+PATH=$PATH:/Java/J17.0_64/bin          
 PATH=$PATH:$TEMP                       
 export PATH;                           
 
@@ -223,6 +279,6 @@ export LIBPATH;
 #     Your Maven and Java options must be set to these values. 
 #
 export MAVEN_OPTS=-Dfile.encoding=IBM-1047 
-export JAVA_HOME=/Java/J11.0_64            
+export JAVA_HOME=/Java/J17.0_64
 export JAVA_OPTS=-Dfile.encoding=ISO8859-1 
 export IBM_JAVA_OPTIONS=                   

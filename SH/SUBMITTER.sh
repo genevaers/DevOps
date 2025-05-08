@@ -49,7 +49,9 @@ fi
 touch $Filel;
 rm $Filel;
 
-submit $Cmd1 # > out.txt;
+submit $Cmd1  > out.txt;
+export jobno=$(awk '/JOB/ {print $2}' out.txt);
+echo "Job number $jobno" ;
 job_rc=$?;
 echo "RC from submit: $job_rc";
 
