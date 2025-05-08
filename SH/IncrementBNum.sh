@@ -3,7 +3,7 @@ touch temp.txt;
 touch lst.txt;
 rm temp.txt;
 rm lst.txt;
-tsocmd "LISTDS '$GERS_BUILD_HLQ.PM$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR.*.GVBLOAD';" > lst.txt 2>> err.log;
+tsocmd "LISTDS '$GERS_BUILD_HLQ.PM$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR.*.GVBLOAD';" > lst.txt 2> err.log;
 x=$?;
 if test $x -eq 0 ; then
 # echo $x;
@@ -13,7 +13,7 @@ else
        export BUILD_NBR="0000";
     else
         cat lst.txt;
-        echo "*** Process Terminated in IncrementBNum.sh ***" ;
+        echo "$(date) ${BASH_SOURCE##*/} *** Process Terminated in IncrementBNum.sh ***" ;
     fi
 fi
-echo "HLQ for this build: $GERS_BUILD_HLQ.PM$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR.B$BUILD_NBR";
+echo "$(date) ${BASH_SOURCE##*/} HLQ for this build: $GERS_BUILD_HLQ.PM$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR.B$BUILD_NBR";

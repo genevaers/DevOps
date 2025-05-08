@@ -7,7 +7,7 @@ if [ "$opt1"  == "-v" ]; then
     echo "Verbose message level";
     export msgLevel=verbose;
 fi
-source ~/gers.profile ;
+source ~/.gers.profile ;
 export INCLUDE_PEX=Y
 export CLONE_PE=Y
 export CLONE_PEX=Y

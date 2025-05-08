@@ -4,7 +4,7 @@
 
 main() {
 
-echo "Start process of cloning the repositories";
+echo "$(date) ${BASH_SOURCE##*/} Start process of cloning the repositories";
 save_pwd=$(pwd);
 # extract repository names
 PE_REPO=$(basename $GERS_REMOTE_PEB .git);
@@ -55,7 +55,7 @@ cd $RCA_REPO;
 git checkout $BRANCH_RCA;
 exitIfError;
 cd ..
-echo "Repositories cloned and branches checked out";
+echo "$(date) ${BASH_SOURCE##*/} Repositories cloned and branches checked out";
 cd $save_pwd ;
 
 }
@@ -64,7 +64,7 @@ exitIfError() {
 
 if [ $? != 0 ]
 then
-    echo "*** Process terminated: see error message above";
+    echo "$(date) ${BASH_SOURCE##*/} *** Process terminated: see error message above";
     exit 1;
 fi 
 
