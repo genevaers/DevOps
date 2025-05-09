@@ -40,5 +40,7 @@ fi
 . ./ALIAS.sh ;
 # Build RCA and Run regression suite 
 . ./BUILDRCA.sh ;
+# Generate Tag scripts
+. ./GenTag.sh ;
 }
 main "$@"
