@@ -13,7 +13,7 @@ set -e;
 DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 echo $DEV_REPO ;
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
-echo "Status:ABD" > asmdone;
+echo "GERS_JOBSTATUS=ABD" > asmdone;
 cat asmdone;
 /*
 //CONDABX ELSE
@@ -28,7 +28,7 @@ set -e;
 DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 echo $DEV_REPO ;
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
-echo "Status:LT8" > asmdone;    
+echo "GERS_JOBSTATUS=LT8" > asmdone;    
 cat asmdone;                    
 /*
 //CONDGE8 ELSE
@@ -42,7 +42,7 @@ set -e;
 DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 echo $DEV_REPO ;
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
-echo "Status:GT8" > asmdone;
+echo "GERS_JOBSTATUS=GT8" > asmdone;
 cat asmdone;
 /*
 //        ENDIF
