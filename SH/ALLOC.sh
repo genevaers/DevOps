@@ -10,10 +10,10 @@ exitIfError;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit JCL to allocate the build data sets";
 . ./SUBMITTER.sh '../JCL/ALLOC.jcl' allocdone 1>> out.log 2>> err.log;
-echo "$(date) ${BASH_SOURCE##*/} Job number: $jobno" ;
+echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
 . ./WAITER.sh 60 allocdone 1>> out.log 2>> err.log;
 exitIfError;
-echo "$(date) ${BASH_SOURCE##*/} Job complete: $jobno" ;
+echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 }
 
 exitIfError() {

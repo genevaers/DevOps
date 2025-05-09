@@ -50,8 +50,8 @@ touch $Filel;
 rm $Filel;
 
 submit $Cmd1  > out.txt;
-export jobno=$(awk '/JOB/ {print $2}' out.txt);
-echo "Job number $jobno" ;
+export GERS_JOBID=$(awk '/JOB/ {print $2}' out.txt);
+echo "Job number $GERS_JOBID" ;
 job_rc=$?;
 echo "RC from submit: $job_rc";
 

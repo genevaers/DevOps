@@ -9,10 +9,10 @@ cd $save_pwd ;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit the generated JCL to assemble and link the load modules";
 . ./SUBMITTER.sh '../JCL/BUILDPE.jcl' asmdone  1>> out.log 2>> err.log;
-echo "$(date) ${BASH_SOURCE##*/} Job number: $jobno" ;
+echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
 . ./WAITER.sh 120 asmdone  1>> out.log 2>> err.log ;
 exitIfError;
-echo "$(date) ${BASH_SOURCE##*/} Job complete: $jobno" ;
+echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 }
 
 exitIfError() {

@@ -55,7 +55,7 @@ while [ ! ]; do
   elapsed_time=$((elapsed_time+5));
   if [ "$elapsed_time" -gt "$timeout" ]; then
     echo "Timeout reached without determining job completion";
-    echo "Check Job output for $jobno"
+    echo "Check Job output for $GERS_JOBID"
     exit 1;
   fi
   sleep 5;
