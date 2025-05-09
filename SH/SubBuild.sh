@@ -20,6 +20,7 @@ if  [ "$GERS_JOBSTATUS" == "LT8" ]; then
 else
   echo "(date) ${BASH_SOURCE##*/} Assemble and Link failed -- process terminated (see job output)";
   exit 1;
+fi
 }
 
 exitIfError() {
