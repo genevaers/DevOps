@@ -11,7 +11,7 @@ source ~/.gers.profile ;
 export INCLUDE_PEX=Y
 export CLONE_PE=Y
 export CLONE_PEX=Y
-export CLONE_RCA=N
+export CLONE_RCA=Y
 export BRANCH_PE="AddBuildTable"
 export BRANCH_PEX="AddBuildTable"
 export BRANCH_RCA="main"
