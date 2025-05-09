@@ -16,9 +16,9 @@ echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;
 
 if  [ "$GERS_JOBSTATUS" == "LT8" ]; then
-  echo "(date) ${BASH_SOURCE##*/} Assemble and Link completed RC 4 or better";
+  echo "$(date) ${BASH_SOURCE##*/} Assemble and Link completed RC 4 or better";
 else
-  echo "(date) ${BASH_SOURCE##*/} Assemble and Link failed -- process terminated (see job output)";
+  echo "$(date) ${BASH_SOURCE##*/} Assemble and Link failed -- process terminated (see job output)";
   exit 1;
 fi
 }
