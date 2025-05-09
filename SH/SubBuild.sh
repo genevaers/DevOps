@@ -13,7 +13,7 @@ echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
 . ./WAITER.sh 120 asmdone  1>> out.log 2>> err.log ;
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
-echo "$(date) ${BASH_SOURCE##*/} Job status  : $GERS_JOBSTATUS" ;
+echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;
 }
 
 exitIfError() {
