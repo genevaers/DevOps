@@ -8,7 +8,7 @@ echo "$(date) ${BASH_SOURCE##*/} Generate JCL to allocate the build data sets";
 java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALLOC ../TABLE/tablesDevOps ../JCL/ALLOC.jcl 2>> err.log; 
 exitIfError;
 
-cat ../JCL/ASMDONE.jcl >> ../JCL/ALLOC.jcl;
+cat ../JCL/ALLOCDONE.jcl >> ../JCL/ALLOC.jcl;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit JCL to allocate the build data sets";
 . ./SUBMITTER.sh '../JCL/ALLOC.jcl' allocdone 1>> out.log 2>> err.log;
