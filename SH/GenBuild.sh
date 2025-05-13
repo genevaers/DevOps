@@ -53,7 +53,7 @@ else
   cat COPYPE.sh > COPY.sh ;
   exitIfError;
 fi 
-chmod 777 COPY.sh ;
+chmod 755 COPY.sh ;
 exitIfError;
 #
 # Create build JCL from templates

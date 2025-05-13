@@ -11,6 +11,18 @@ java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/TAGBUILD ../TABLE/tablesDe
 exitIfError;
 java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/TAGREL ../TABLE/tablesDevOps ./TAGREL.sh 2>> err.log ;
 exitIfError;
-echo "$(date) ${BASH_SOURCE##*/} Performance Engine copy script generated";
+chmod 755 TAGBUILD.sh ;
+chmod 755 TAGREL.sh ;
+echo "$(date) ${BASH_SOURCE##*/} Performance Engine tagging scripts generated";
+}
+
+exitIfError() {
+
+if [ $? != 0 ]
+then
+    echo "$(date) ${BASH_SOURCE##*/} *** Process terminated: see error message above";
+    exit 1;
+fi 
+
 }
 main "$@"
