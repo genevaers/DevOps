@@ -7,7 +7,7 @@ RCA_REPO=$(basename $GERS_REMOTE_RUN .git);
 if [ "$msgLevel"  == "verbose" ]; then
   echo $RCA_REPO ;
 fi 
-
+save_pwd=$(pwd) ;
 # Are we building on zOS ?
 if [ "$BUILD_RCA" == "ZOS" ]; then 
   echo "$(date) ${BASH_SOURCE##*/} Start RCA Build";
@@ -78,6 +78,8 @@ elif [ "$BUILD_RCA" == "WIN" ]; then
   ./target/bin/gerstf;
 
 fi 
+
+cd $save_pwd ;
 
 }
 
