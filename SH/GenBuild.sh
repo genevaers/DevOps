@@ -16,9 +16,9 @@ if [ "$msgLevel"  == "verbose" ]; then
   echo $DEV_REPO ;
 fi 
 # Make ascii copies of the tables
-mkdir $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A;
+ascii_dir=$GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A ;
+[ -d $ascii_dir ] || mkdir $ascii_dir ;
 exitIfError;
-#
 iconv -f IBM-1047 -t ISO8859-1 $GERS_GIT_REPO_DIR/$PE_REPO/TABLE/tablesPE.csv  > $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A/tablesPE.csv;
 exitIfError;
 iconv -f IBM-1047 -t ISO8859-1 $GERS_GIT_REPO_DIR/$PE_REPO/TABLE/MAC.csv  > $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A/MAC.csv;
@@ -34,7 +34,8 @@ echo "$(date) ${BASH_SOURCE##*/} Performance Engine copy script generated";
 # Performance Engine extensions required?
 if  [ "$INCLUDE_PEX" == "Y" ]; then 
 # Make ascii copies of the tables
-  mkdir $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A;
+  ascii_dir=$GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A ;
+  [ -d $ascii_dir ] || mkdir $ascii_dir ;
   exitIfError;
   iconv -f IBM-1047 -t ISO8859-1 $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE/tablesPEX.csv  > $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX.csv;
   exitIfError;
