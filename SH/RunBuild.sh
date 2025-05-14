@@ -23,24 +23,25 @@ export BUILD_MINOR='009'
 if [ "$msgLevel"  == "verbose" ]; then
     env | grep 'GERS_' ;
 fi 
-#
+# Create the log files
+. ./CreateLogs.sh ;
 # Increment build number and set HLQ
-. ./IncrementBNum.sh ;
+. ./IncrementBNum.sh | tee -a $out_log;
 # Generate JCL to allocate data sets, then submit and wait for completion
-. ./ALLOC.sh ;
+. ./ALLOC.sh | tee -a $out_log;
 # Clone the repositories if required, and checkout branches.
-. ./CLONE.sh ;
+. ./CLONE.sh  | tee -a $out_log;
 # Generate the script to copy source to data sets
 # Generate the JCL for ASM and LINK
 # These read tables in the PE and PEX repositories
-. ./GenBuild.sh ;
+. ./GenBuild.sh  | tee -a $out_log;
 # Submit the generated assemble and link jobs
-. ./SubBuild.sh ;
+. ./SubBuild.sh  | tee -a $out_log;
 # Generate and submit JCL to set aliases
-. ./ALIAS.sh ;
+. ./ALIAS.sh  | tee -a $out_log;
 # Build RCA and Run regression suite 
-. ./BUILDRCA.sh ;
+. ./BUILDRCA.sh  | tee -a $out_log;
 # Generate Tag scripts
-. ./GenTag.sh ;
+. ./GenTag.sh  | tee -a $out_log;
 }
 main "$@"
