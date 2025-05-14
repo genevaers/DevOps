@@ -13,8 +13,8 @@ set -e;
 DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 echo $DEV_REPO ;
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
-echo "GERS_JOBSTATUS=ABD" > asmdone;
-cat asmdone;
+echo "GERS_JOBSTATUS=ABD" > aliasdone;
+cat aliasdone;
 /*
 //CONDABX ELSE
 //COND01  IF RC < 8 THEN
@@ -28,8 +28,8 @@ set -e;
 DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 echo $DEV_REPO ;
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
-echo "GERS_JOBSTATUS=LT8" > asmdone;
-cat asmdone;
+echo "GERS_JOBSTATUS=LT8" > aliasdone;
+cat aliasdone;
 /*
 //CONDGE8 ELSE
 //STEP9N   EXEC PGM=BPXBATCH
@@ -42,8 +42,8 @@ set -e;
 DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 echo $DEV_REPO ;
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
-echo "GERS_JOBSTATUS=GE8" > asmdone;
-cat asmdone;
+echo "GERS_JOBSTATUS=GE8" > aliasdone;
+cat aliasdone;
 /*
 //        ENDIF
 //        ENDIF

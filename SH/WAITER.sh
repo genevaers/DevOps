@@ -44,6 +44,8 @@ while [ ! ]; do
   if [ $status -eq 0 ]; then
     current_time_ms=$(date +"%H:%M:%S");
     echo "Job completed: $current_time_ms";
+    export $(cat $Filel | xargs);
+    echo "Job status: " $GERS_JOBSTATUS;
     echo "Done signal lock identified and removed";
     rm $Filel;
   # break and not exit here - this script is dotted in
