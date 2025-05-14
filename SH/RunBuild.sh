@@ -26,7 +26,8 @@ fi
 # Create the log files
 . ./CreateLogs.sh ;
 # Increment build number and set HLQ
-. ./IncrementBNum.sh | tee -a $out_log;
+# Do not pipe this output to tee (will break)
+. ./IncrementBNum.sh ;
 # Generate JCL to allocate data sets, then submit and wait for completion
 . ./ALLOC.sh | tee -a $out_log;
 # Clone the repositories if required, and checkout branches.

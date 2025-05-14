@@ -5,15 +5,15 @@
 main() {
 
 echo "$(date) ${BASH_SOURCE##*/} Generate JCL to set aliases for the build data sets";
-java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALIAS ../TABLE/tablesDevOps ../JCL/ALIAS.jcl 2>> err.log;
+java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALIAS ../TABLE/tablesDevOps ../JCL/ALIAS.jcl 2>> $err_log;
 exitIfError;
 
 cat ../JCL/ALIASDONE.jcl >> ../JCL/ALIAS.jcl;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit JCL to set aliases for the build data sets";
-. ./SUBMITTER.sh '../JCL/ALIAS.jcl' aliasdone  &>> err.log;
+. ./SUBMITTER.sh '../JCL/ALIAS.jcl' aliasdone  &>> $err_log;
 echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
-. ./WAITER.sh 60 aliasdone &>> err.log;
+. ./WAITER.sh 60 aliasdone &>> $err_log;
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;
