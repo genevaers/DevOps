@@ -47,6 +47,10 @@ if [ "$BUILD_RCA" == "ZOS" ]; then
   cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
   exitIfError;
   ./target/bin/gerstf;
+  cd out;
+  chtag  -R -c 819 *;
+  chtag  -R -t *;
+  cat fmoverview.txt ;
 
 elif [ "$BUILD_RCA" == "WIN" ]; then 
 # already built on Windows and uploaded to zOS
@@ -76,6 +80,10 @@ elif [ "$BUILD_RCA" == "WIN" ]; then
   cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
   exitIfError ;
   ./target/bin/gerstf;
+  cd out;
+  chtag  -R -c 819 *;
+  chtag  -R -t *;
+  cat fmoverview.txt ;  
 
 fi 
 
