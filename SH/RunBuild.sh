@@ -19,9 +19,15 @@ export BUILD_RCA=ZOS
 export BUILD_VERSION='5'
 export BUILD_MAJOR='01'
 export BUILD_MINOR='009'
-env | grep 'GERS_' ;
 # Create the log files
 . ./CreateLogs.sh ;
+# set env vars for build messages
+# Release Number. (Example: 501001) -->
+export GERS_PE_REL_NBR=$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR;
+# Release number formatted with dots. (Example: 5.01.001) -->
+export GERS_PE_REL_NBR_FORMATTED=$BUILD_VERSION.$BUILD_MAJOR.$BUILD_MINOR;
+# write environment vars to log
+env | grep 'GERS_' | tee -a $out_log;
 # Increment build number and set HLQ
 # Do not pipe this output to tee (will break)
 . ./IncrementBNum.sh ;
