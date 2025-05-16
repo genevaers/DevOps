@@ -29,7 +29,7 @@
 <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
 #!/bin/bash
 main() {
-echo "$(date) ${r"${BASH_SOURCE##*/}"} Start tagging of release "PM_${RELFMT}";
+echo "$(date) ${r"${BASH_SOURCE##*/}"} Start tagging of release PM_${RELFMT}";
 <#--
  change to repository directory
  -->
@@ -53,7 +53,7 @@ exitIfError;
 git tag -a "PM_${RELFMT}" -m "Performance Engine release PM ${RELFMT}";
 exitIfError;
 #
-echo "$(date) ${r"${BASH_SOURCE##*/}"} Tagging of release "PM_${RELFMT} complete";
+echo "$(date) ${r"${BASH_SOURCE##*/}"} Tagging of release PM_${RELFMT} complete";
 }
 
 exitIfError() {

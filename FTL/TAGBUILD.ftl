@@ -29,7 +29,7 @@
 <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
 #!/bin/bash
 main() {
-echo "$(date) ${r"${BASH_SOURCE##*/}"} Start tagging of build "PM_${RELFMT}.B${env["BUILD_NBR"]}";
+echo "$(date) ${r"${BASH_SOURCE##*/}"} Start tagging of build PM_${RELFMT}.B${env["BUILD_NBR"]}";
 <#--
  change to repository directory
  -->
@@ -61,7 +61,7 @@ exitIfError;
 git push origin tag "PM_${RELFMT}.B${env["BUILD_NBR"]}"; 
 exitIfError;
 #
-echo "$(date) ${r"${BASH_SOURCE##*/}"} Tagging of build "PM_${RELFMT}.B${env["BUILD_NBR"]} complete";
+echo "$(date) ${r"${BASH_SOURCE##*/}"} Tagging of build PM_${RELFMT}.B${env["BUILD_NBR"]} complete";
 }
 
 exitIfError() {
