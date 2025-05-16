@@ -32,7 +32,6 @@
 <#-- Sometimes the number is formatted with dots. 
  (Example: 5.01.001) -->
 <#assign RELFMT = env["BUILD_VERSION"] + "." + env["BUILD_MAJOR"] + "." + env["BUILD_MINOR"]>
- 
 <#-- The Component ID for this product is "PM" for "Performance 
  Engine - MVS". 
  The Major Release Name is the Component ID grouped with the 
@@ -43,27 +42,10 @@
  Component ID.  
  (Example: PM501001) -->
 <#assign MINOR_REL = "PM" + env["BUILD_VERSION"] + env["BUILD_MAJOR"] + env["BUILD_MINOR"]>
-
 <#-- The Major HLQ is used for setting the ALIASes 
  ( Example: GEBT.BOB.PM512 ) -->
 <#assign MAJOR_HLQ  = env["GERS_BUILD_HLQ"] + "." + MAJOR_REL>
-
 <#-- The Minor HLQ is use for creating the XMIT file
 (Example: GEBT.BOB.PM512123) -->
 <#assign MINOR_HLQ  = env["GERS_BUILD_HLQ"] + "." + MINOR_REL>
-
 <#assign TARGET_HLQ  = env["GERS_BUILD_HLQ"] + "." + MINOR_REL + ".B" + env["BUILD_NBR"]>
-
-<#-- Release ${RELEASE}
-RELFMT ${RELFMT}
-Major rel ${MAJOR_REL}
-Minor rel ${MINOR_REL}
-Major HLQ ${MAJOR_HLQ}
-Minor HLQ ${MINOR_HLQ}
-Target HLQ ${TARGET_HLQ} -->
-
-<#-- extract repository names from the repo remote addresses 
-<#assign PE_REPO = env["GERS_REMOTE_PEB"]?keep_after_last("/")?keep_before(".")>
-<#assign PEX_REPO = env["GERS_REMOTE_PEX"]?keep_after_last("/")?keep_before(".")>
-<#assign RCA_REPO = env["GERS_REMOTE_RUN"]?keep_after_last("/")?keep_before(".")>
--->

@@ -19,10 +19,7 @@ export BUILD_RCA=ZOS
 export BUILD_VERSION='5'
 export BUILD_MAJOR='01'
 export BUILD_MINOR='009'
-
-if [ "$msgLevel"  == "verbose" ]; then
-    env | grep 'GERS_' ;
-fi 
+env | grep 'GERS_' ;
 # Create the log files
 . ./CreateLogs.sh ;
 # Increment build number and set HLQ

@@ -23,7 +23,7 @@ exitIfError;
 if [ "$CLONE_PE" == "Y" ]; then
   rm -rf $PE_REPO;
   exitIfError;
-  git clone $GERS_REMOTE_PEB;
+  git clone --progress $GERS_REMOTE_PEB 2>&1;
   exitIfError;
 fi
 cd $PE_REPO;
@@ -34,7 +34,7 @@ cd ..
 if [ "$CLONE_PEX" == "Y" ]; then
   rm -rf $PEX_REPO;
   exitIfError;
-  git clone $GERS_REMOTE_PEX;
+  git clone --progress $GERS_REMOTE_PEX 2>&1;
   exitIfError;
 fi
 cd $PEX_REPO;
@@ -45,7 +45,7 @@ cd ..
 if [ "$CLONE_RCA" == "Y" ]; then
   rm -rf $RCA_REPO;
   exitIfError;
-  git clone $GERS_REMOTE_RUN;
+  git clone --progress $GERS_REMOTE_RUN 2>&1;
   exitIfError;
 else
   rm -rf $RCA_REPO/PETestFramework/out;
