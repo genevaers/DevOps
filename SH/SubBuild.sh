@@ -7,7 +7,7 @@ main() {
 # Copy from USS directory to data sets
 echo "$(date) ${BASH_SOURCE##*/} Copy source from z/OS Unix directories to data sets";
 save_pwd=$(pwd) ;
-. ./COPY.sh ;
+. ./Copy.sh ;
 cd $save_pwd ;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit the generated JCL to assemble and link the load modules";
