@@ -32,7 +32,7 @@ java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/COPYPE $GERS_GIT_REPO_DIR/
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Performance Engine copy script generated";
 # Performance Engine extensions required?
-if  [ "$INCLUDE_PEX" == "Y" ]; then 
+if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then 
 # Make ascii copies of the tables
   ascii_dir=$GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A ;
   [ -d $ascii_dir ] || mkdir $ascii_dir ;
@@ -62,7 +62,7 @@ java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BUILDPE $GERS_GIT_REPO_DIR
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Performance Engine build JCL generated";
 #  -- Generate for PEX, if required
-if  [ "$INCLUDE_PEX" == "Y" ]; then 
+if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then 
   java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BUILDPEX $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX ../JCL/BUILDPEX.jcl 2>> $err_log;
   exitIfError;
   echo "$(date) ${BASH_SOURCE##*/} Performance Engine Extensions build JCL generated";

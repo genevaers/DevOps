@@ -9,7 +9,7 @@ if [ "$msgLevel"  == "verbose" ]; then
 fi 
 save_pwd=$(pwd) ;
 # Are we building on zOS ?
-if [ "$BUILD_RCA" == "ZOS" ]; then 
+if [ "$GERS_BUILD_RCA" == "ZOS" ]; then 
   echo "$(date) ${BASH_SOURCE##*/} Start RCA Build";
   cd $GERS_JARS;
   exitIfError ;
@@ -37,7 +37,7 @@ if [ "$BUILD_RCA" == "ZOS" ]; then
   rm rcapps-latest.jar;
   ln -s rcapps-$rev.jar rcapps-latest.jar;
 
-  MINOR_REL="PM"$BLDVER$BLDMAJ$BUILD_MINOR;
+  MINOR_REL="PM"$GERS_BUILD_VERSION$GERS_BUILD_MAJOR$GERS_BUILD_MINOR;
 
   touch rcapps-$MINOR_REL.jar;
   rm rcapps-$MINOR_REL.jar;
@@ -52,7 +52,7 @@ if [ "$BUILD_RCA" == "ZOS" ]; then
   chtag  -R -t *;
   cat fmoverview.txt ;
 
-elif [ "$BUILD_RCA" == "WIN" ]; then 
+elif [ "$GERS_BUILD_RCA" == "WIN" ]; then 
 # already built on Windows and uploaded to zOS
   echo "$(date) ${BASH_SOURCE##*/} Copy and link Windows built RCA";
   cd $GERS_GIT_REPO_DIR/$RCA_REPO;

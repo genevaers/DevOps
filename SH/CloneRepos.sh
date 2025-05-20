@@ -20,29 +20,29 @@ fi
 cd $GERS_GIT_REPO_DIR ;
 exitIfError;
 # Clone Performance Engine repo, if required
-if [ "$CLONE_PE" == "Y" ]; then
+if [ "$GERS_CLONE_PE" == "Y" ]; then
   rm -rf $PE_REPO;
   exitIfError;
   git clone --progress $GERS_REMOTE_PEB 2>&1;
   exitIfError;
 fi
 cd $PE_REPO;
-git checkout $BRANCH_PE;
+git checkout $GERS_BRANCH_PE;
 exitIfError;
 cd ..
 # Clone PE Extensions repo, if required
-if [ "$CLONE_PEX" == "Y" ]; then
+if [ "$GERS_CLONE_PEX" == "Y" ]; then
   rm -rf $PEX_REPO;
   exitIfError;
   git clone --progress $GERS_REMOTE_PEX 2>&1;
   exitIfError;
 fi
 cd $PEX_REPO;
-git checkout $BRANCH_PEX;
+git checkout $GERS_BRANCH_PEX;
 exitIfError;
 cd ..
 # Clone RCA repo, or clean the Test Framework output dir
-if [ "$CLONE_RCA" == "Y" ]; then
+if [ "$GERS_CLONE_RCA" == "Y" ]; then
   rm -rf $RCA_REPO;
   exitIfError;
   git clone --progress $GERS_REMOTE_RUN 2>&1;
@@ -52,7 +52,7 @@ else
   exitIfError;
 fi
 cd $RCA_REPO;
-git checkout $BRANCH_RCA;
+git checkout $GERS_BRANCH_RCA;
 exitIfError;
 cd ..
 echo "$(date) ${BASH_SOURCE##*/} Repositories cloned and branches checked out";

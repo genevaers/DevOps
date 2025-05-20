@@ -10,24 +10,13 @@ if [ "$opt1"  == "-v" ]; then
     export msgLevel=verbose;
 fi
 source ~/.gers.profile ;
-export INCLUDE_PEX=Y
-export CLONE_PE=Y
-export CLONE_PEX=Y
-export CLONE_RCA=Y
-export BRANCH_PE="AddBuildTable"
-export BRANCH_PEX="AddBuildTable"
-export BRANCH_RCA="main"
-export BUILD_RCA=ZOS 
-export BUILD_VERSION='5'
-export BUILD_MAJOR='01'
-export BUILD_MINOR='009'
 # Create the log files
 . ./CreateLogs.sh ;
 # set env vars for build messages
 # Release Number. (Example: 501001) -->
-export GERS_PE_REL_NBR=$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR;
+export GERS_PE_REL_NBR=$GERS_BUILD_VERSION$GERS_BUILD_MAJOR$GERS_BUILD_MINOR;
 # Release number formatted with dots. (Example: 5.01.001) -->
-export GERS_PE_REL_NBR_FORMATTED=$BUILD_VERSION.$BUILD_MAJOR.$BUILD_MINOR;
+export GERS_PE_REL_NBR_FORMATTED=$GERS_BUILD_VERSION.$GERS_BUILD_MAJOR.$GERS_BUILD_MINOR;
 # Write environment vars to log
 env | grep 'GERS_' | tee -a $out_log;
 # Create build number and set HLQ
