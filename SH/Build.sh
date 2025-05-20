@@ -23,20 +23,20 @@ env | grep 'GERS_' | tee -a $out_log;
 # Do not pipe this output to tee (will break)
 . ./CreateBuildNum.sh ;
 # Generate JCL to allocate data sets, then submit and wait for completion
-. ./Allocate.sh | tee -a $out_log;
+. ./Allocate.sh  > >(tee -a $out_log);
 # Clone the repositories if required, and checkout branches.
-. ./CloneRepos.sh  | tee -a $out_log;
+. ./CloneRepos.sh  > >(tee -a $out_log);
 # Generate the script to copy source to data sets
 # Generate the JCL for ASM and LINK
 # These read tables in the PE and PEX repositories
-. ./GenBuild.sh  | tee -a $out_log;
+. ./GenBuild.sh  > >(tee -a $out_log);
 # Submit the generated assemble and link jobs
-. ./SubBuild.sh  | tee -a $out_log;
+. ./SubBuild.sh  > >(tee -a $out_log);
 # Generate and submit JCL to set aliases
-. ./DataSetAlias.sh  | tee -a $out_log;
+. ./DataSetAlias.sh  > >(tee -a $out_log);
 # Build RCA and Run regression suite 
-. ./BuildRCApps.sh  | tee -a $out_log;
+. ./BuildRCApps.sh  > >(tee -a $out_log);
 # Generate Tag scripts
-. ./GenTag.sh  | tee -a $out_log;
+. ./GenTag.sh  > >(tee -a $out_log);
 }
 main "$@"
