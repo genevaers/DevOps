@@ -1,5 +1,5 @@
 #!/bin/bash
-# Waiter.sh - check for job completion
+# JobWaiter.sh - check for job completion
 ########################################################
 
 
