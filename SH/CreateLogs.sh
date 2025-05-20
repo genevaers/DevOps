@@ -1,5 +1,5 @@
 #!/bin/bash
-# ALIAS.sh - Create Aliases for data sets
+# CreateLogs.sh - Create timestamped log files
 ########################################################
 
 main() {

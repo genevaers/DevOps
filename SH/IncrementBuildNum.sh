@@ -1,4 +1,6 @@
 #!/bin/sh
+# IncrementBuildNum.sh - find highest build number and increment
+########################################################
 
 FILE="lst.txt"; # File to parse to get highest build number
 

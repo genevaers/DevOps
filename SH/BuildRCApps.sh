@@ -1,5 +1,5 @@
 #!/bin/bash
-# RunReg.sh Run the regression suite
+# BuildRCApps.sh Build RCA then run the regression suite
 #######################################
 main() {
 

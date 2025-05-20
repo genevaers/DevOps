@@ -7,7 +7,7 @@ tsocmd "LISTDS '$GERS_BUILD_HLQ.PM$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR.*.GVBLO
 x=$?;
 if test $x -eq 0 ; then
 # echo $x;
-. INCRBLD.sh;
+. IncrementBuildNum.sh;
 else
     if test $x -eq 8 ; then
        export BUILD_NBR="0000";

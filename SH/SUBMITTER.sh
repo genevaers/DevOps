@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Invoke as follows: SUBMITTER.sh '//GEBT.RTC22964.JCL(LISTDS)' lockdone
+# Invoke as follows: Submitter.sh '//GEBT.RTC22964.JCL(LISTDS)' lockdone
 # Where submitter job includes last job step:
 #
 # //*********************************************************************
@@ -22,7 +22,7 @@
 # echo "Touchstatus: $status";
 # /*
 #
-# Then invoke: WAITER.sh 60 lockdone
+# Then invoke: Waiter.sh 60 lockdone
 
 if [ "$msgLevel"  == "verbose" ]; then
   echo "Arg0: $0";

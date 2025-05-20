@@ -1,4 +1,7 @@
 #!/bin/bash
+# Waiter.sh - check for job completion
+########################################################
+
 
 if [ "$msgLevel"  == "verbose" ]; then
   echo "Arg0: $0";

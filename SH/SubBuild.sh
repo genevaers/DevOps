@@ -1,4 +1,7 @@
 #!/bin/bash
+# SubBuild.sh - Submit generated JCL 
+########################################################
+
 main() {
 
 # Copy from USS directory to data sets

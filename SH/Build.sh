@@ -1,4 +1,6 @@
 #!/bin/bash
+# Build.sh - Build GenevaERS 
+########################################################
 # set -x;
 # set -e;
 main() {
@@ -26,15 +28,15 @@ export BUILD_MINOR='009'
 export GERS_PE_REL_NBR=$BUILD_VERSION$BUILD_MAJOR$BUILD_MINOR;
 # Release number formatted with dots. (Example: 5.01.001) -->
 export GERS_PE_REL_NBR_FORMATTED=$BUILD_VERSION.$BUILD_MAJOR.$BUILD_MINOR;
-# write environment vars to log
+# Write environment vars to log
 env | grep 'GERS_' | tee -a $out_log;
-# Increment build number and set HLQ
+# Create build number and set HLQ
 # Do not pipe this output to tee (will break)
-. ./IncrementBNum.sh ;
+. ./CreateBuildNum.sh ;
 # Generate JCL to allocate data sets, then submit and wait for completion
-. ./ALLOC.sh | tee -a $out_log;
+. ./Allocate.sh | tee -a $out_log;
 # Clone the repositories if required, and checkout branches.
-. ./CLONE.sh  | tee -a $out_log;
+. ./CloneRepos.sh  | tee -a $out_log;
 # Generate the script to copy source to data sets
 # Generate the JCL for ASM and LINK
 # These read tables in the PE and PEX repositories
@@ -42,9 +44,9 @@ env | grep 'GERS_' | tee -a $out_log;
 # Submit the generated assemble and link jobs
 . ./SubBuild.sh  | tee -a $out_log;
 # Generate and submit JCL to set aliases
-. ./ALIAS.sh  | tee -a $out_log;
+. ./DataSetAlias.sh  | tee -a $out_log;
 # Build RCA and Run regression suite 
-. ./BUILDRCA.sh  | tee -a $out_log;
+. ./BuildRCApps.sh  | tee -a $out_log;
 # Generate Tag scripts
 . ./GenTag.sh  | tee -a $out_log;
 }

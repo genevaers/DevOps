@@ -1,5 +1,5 @@
 #!/bin/bash
-# ALIAS.sh - Create Aliases for data sets
+# DataSetAlias.sh - Create Aliases for data sets
 ########################################################
 
 main() {
@@ -11,9 +11,9 @@ exitIfError;
 cat ../JCL/ALIASDONE.jcl >> ../JCL/ALIAS.jcl;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit JCL to set aliases for the build data sets";
-. ./SUBMITTER.sh '../JCL/ALIAS.jcl' aliasdone  &>> $err_log;
+. ./Submitter.sh '../JCL/ALIAS.jcl' aliasdone  &>> $err_log;
 echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
-. ./WAITER.sh 60 aliasdone &>> $err_log;
+. ./Waiter.sh 60 aliasdone &>> $err_log;
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;

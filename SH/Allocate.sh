@@ -1,5 +1,5 @@
 #!/bin/bash
-# ALLOC.sh - Allocate data sets
+# Allocate.sh - Allocate data sets
 ########################################################
 
 main() {
@@ -11,9 +11,9 @@ exitIfError;
 cat ../JCL/ALLOCDONE.jcl >> ../JCL/ALLOC.jcl;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit JCL to allocate the build data sets";
-. ./SUBMITTER.sh '../JCL/ALLOC.jcl' allocdone &>> $err_log;
+. ./Submitter.sh '../JCL/ALLOC.jcl' allocdone &>> $err_log;
 echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
-. ./WAITER.sh 60 allocdone &>> $err_log;
+. ./Waiter.sh 60 allocdone &>> $err_log;
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;

@@ -1,5 +1,5 @@
 #!/bin/sh
-# CLONE.sh - Clone required repositories ready for build
+# CloneRepos.sh - Clone required repositories ready for build
 ########################################################
 
 main() {
