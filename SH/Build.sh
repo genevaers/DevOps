@@ -34,6 +34,8 @@ env | grep 'GERS_' | tee -a $out_log;
 . ./SubBuild.sh  > >(tee -a $out_log);
 # Generate and submit JCL to set aliases
 . ./DataSetAlias.sh  > >(tee -a $out_log);
+# Save job output from spool to data set
+. ./SaveJobInfo.sh > >(tee -a $out_log);
 # Build RCA and Run regression suite 
 . ./BuildRCApps.sh  > >(tee -a $out_log);
 # Generate Tag scripts
