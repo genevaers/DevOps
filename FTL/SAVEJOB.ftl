@@ -21,7 +21,7 @@
 <#include "SETVARS.ftl">
 <#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>
 //SAVEJOB   JOB (${env["GERS_JOB_ACCT_INFO"]}),
-//          'Save GenevaERS build job ',
+//          'Save GenevaERS jobs',
 //          NOTIFY=${env["USER"]},
 //          CLASS=${env["GERS_JOB_CLASS"]},REGION=0M,
 //          MSGLEVEL=${env["GERS_MSG_LEVEL"]},
@@ -48,9 +48,9 @@ H ALL
 SORT END-DATE D END-TIME D
 H ALL
 ++XDC
-++<<='''${TARGET_HLQ}.LISTJOB(${row["JJOBNAME"]})'''>>, 
-<<=' '>>,
-<<='OLD'>>
+++<='${TARGET_HLQ}.LISTJOB(${row["JJOBNAME"]})'>, 
+<=' '>,
+<='OLD'>
 ++AFD END
 </#if>
 </#list>
