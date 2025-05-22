@@ -48,7 +48,7 @@ H ALL
 SORT END-DATE D END-TIME D
 H ALL
 ++XDC
-++<='${TARGET_HLQ}.LISTJOB(${row["JJOBNAME"]})'>, 
+++<='''${TARGET_HLQ}.LISTJOB(${row["JJOBNAME"]})'''>, 
 <=' '>,
 <='OLD'>
 ++AFD END
