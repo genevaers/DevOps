@@ -85,6 +85,11 @@ export GERS_TEST_SPEC_LIST='JBasespeclist.yaml'
 #
 export GERS_TEST_HLQ='<your-test-hlq>'
 
+#     If GERS_RUN_TESTS is set to 'Y' the regression tests specified by 
+#     GERS_TEST_SPEC_LIST will be executed.
+#      
+export GERS_RUN_TESTS='Y'
+
 #     GERS_JARS is the USS directory that contains your GERS .jar
 #     files.  
 #

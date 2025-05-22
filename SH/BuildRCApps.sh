@@ -43,14 +43,16 @@ if [ "$GERS_BUILD_RCA" == "ZOS" ]; then
   rm rcapps-$MINOR_REL.jar;
   ln -s rcapps-$rev.jar rcapps-$MINOR_REL.jar;
 
-  echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
-  cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
-  exitIfError;
-  ./target/bin/gerstf;
-  cd out;
-  chtag  -R -c 819 *;
-  chtag  -R -t *;
-  cat fmoverview.txt ;
+  if [ "$GERS_RUN_TESTS" == "Y" ]; then 
+    echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
+    cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
+    exitIfError;
+    ./target/bin/gerstf;
+    cd out;
+    chtag  -R -c 819 *;
+    chtag  -R -t *;
+    cat fmoverview.txt ;
+  fi 
 
 elif [ "$GERS_BUILD_RCA" == "WIN" ]; then 
 # already built on Windows and uploaded to zOS
@@ -76,14 +78,16 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   rm rcapps-$MINOR_REL.jar;
   ln -s rcapps-$rev.jar rcapps-$MINOR_REL.jar;
 
-  echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
-  cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
-  exitIfError ;
-  ./target/bin/gerstf;
-  cd out;
-  chtag  -R -c 819 *;
-  chtag  -R -t *;
-  cat fmoverview.txt ;  
+  if [ "$GERS_RUN_TESTS" == "Y" ]; then 
+    echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
+    cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
+    exitIfError ;
+    ./target/bin/gerstf;
+    cd out;
+    chtag  -R -c 819 *;
+    chtag  -R -t *;
+    cat fmoverview.txt ;  
+  fi 
 
 fi 
 
