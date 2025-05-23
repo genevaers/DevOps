@@ -8,12 +8,19 @@ echo "$(date) ${BASH_SOURCE##*/} Start generation of tagging scripts";
 # Create copy commands to copy source to data sets - this reads a table in each of the repositories
 #
 java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/TAGBUILD ../TABLE/tablesDevOps ./TagBuild.sh 2>> $err_log ;
+java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/TAGBUILDJ ../TABLE/tablesDevOps ../JCL/TagBuild.jcl 2>> $err_log ;
 exitIfError;
 java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/TAGREL ../TABLE/tablesDevOps ./TagRel.sh 2>> $err_log ;
 exitIfError;
 chmod 755 TagBuild.sh ;
 chmod 755 TagRel.sh ;
 echo "$(date) ${BASH_SOURCE##*/} Performance Engine tagging scripts generated";
+#
+# Copy to data set for use at a later date
+#
+cp ../JCL/TagBuild.jcl "//'$GERS_TARGET_HLQ.JCL(TAGBLD)'"
+# cp TagRel.sh "//'$GERS_TARGET_HLQ.JCL(TAGREL)'"
+
 }
 
 exitIfError() {
