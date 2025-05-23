@@ -25,7 +25,7 @@
 <#assign RCA_REPO = env["GERS_REMOTE_RUN"]?keep_after_last("/")?keep_before(".")>
 <#include "SETVARS.ftl">
 //TAGREL   JOB (${env["GERS_JOB_ACCT_INFO"]}),
-//          'Tag build           ',
+//          'Tag release         ',
 //          NOTIFY=${env["USER"]},
 //          CLASS=${env["GERS_JOB_CLASS"]},REGION=0M,
 //          MSGLEVEL=${env["GERS_MSG_LEVEL"]},
@@ -35,7 +35,7 @@
 //*   Tag release
 //*******************************************************************
 //*
-//TAGBLD   EXEC PGM=BPXBATCH,
+//TAGREL   EXEC PGM=BPXBATCH,
 //            COND=(4,LT)
 //*
 //STDPARM  DD *
