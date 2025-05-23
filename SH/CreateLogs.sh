@@ -11,8 +11,12 @@ log_date=$(date '+%Y-%m-%d-%H%M%S');
 export out_log="$log_dir/out-$log_date.log";
 echo "$(date) ${BASH_SOURCE##*/} Create stdout log file  ${out_log##*/}" | tee $out_log ;
 exitIfError;
+chtag -c"iSO8859-1" -t $out_log;
+exitIfError;
 export err_log="$log_dir/err-$log_date.log";
 echo "$(date) ${BASH_SOURCE##*/} Create stderr log file  ${err_log##*/}" | tee $err_log ;
+exitIfError;
+chtag -c"iSO8859-1" -t $err_log;
 exitIfError;
 }
 
