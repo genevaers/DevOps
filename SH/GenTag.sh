@@ -22,8 +22,9 @@ echo "$(date) ${BASH_SOURCE##*/} Performance Engine tagging scripts generated";
 # Copy to data set for use at a later date
 #
 cp ../JCL/TAGBLD.jcl "//'$GERS_TARGET_HLQ.JCL(TAGBLD)'"
+exitIfError;
 cp ../JCL/TAGREL.jcl "//'$GERS_TARGET_HLQ.JCL(TAGREL)'"
-
+exitIfError;
 }
 
 exitIfError() {
