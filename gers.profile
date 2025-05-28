@@ -28,8 +28,8 @@ export GERS_CLONE_RCA=Y
 #       GERS_BRANCH_PEX - Performance-Engine-Extensions
 #       GERS_BRANCH_RCA - Run-Control-Apps
 #
-export GERS_BRANCH_PE="AddBuildTable"
-export GERS_BRANCH_PEX="AddBuildTable"
+export GERS_BRANCH_PE="main"
+export GERS_BRANCH_PEX="main"
 export GERS_BRANCH_RCA="main"
 export GERS_BUILD_RCA=ZOS 
 
