@@ -21,17 +21,17 @@
 * -->
 <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
 <#-- Generate assembler JCL -->
-<#list PGMRND as pgmTable>
+<#list PGMEXT as pgmTable>
 <#include "HLASM.ftl">
 </#list> 
 <#-- Generate JCL for link -->
-<#list PGMRND as pgmTable>
+<#list PGMEXT as pgmTable>
 <#if  pgmTable.PMODTYPE == "LOADMOD">
 <#include "LINKEDIT.ftl">
 </#if>
 </#list> 
 <#-- Generate JCL for Db2 BIND -->
-<#list PGMRND as pgmTable>
+<#list PGMEXT as pgmTable>
 <#if  pgmTable.PSQL == "Y" && env["GERS_DB2_ASM"] == "Y" >
 <#include "BIND.ftl">
 </#if>

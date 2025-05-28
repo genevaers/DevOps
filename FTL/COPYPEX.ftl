@@ -31,7 +31,7 @@
 cd ${env["GERS_GIT_REPO_DIR"]}/${PEX_REPO} ;
 exitIfError;
 <#-- create copy commands for all source elements -->
-<#list PGMRND as programTable>
+<#list PGMEXT as programTable>
 cp ASM/${programTable.PID}.asm "//'${TARGET_HLQ}.ASM(${programTable.PID})'"
 exitIfError;
 <#if  programTable.PMODTYPE == "LOADMOD">
@@ -39,7 +39,7 @@ cp LINKPARM/${programTable.PID}.link "//'${TARGET_HLQ}.LINKPARM(${programTable.P
 exitIfError;
 </#if>
 </#list> 
-<#list MACRND as macroTable>
+<#list MACEXT as macroTable>
 cp MAC/${macroTable.CID}.mac "//'${TARGET_HLQ}.MAC(${macroTable.CID})'"
 exitIfError;
 </#list> 
