@@ -48,11 +48,17 @@ This builds the utility used to create the JCL during the Performance Engine bui
 2. Execute Build.sh.  
 This will start a series of scripts and jobs which will build the Performance Engine then execute regression tests.  
 
-The build process generates tagging scripts.
+The build process generates tagging scripts and JCL.
 
 ### Tagging the build 
 
-1. In the SH directory of DevOps execute the generated script TAGBLD.
+You can run the tagging script:
+1. In the SH directory of DevOps execute the generated script TAGBUILD.sh.
+or submit the tagging JCL:
+2. In your build JCL library (<GERS_ENV_HLQ>.JCL), submit TAGBLD.
 
 ### Tagging the release 
-1. In the SH directory of DevOps execute the generated script TAGREL.
+You can run the tagging script:
+1. In the SH directory of DevOps execute the generated script TAGREL.sh.
+or submit the tagging JCL:
+2. In your build JCL library (<GERS_ENV_HLQ>.JCL), submit TAGREL.
