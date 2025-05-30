@@ -36,11 +36,15 @@ Utilities for Development and Operations for GenevaERS
     mkdir /u/<your-tso-id>/git/GenevaERS
     ```
 5. Clone the DevOps repository to your Git directory.
-6. Find the file gers.profile in the DevOps directory and copy it to your z/OS UNIX home directory. Open this copy in a text editor.  (We recommend using ISPF option 3.17 for this.)
-7. Follow the instructions in gers.profiles and update your environment variables with the appropriate values.
-8. Save and close gers.profile.
-9. Navigate to the FTL2JCL directory under the DevOps directory.
-10. Execute build.sh.  
+6. Find the file .gers.profile in the DevOps directory and copy it to your z/OS UNIX home directory. Open this copy in a text editor.  (We recommend using ISPF option 3.17 for this.)
+7. Follow the instructions in .gers.profile and update your environment variables with the appropriate values.
+8. Save and close .gers.profile.
+9. Open the .profile file that is in your z/OS UNIX home directory (if it doesn't exit, create it), and add the following line:
+```
+. ~/.gers.profile
+```
+10. Navigate to the FTL2JCL directory under the DevOps directory.
+11. Execute build.sh.  
 This builds the utility used to create the JCL during the Performance Engine build. It will copy the .jar file to the RCA jar file directory created earlier and referenced by $GERS_RCA_JAR_DIR.
 
 ### Building the Performance Engine and executing the regression tests
