@@ -17,7 +17,7 @@ export GERS_PE_REL_NBR=$GERS_BUILD_VERSION$GERS_BUILD_MAJOR$GERS_BUILD_MINOR;
 # Release number formatted with dots. (Example: 5.01.001) -->
 export GERS_PE_REL_NBR_FORMATTED=$GERS_BUILD_VERSION.$GERS_BUILD_MAJOR.$GERS_BUILD_MINOR;
 # Write environment vars to log
-env | grep 'GERS_' | tee -a $out_log;
+env | grep 'GERS_' | sort | tee -a $out_log;
 # Create build number and set HLQ
 # Do not pipe this output to tee (will break)
 . ./CreateBuildNum.sh ;
