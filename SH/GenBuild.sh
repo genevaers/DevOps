@@ -29,7 +29,7 @@ exitIfError;
 # Create copy commands to copy source to data sets - this reads a table in each of the repositories
 #
 java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/COPYPE $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A/tablesPE ./CopyPE.sh  2>> $err_log;
-exitIfError;
+exitIfFTLError;
 echo "$(date) ${BASH_SOURCE##*/} Performance Engine copy script generated";
 # Performance Engine extensions required?
 if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then 
@@ -45,7 +45,7 @@ if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then
   exitIfError;
 
   java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/COPYPEX $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX ./CopyPEX.sh  2>> $err_log;
-  exitIfError;
+  exitIfFTLError;
   echo "$(date) ${BASH_SOURCE##*/} Performance Engine Extensions copy script generated";
   cat CopyPE.sh CopyPEX.sh > Copy.sh ;
   exitIfError;
@@ -59,12 +59,12 @@ exitIfError;
 # Create build JCL from templates
 #  -- Generate for PE 
 java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BUILDPE $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A/tablesPE ../JCL/BUILDPE.jcl  2>> $err_log;
-exitIfError;
+exitIfFTLError;
 echo "$(date) ${BASH_SOURCE##*/} Performance Engine build JCL generated";
 #  -- Generate for PEX, if required
 if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then 
   java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BUILDPEX $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX ../JCL/BUILDPEX.jcl 2>> $err_log;
-  exitIfError;
+  exitIfFTLError;
   echo "$(date) ${BASH_SOURCE##*/} Performance Engine Extensions build JCL generated";
   cd ../JCL;
   cat BUILDPEX.jcl ASMDONE.jcl >> BUILDPE.jcl ;
@@ -88,5 +88,16 @@ then
 fi 
 
 }
+
+exitIfFTLError() {
+
+if [ $? != 0 ]
+then
+    echo "$(date) ${BASH_SOURCE##*/} *** Process terminated: see error log $err_log";
+    exit 1;
+fi 
+
+}
+
 
 main "$@"

@@ -6,7 +6,7 @@ main() {
 
 echo "$(date) ${BASH_SOURCE##*/} Generate JCL to set aliases for the build data sets";
 java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALIAS ../TABLE/tablesDevOps ../JCL/ALIAS.jcl 2>> $err_log;
-exitIfError;
+exitIfFTLError;
 
 cat ../JCL/ALIASDONE.jcl >> ../JCL/ALIAS.jcl;
 
@@ -31,6 +31,16 @@ exitIfError() {
 if [ $? != 0 ]
 then
     echo "$(date) ${BASH_SOURCE##*/} *** Process terminated: see error message above";
+    exit 1;
+fi 
+
+}
+
+exitIfFTLError() {
+
+if [ $? != 0 ]
+then
+    echo "$(date) ${BASH_SOURCE##*/} *** Process terminated: see error log $err_log";
     exit 1;
 fi 
 
