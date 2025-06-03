@@ -51,17 +51,23 @@ public class CommandLineHandler {
 	private static Path parent;
 	private static Path outputPath = null;
 
-	public static void main(String[] args)
-			throws IOException, InterruptedException {
-		if (args.length == 3) {
-			logger.atInfo().log("FTL2JCL %s\nProcess %s.ftl, with tables from %s to produce %s", readVersion(), args[0], args[1], args[2]);
-			buildAdditionalInfoFromCSV(args);
-			outputPath = Paths.get(args[2]);
-			outputPath.getParent().toFile().mkdirs();
-			writeTemplatedOutput(args[0]);
-			logger.atInfo().log("Process %s.ftl to produce %s", args[0], args[2]);
-		} else {
-			logger.atSevere().log("Expected 3 arguments. Only received\n %d", args.length);
+	public static void main(String[] args) {
+		try {
+			if (args.length == 3) {
+				logger.atInfo().log("FTL2JCL %s\nProcess %s.ftl, with tables from %s to produce %s", readVersion(),
+						args[0], args[1], args[2]);
+				buildAdditionalInfoFromCSV(args);
+				outputPath = Paths.get(args[2]);
+				outputPath.getParent().toFile().mkdirs();
+				writeTemplatedOutput(args[0]);
+				logger.atInfo().log("Process %s.ftl to produce %s", args[0], args[2]);
+			} else {
+				logger.atSevere().log("Expected 3 arguments. Only received\n %d", args.length);
+				System.exit(1);
+			}
+		} catch (IOException e) {
+			logger.atSevere().log("Reading file failed.\n %s", e.getMessage());
+			System.exit(1);
 		}
 	}
 
@@ -84,20 +90,21 @@ public class CommandLineHandler {
 				.readValues(csvPath.toFile());
 		mapper.enable(CsvParser.Feature.WRAP_AS_ARRAY);
 		while (it.hasNext()) {
-				table.add(it.next());
+			table.add(it.next());
 		}
 		return;
 	}
 
 	private static void writeTemplatedOutput(String name) {
 		try {
-			Path tempFilePath = Paths.get(name+".ftl");
+			Path tempFilePath = Paths.get(name + ".ftl");
 			initFreeMarkerConfiguration(tempFilePath.getParent());
 			Template template = cfg.getTemplate(tempFilePath.getFileName().toString());
-			//Template template = cfg.getTemplate(tn + ".ftl");
+			// Template template = cfg.getTemplate(tn + ".ftl");
 			generateTestTemplatedOutput(template, buildTemplateModel(name), outputPath);
 		} catch (IOException | TemplateException e) {
 			logger.atSevere().log("Template generation failed.\n %s", e.getMessage());
+			System.exit(1);
 		}
 	}
 
