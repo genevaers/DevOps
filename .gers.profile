@@ -62,8 +62,7 @@ export GERS_INCLUDE_PEX='Y'
 export GERS_BUILD_HLQ='<your-build-hlq>'
 
 #     GERS_ENV_HLQ specifies the high-level qualifier(s) to be used for
-#     build work files, such as JCL libraries, and aliases
-#     for the build output files.
+#     aliases for the build output files.
 #
 #     Examples:
 #
