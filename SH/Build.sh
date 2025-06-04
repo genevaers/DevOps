@@ -9,6 +9,8 @@ if [ "$opt1"  == "-v" ]; then
     echo "Verbose message level";
     export msgLevel=verbose;
 fi
+# Re-read the gers profile in case anything changed
+source ~/.gers.profile ;
 # Create the log files
 . ./CreateLogs.sh ;
 # set env vars for build messages
