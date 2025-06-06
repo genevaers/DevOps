@@ -18,7 +18,7 @@ Utilities for Development and Operations for GenevaERS
     ```
 2. Establish a directory to house the .jar files that are required to build the Performance Engine.  (This is known as the "GERS JARS" directory.)  
    1. If you ARE NOT the GenevaERS system administrator for your site: 
-      1. Obtain the name of the GERS JARS directory from your GenevaERS system adminstrator.   
+      1. Obtain the name of the GERS JARS directory from your GenevaERS system administrator.   
    2. If you ARE the GenevaERS system administrator for your site: 
       1. Create a directory.  Example: 
             ```
@@ -31,25 +31,52 @@ Utilities for Development and Operations for GenevaERS
     ```
     mkdir /u/<your-tso-id>/RCA
     ```
-4. In your USS home directory, create a subdirectory for storing the GenevaERS Git repositories.  Example:
+4. In your z/OS UNIX home directory, create a subdirectory for storing the GenevaERS Git repositories.  Example:
     ```
     mkdir /u/<your-tso-id>/git/GenevaERS
     ```
 5. Clone the DevOps repository to your Git directory.
-6. Find the file gers.profile in the DevOps directory and open it in a text editor.  (We recommend using ISPF option 3.17 for this.)
-7. Copy all the lines of this file to your clipboard.
-8. Navigate to your USS home directory.
-9.  Open the file named .profile in a text editor.  (If it doesn't exist, create it.)
-10. Paste the saved lines at the end of .profile.
-11. Follow the instructions in these new lines and update your environment variables with the appropriate values.
-12. Save and close .profile.
+6. Find the file .gers.profile in the DevOps directory and copy it to your z/OS UNIX home directory. Open this copy in a text editor.  (We recommend using ISPF option 3.17 for this.)
+7. Follow the instructions in .gers.profile and update your environment variables with the appropriate values.
+8. Save and close .gers.profile.
+9. Open the .profile file that is in your z/OS UNIX home directory (if it doesn't exit, create it), and add the following line:
+```
+. ~/.gers.profile
+```
+10. Navigate to the FTL2JCL directory under the DevOps directory.
+11. To build the FTL2JCL utility used to create the JCL during the Performance Engine build run the build.sh script using the following:
+```
+./build.sh
+```
+ It will copy the .jar file to the RCA jar file directory created earlier and referenced by $GERS_RCA_JAR_DIR.
 
-### Building the Performance Engine and executing the regression tests
-1. In the JCL folder of the DevOps repo, open the BLDPE.jcl file.  (We recommend using ISPF option 3.17 for this.)
-2. Edit the JCL according to the instructions specified in the job, then submit the job.  This will start a series of jobs which will build the Performance Engine and execute regression tests.  
+### Building the Performance Engine and running the regression tests
+1. Navigate to the SH directory under the DevOps directory. 
+2. To run the build enter the following:
+```
+./Build.sh
+```
+This will start a series of scripts and jobs which will build the Performance Engine then run the regression tests.  
+
+The build process generates tagging scripts and JCL.
 
 ### Tagging the build 
-1. In your build JCL library (<GERS_ENV_HLQ>.JCL), submit TAGBLD.
+
+You can run the tagging script:  
+1. In the SH directory of DevOps run the generated script TAGBUILD.sh.
+```
+./TAGBUILD.sh
+```
+or submit the tagging JCL:  
+
+2. In your build JCL library <GERS_ENV_HLQ>.JCL, submit TAGBLD.
 
 ### Tagging the release 
-1. In your build JCL library (<GERS_ENV_HLQ>.JCL), submit TAGREL.
+You can run the tagging script:
+1. In the SH directory of DevOps run the generated script TAGREL.sh.
+```
+./TAGBUILD.sh
+```
+or submit the tagging JCL:  
+
+2. In your build JCL library <GERS_ENV_HLQ>.JCL, submit TAGREL.

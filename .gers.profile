@@ -1,6 +1,43 @@
 
 # Environment variables for GenevaERS 
 # -----------------------------------
+# 
+# Environment variable that may change for every build are here at the top
+#
+#     The following variables are used to identify the release of the Performance Engine:
+#       GERS_BUILD_VERSION is the Version Number (1 digit).
+#       GERS_BUILD_MAJOR is the Major Release Number (2 digits).
+#       GERS_BUILD_MINOR is the Minor Release Number (3 digits). 
+#
+export GERS_BUILD_VERSION='5'
+export GERS_BUILD_MAJOR='01'
+export GERS_BUILD_MINOR='001'
+
+#     For each of the following variables, a value of 'Y' will cause the associated repository to be 
+#     deleted (if it exists) and cloned. Any other value will leave the repository source code untouched.
+#       GERS_CLONE_PE  - Performance-Engine (base)
+#       GERS_CLONE_PEX - Performance-Engine-Extensions
+#       GERS_CLONE_RCA - Run-Control-Apps
+#
+export GERS_CLONE_PE=Y
+export GERS_CLONE_PEX=Y
+export GERS_CLONE_RCA=Y
+
+#     The following variables specify the branches or tags in the Git repositories to be used for the build:
+#       GERS_BRANCH_PE - Performance-Engine (base)
+#       GERS_BRANCH_PEX - Performance-Engine-Extensions
+#       GERS_BRANCH_RCA - Run-Control-Apps
+#
+export GERS_BRANCH_PE="main"
+export GERS_BRANCH_PEX="main"
+export GERS_BRANCH_RCA="main"
+export GERS_BUILD_RCA=ZOS 
+
+#     A value of 'Y' for GERS_INCLUDE_PEX will cause the R&D components 
+#     of the Performance Engine to be included in the build.  Any 
+#     other value will cause the R&D components to be skipped. 
+#
+export GERS_INCLUDE_PEX='Y'
 
 #     GERS_BUILD_HLQ specifies the high-level qualifier(s) to be used 
 #     for build output files, such as load libraries.  
@@ -25,8 +62,7 @@
 export GERS_BUILD_HLQ='<your-build-hlq>'
 
 #     GERS_ENV_HLQ specifies the high-level qualifier(s) to be used for
-#     build work files, such as JCL libraries, and aliases
-#     for the build output files.
+#     aliases for the build output files.
 #
 #     Examples:
 #
@@ -48,6 +84,11 @@ export GERS_TEST_SPEC_LIST='JBasespeclist.yaml'
 #
 export GERS_TEST_HLQ='<your-test-hlq>'
 
+#     If GERS_RUN_TESTS is set to 'Y' the regression tests specified by 
+#     GERS_TEST_SPEC_LIST will be executed.
+#      
+export GERS_RUN_TESTS='Y'
+
 #     GERS_JARS is the USS directory that contains your GERS .jar
 #     files.  
 #
@@ -61,16 +102,7 @@ export GERS_GIT_REPO_DIR='<your-git-repo-dir>'
 #     GERS_RCA_JAR_DIR is the USS directory that contains RCA .jar  
 #     files.                                                       
 #                                                                  
-export GERS_RCA_JAR_DIR='<your-rca-jar-dir>'                            
-                                                                   
-#     A value of 'Y' for GERS_INCLUDE_PEX will cause the R&D components 
-#     of the Performance Engine to be included in the build.  Any 
-#     other value will cause the R&D components to be skipped. 
-#     Note:  You may override this value in the Performance Engine
-#     build JCL.   
-#
-export GERS_INCLUDE_PEX='Y'
-
+export GERS_RCA_JAR_DIR='<your-rca-jar-dir>'                                                                                               
 #     A value of 'Y' for GERS_DB2_JAVA will cause Db2 components to be 
 #     included in any Java program (such as the Run-Control App) that needs 
 #     to access Db2 data.  Any other value will cause the Db2 components 
@@ -108,27 +140,6 @@ export GERS_JVM_PROC_LIB='AJV.V11R0M0.PROCLIB'
 #     GERS_JZOS_LOAD_LIB is the name of the JZOS load library.
 #
 export GERS_JZOS_LOAD_LIB='AJV.V11R0M0.SIEALNKE'
-
-#     GERS_ISPF_LOAD_LIB is the name of the ISPF load library.
-#
-export GERS_ISPF_LOAD_LIB='ISP.SISPLOAD'
-
-#     GERS_ISPF_MSG_LIB is the name of the ISPF message library.
-#
-export GERS_ISPF_MSG_LIB='ISP.SISPMENU'
-
-#     GERS_ISPF_PANEL_LIB is the name of the ISPF panel library.
-#
-export GERS_ISPF_PANEL_LIB='ISP.SISPPENU'
-
-#     GERS_ISPF_SKEL_LIB is the name of the ISPF skeleton library.
-#
-export GERS_ISPF_SKEL_LIB='ISP.SISPSENU'
-
-#     GERS_ISPF_TABLE_LIB is the name of the ISPF table library.
-#
-export GERS_ISPF_TABLE_LIB='ISP.SISPTENU'
-
 #     GERS_HLASM_TK_MAC_LIB is the name of the High-Level Assembler 
 #     Toolkit macro library.   
 #
@@ -167,14 +178,6 @@ export GERS_CSS_LIB='SYS1.CSSLIB'
 #     GERS_LINK_LIB is the name of the system link library. 
 #
 export GERS_LINK_LIB='SYS1.LINKLIB'  
-
-#     GERS_USS_EXEC_LIB is the name of the USS EXEC library.   
-#
-export GERS_USS_EXEC_LIB='SYS1.SBPXEXEC'
-
-#     GERS_USS_MSG_LIB is the name of the USS message library.   
-#
-export GERS_USS_MSG_LIB='SYS1.SBPXMENU'
 
 #     GERS_DB2_LOAD_LIB is the name of the Db2 load library.
 #
