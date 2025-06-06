@@ -18,7 +18,7 @@ Utilities for Development and Operations for GenevaERS
     ```
 2. Establish a directory to house the .jar files that are required to build the Performance Engine.  (This is known as the "GERS JARS" directory.)  
    1. If you ARE NOT the GenevaERS system administrator for your site: 
-      1. Obtain the name of the GERS JARS directory from your GenevaERS system adminstrator.   
+      1. Obtain the name of the GERS JARS directory from your GenevaERS system administrator.   
    2. If you ARE the GenevaERS system administrator for your site: 
       1. Create a directory.  Example: 
             ```
@@ -44,25 +44,39 @@ Utilities for Development and Operations for GenevaERS
 . ~/.gers.profile
 ```
 10. Navigate to the FTL2JCL directory under the DevOps directory.
-11. Execute build.sh.  
-This builds the utility used to create the JCL during the Performance Engine build. It will copy the .jar file to the RCA jar file directory created earlier and referenced by $GERS_RCA_JAR_DIR.
+11. To build the FTL2JCL utility used to create the JCL during the Performance Engine build run the build.sh script using the following:
+```
+./build.sh
+```
+ It will copy the .jar file to the RCA jar file directory created earlier and referenced by $GERS_RCA_JAR_DIR.
 
-### Building the Performance Engine and executing the regression tests
+### Building the Performance Engine and running the regression tests
 1. Navigate to the SH directory under the DevOps directory. 
-2. Execute Build.sh.  
-This will start a series of scripts and jobs which will build the Performance Engine then execute regression tests.  
+2. To run the build enter the following:
+```
+./Build.sh
+```
+This will start a series of scripts and jobs which will build the Performance Engine then run the regression tests.  
 
 The build process generates tagging scripts and JCL.
 
 ### Tagging the build 
 
-You can run the tagging script:
-1. In the SH directory of DevOps execute the generated script TAGBUILD.sh.
-or submit the tagging JCL:
-2. In your build JCL library (<GERS_ENV_HLQ>.JCL), submit TAGBLD.
+You can run the tagging script:  
+1. In the SH directory of DevOps run the generated script TAGBUILD.sh.
+```
+./TAGBUILD.sh
+```
+or submit the tagging JCL:  
+
+2. In your build JCL library <GERS_ENV_HLQ>.JCL, submit TAGBLD.
 
 ### Tagging the release 
 You can run the tagging script:
-1. In the SH directory of DevOps execute the generated script TAGREL.sh.
-or submit the tagging JCL:
-2. In your build JCL library (<GERS_ENV_HLQ>.JCL), submit TAGREL.
+1. In the SH directory of DevOps run the generated script TAGREL.sh.
+```
+./TAGBUILD.sh
+```
+or submit the tagging JCL:  
+
+2. In your build JCL library <GERS_ENV_HLQ>.JCL, submit TAGREL.
