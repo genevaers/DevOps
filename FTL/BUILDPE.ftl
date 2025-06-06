@@ -22,7 +22,7 @@
 <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
 //BLDPE    JOB (${env["GERS_JOB_ACCT_INFO"]}),
 //          'Build GenevaERS PE  ',
-//          NOTIFY=${env["USER"]},
+//          NOTIFY=${env["LOGNAME"]},
 //          CLASS=${env["GERS_JOB_CLASS"]},REGION=0M,
 //          MSGLEVEL=${env["GERS_MSG_LEVEL"]},
 //          MSGCLASS=${env["GERS_MSG_CLASS"]}

@@ -23,7 +23,7 @@
 <#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>
 //ALLOC    JOB (${env["GERS_JOB_ACCT_INFO"]}),
 //          'Build GenevaERS PE  ',
-//          NOTIFY=${env["USER"]},
+//          NOTIFY=${env["LOGNAME"]},
 //          CLASS=${env["GERS_JOB_CLASS"]},REGION=0M,
 //          MSGLEVEL=${env["GERS_MSG_LEVEL"]},
 //          MSGCLASS=${env["GERS_MSG_CLASS"]}

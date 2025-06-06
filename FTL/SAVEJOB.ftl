@@ -22,7 +22,7 @@
 <#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>
 //SAVEJOB   JOB (${env["GERS_JOB_ACCT_INFO"]}),
 //          'Save GenevaERS jobs',
-//          NOTIFY=${env["USER"]},
+//          NOTIFY=${env["LOGNAME"]},
 //          CLASS=${env["GERS_JOB_CLASS"]},REGION=0M,
 //          MSGLEVEL=${env["GERS_MSG_LEVEL"]},
 //          MSGCLASS=${env["GERS_MSG_CLASS"]}
@@ -42,7 +42,7 @@
 <#if  row.JCOPYOUT == "Y">
 SET DISPLAY
 PREFIX ${row["JJOBNAME"]}
-OWNER ${env["USER"]}
+OWNER ${env["LOGNAME"]}
 H ALL
 ++ALL
 SORT END-DATE D END-TIME D
