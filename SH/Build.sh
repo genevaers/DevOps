@@ -41,5 +41,6 @@ env | grep 'GERS_' | sort | tee -a $out_log;
 . ./BuildRCApps.sh  > >(tee -a $out_log);
 # Generate Tag scripts
 . ./GenTag.sh  > >(tee -a $out_log);
+echo "$(date) ${BASH_SOURCE##*/} Build process completed for PM$GERS_PE_REL_NBR_FORMATTED" | tee $out_log ;
 }
 main "$@"
