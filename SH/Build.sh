@@ -53,6 +53,6 @@ tsocmd "send '$(date '+%H.%M.%S') Building the RCA and running the regression su
 # Generate Tag scripts
 tsocmd "send '$(date '+%H.%M.%S') Generating the tag scripts and JCL...               ' user("$LOGNAME")"             
 . ./GenTag.sh  > >(tee -a $out_log);
-echo "$(date) ${BASH_SOURCE##*/} Build process completed for PM$GERS_PE_REL_NBR_FORMATTED.B$BUILD_NBR" | tee $out_log ;
+echo "$(date) ${BASH_SOURCE##*/} Build process completed for PM$GERS_PE_REL_NBR_FORMATTED.B$BUILD_NBR" | tee -a $out_log ;
 }
 main "$@"
