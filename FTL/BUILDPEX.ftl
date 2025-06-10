@@ -32,7 +32,7 @@
 </#list> 
 <#-- Generate JCL for Db2 BIND -->
 <#list PGMEXT as pgmTable>
-<#if  pgmTable.PSQL == "Y" && env["GERS_DB2_ASM"] == "Y" >
+<#if  pgmTable.PDB2PRE == "Y" && env["GERS_DB2_ASM"] == "Y" >
 <#include "BIND.ftl">
 </#if>
 </#list> 

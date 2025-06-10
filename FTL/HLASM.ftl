@@ -20,7 +20,7 @@
 * ******************************************************************
 * -->
 <#assign pgmSuffix = pgmTable.PID[3..]>
-<#if  pgmTable.PSQL == "Y" && env["GERS_DB2_ASM"] == "Y">
+<#if  pgmTable.PDB2PRE == "Y" && env["GERS_DB2_ASM"] == "Y">
     <#include "HLASMSQL.ftl">
 </#if>
 //*********************************************************************
@@ -43,7 +43,7 @@ PC(GEN)
 SECTALGN(256)
 SYSPARM(${RELFMT})
 //*
-<#if  pgmTable.PSQL == "Y" && env["GERS_DB2_ASM"] = "Y">
+<#if  pgmTable.PDB2PRE == "Y" && env["GERS_DB2_ASM"] = "Y">
     <#assign SDB2PRE = "Y">
 <#else>
     <#assign SDB2PRE = "N">
