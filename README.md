@@ -39,7 +39,7 @@ Utilities for Development and Operations for GenevaERS
 6. Find the file .gers.profile in the DevOps directory and copy it to your z/OS UNIX home directory. Open this copy in a text editor.  (We recommend using ISPF option 3.17 for this.)
 7. Follow the instructions in .gers.profile and update your environment variables with the appropriate values.
 8. Save and close .gers.profile.
-9. Open the .profile file that is in your z/OS UNIX home directory (if it doesn't exit, create it), and add the following line:
+9. Open the .profile file that is in your z/OS UNIX home directory (if it doesn't exist, create it), and add the following line:
 ```
 . ~/.gers.profile
 ```
