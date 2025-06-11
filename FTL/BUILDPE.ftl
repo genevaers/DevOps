@@ -34,6 +34,7 @@
 <#-- Generate JCL for link -->
 <#list PGM as pgmTable>
 <#if  pgmTable.PMODTYPE == "LOADMOD">
+<#assign FTL_dir = "PE">
 <#include "LINKEDIT.ftl">
 </#if>
 </#list> 

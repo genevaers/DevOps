@@ -19,21 +19,21 @@
 * 
 * ******************************************************************
 * -->
-<#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
-<#-- Generate assembler JCL -->
-<#list PGMEXT as pgmTable>
-<#include "HLASM.ftl">
-</#list> 
-<#-- Generate JCL for link -->
-<#list PGMEXT as pgmTable>
-<#if  pgmTable.PMODTYPE == "LOADMOD">
-<#assign FTL_dir = "PEX">
-<#include "LINKEDIT.ftl">
-</#if>
-</#list> 
-<#-- Generate JCL for Db2 BIND -->
-<#list PGMEXT as pgmTable>
-<#if  pgmTable.PDB2PRE == "Y" && env["GERS_DB2_ASM"] == "Y" >
-<#include "BIND.ftl">
+#!/bin/bash
+<#-- get the repository names from the remote address string  -->
+<#assign PE_REPO = env["GERS_REMOTE_PEB"]?keep_after_last("/")?keep_before(".")>
+<#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>
+<#include "SETVARS.ftl">
+<#-- check we have dir to copy to -->
+FTL_dir=../FTL/PE ;
+[ -d $FTL_dir ] || mkdir $FTL_dir ;
+<#-- change to PE repository directory -->
+cd ${env["GERS_GIT_REPO_DIR"]}/${PE_REPO} ;
+exitIfError;
+<#-- create copy commands for all source elements -->
+<#list PGM as programTable>
+<#if  programTable.PMODTYPE == "LOADMOD">
+cp LINKPARM/${programTable.PID}.ftl "${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/FTL/PE/${programTable.PID}.ftl"
+exitIfError;
 </#if>
 </#list> 

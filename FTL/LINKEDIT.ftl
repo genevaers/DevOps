@@ -27,8 +27,8 @@
 // PARM=(XREF,LET,LIST,MAP),
 // COND=(4,LT)
 //*
-//SYSLIN   DD DSN=${TARGET_HLQ}.LINKPARM(${pgmTable.PID}),
-//            DISP=SHR
+//SYSLIN   DD *
+<#include "${FTL_dir}/${pgmTable.PID}.ftl">
 //*
 //SYSLIB   DD DISP=SHR,DSN=${TARGET_HLQ}.OBJ
 //         DD DISP=SHR,DSN=${env["GERS_LE_RUN_LIB"]}

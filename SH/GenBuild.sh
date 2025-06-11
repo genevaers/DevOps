@@ -56,6 +56,25 @@ fi
 chmod 755 Copy.sh ;
 exitIfError;
 #
+# The LINKPARMs need to copied from the PE and PEX repositories before building the JCL
+#
+java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/COPYLINKPE $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A/tablesPE ./CopyLinkPE.sh  2>> $err_log;
+exitIfFTLError;
+save_pwd=$(pwd) ;
+. ./CopyLinkPE.sh ;
+cd $save_pwd ;
+#
+echo "$(date) ${BASH_SOURCE##*/} Performance Engine LINKPARMs copied";
+#
+if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then 
+  java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/COPYLINKPEX $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX ./CopyLinkPEX.sh  2>> $err_log;
+  exitIfFTLError;
+  save_pwd=$(pwd) ;
+  . ./CopyLinkPEX.sh ;
+  cd $save_pwd ;
+fi 
+#
+#
 # Create build JCL from templates
 #  -- Generate for PE 
 java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BUILDPE $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A/tablesPE ../JCL/BUILDPE.jcl  2>> $err_log;
