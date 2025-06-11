@@ -33,7 +33,7 @@ exitIfError;
 <#-- create copy commands for all source elements -->
 <#list PGMEXT as programTable>
 <#if  programTable.PMODTYPE == "LOADMOD">
-cp LINKPARM/${programTable.PID}.ftl "${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/FTL/PEX/${programTable.PID}.ftl'"
+cp LINKPARM/${programTable.PID}.ftl "${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/FTL/PEX/${programTable.PID}.ftl"
 exitIfError;
 </#if>
 </#list> 
