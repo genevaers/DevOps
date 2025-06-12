@@ -20,22 +20,20 @@
 * ******************************************************************
 * -->
 #!/bin/bash
-<#--
- get the repository names from the remote address string 
- -->
+<#-- get the repository names from the remote address string  -->
 <#assign PE_REPO = env["GERS_REMOTE_PEB"]?keep_after_last("/")?keep_before(".")>
-<#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
-<#--
- change to repository directory
- -->
+<#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>
+<#include "SETVARS.ftl">
+<#-- check we have dir to copy to -->
+FTL_dir=../FTL/PE ;
+[ -d $FTL_dir ] || mkdir $FTL_dir ;
+<#-- change to PE repository directory -->
 cd ${env["GERS_GIT_REPO_DIR"]}/${PE_REPO} ;
 exitIfError;
 <#-- create copy commands for all source elements -->
 <#list PGM as programTable>
-cp ASM/${programTable.PID}.asm "//'${TARGET_HLQ}.ASM(${programTable.PID})'"
+<#if  programTable.PMODTYPE == "LOADMOD">
+cp LINKPARM/${programTable.PID}.ftl "${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/FTL/PE/${programTable.PID}.ftl"
 exitIfError;
-</#list> 
-<#list MAC as macroTable>
-cp MAC/${macroTable.CID}.mac "//'${TARGET_HLQ}.MAC(${macroTable.CID})'"
-exitIfError;
+</#if>
 </#list> 
