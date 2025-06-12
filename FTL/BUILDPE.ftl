@@ -35,7 +35,7 @@
 <#-- Generate JCL for link -->
 <#list PGM as pgmTable>
 <#if  pgmTable.PMODTYPE == "LOADMOD">
-<#assign FTL_dir = "PEX">
+<#assign FTL_dir = "PE">
 <#include "LINKEDIT.ftl">
 </#if>
 </#list> 
@@ -55,7 +55,7 @@
 <#-- Generate JCL for link -->
 <#list PGM as pgmTable>
 <#if  pgmTable.PMODTYPE == "LOADMOD" && pgmTable.PDB2PRE != "Y">
-<#assign FTL_dir = "PEX">
+<#assign FTL_dir = "PE">
 <#include "LINKEDIT.ftl">
 </#if>
 </#list> 
