@@ -72,6 +72,7 @@ if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then
   save_pwd=$(pwd) ;
   . ./CopyLinkPEX.sh ;
   cd $save_pwd ;
+  echo "$(date) ${BASH_SOURCE##*/} Performance Engine Extensions LINKPARMs copied";
 fi 
 #
 #
