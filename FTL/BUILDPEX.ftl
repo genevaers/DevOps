@@ -20,7 +20,8 @@
 * ******************************************************************
 * -->
 <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
-<#-- Generate assembler JCL -->
+<#-------- BUILD WITH DB2 -->
+<#if env["GERS_DB2_ASM"] == "Y">
 <#list PGMEXT as pgmTable>
 <#include "HLASM.ftl">
 </#list> 
@@ -33,7 +34,22 @@
 </#list> 
 <#-- Generate JCL for Db2 BIND -->
 <#list PGMEXT as pgmTable>
-<#if  pgmTable.PDB2PRE == "Y" && env["GERS_DB2_ASM"] == "Y" >
+<#if  pgmTable.PDB2PRE == "Y">
 <#include "BIND.ftl">
 </#if>
+</#list>
+<#else>
+<#-------- BUILD WITHOUT DB2 -->
+<#list PGMEXT as pgmTable>
+<#if pgmTable.PDB2PRE != "Y">
+<#include "HLASM.ftl">
+</#if>
+</#list>
+<#-- Generate JCL for link -->
+<#list PGMEXT as pgmTable>
+<#if  pgmTable.PMODTYPE == "LOADMOD" && pgmTable.PDB2PRE != "Y">
+<#assign FTL_dir = "PEX">
+<#include "LINKEDIT.ftl">
+</#if>
 </#list> 
+</#if> 

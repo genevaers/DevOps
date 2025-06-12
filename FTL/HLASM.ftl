@@ -21,7 +21,10 @@
 * -->
 <#assign pgmSuffix = pgmTable.PID[3..]>
 <#if  pgmTable.PDB2PRE == "Y" && env["GERS_DB2_ASM"] == "Y">
+    <#assign SDB2PRE = "Y">
     <#include "HLASMSQL.ftl">
+<#else>
+    <#assign SDB2PRE = "N">
 </#if>
 //*********************************************************************
 //*  Assemble module
@@ -43,11 +46,6 @@ PC(GEN)
 SECTALGN(256)
 SYSPARM(${RELFMT})
 //*
-<#if  pgmTable.PDB2PRE == "Y" && env["GERS_DB2_ASM"] = "Y">
-    <#assign SDB2PRE = "Y">
-<#else>
-    <#assign SDB2PRE = "N">
-</#if>
 <#if SDB2PRE == "Y">
 //SYSIN    DD DSN=&&DB2PS,    from pre-compile 
 //            DISP=(OLD,DELETE)
