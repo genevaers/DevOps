@@ -9,11 +9,14 @@ if [ "$opt1"  == "-v" ]; then
     echo "Verbose message level";
     export msgLevel=verbose;
 fi
-userTSO='Y'; 
+if [ -z "$USER" ] ; then
+  userTSO='Y'; 
+fi 
 sendTSOMsg 'Starting the PE build process...                    ';
 cd $GERS_GIT_REPO_DIR"/DevOps/SH";                                                                       
 # Re-read the gers profile in case anything changed
 source ~/.gers.profile ;
+exitIfError;
 # Create the log files
 sendTSOMsg 'Creating the log files...                           ';
 . ./CreateLogs.sh ;
@@ -59,12 +62,22 @@ echo "$(date) ${BASH_SOURCE##*/} Build process completed for PM$GERS_PE_REL_NBR_
 
 sendTSOMsg() {
 
-if [ $userTSO = 'Y' ]; then 
+if [ "$userTSO" == "Y" ]; then 
     tsocmd "send '$(date '+%H.%M.%S') $1' user("$LOGNAME")" ;
     if [ $? != 0 ] ; then
         userTSO='N'; 
     fi  
 fi   
+
+}
+
+exitIfError() {
+
+if [ $? != 0 ]
+then
+    echo "*** Process terminated: see error message above";
+    exit 1;
+fi 
 
 }
 
