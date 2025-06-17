@@ -8,6 +8,7 @@ if [ "$msgLevel"  == "verbose" ]; then
   echo $RCA_REPO ;
 fi 
 save_pwd=$(pwd) ;
+MINOR_REL="PM"$GERS_BUILD_VERSION$GERS_BUILD_MAJOR$GERS_BUILD_MINOR;
 # Are we building on zOS ?
 if [ "$GERS_BUILD_RCA" == "ZOS" ]; then 
   echo "$(date) ${BASH_SOURCE##*/} Start RCA Build";
@@ -36,8 +37,6 @@ if [ "$GERS_BUILD_RCA" == "ZOS" ]; then
   touch rcapps-latest.jar;
   rm rcapps-latest.jar;
   ln -s rcapps-$rev.jar rcapps-latest.jar;
-
-  MINOR_REL="PM"$GERS_BUILD_VERSION$GERS_BUILD_MAJOR$GERS_BUILD_MINOR;
 
   touch rcapps-$MINOR_REL.jar;
   rm rcapps-$MINOR_REL.jar;
@@ -77,6 +76,17 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   touch rcapps-$MINOR_REL.jar;
   rm rcapps-$MINOR_REL.jar;
   ln -s rcapps-$rev.jar rcapps-$MINOR_REL.jar;
+
+  cd $GERS_GIT_REPO_DIR/$RCA_REPO;
+  cd PETestFramework/target;
+  chtag -b  *.jar;
+  chmod 755 *.jar;
+  cd bin;
+  mv gerstf gerstf.old;
+  iconv -f"ISO8859-1" -t"IBM-1047" gerstf.old >> gerstf;
+  rm gerstf.old;
+  chtag -t -c"IBM-1047" gerstf;
+  chmod 755 gerstf;
 
   if [ "$GERS_RUN_TESTS" == "Y" ]; then 
     echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
