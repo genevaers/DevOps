@@ -12,8 +12,9 @@ fi
 if [ -z "$USER" ] ; then
   userTSO='Y'; 
 fi 
+DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 sendTSOMsg 'Starting the PE build process...                    ';
-cd $GERS_GIT_REPO_DIR"/DevOps/SH";                                                                       
+cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
 # Re-read the gers profile in case anything changed
 source ~/.gers.profile ;
 exitIfError;
