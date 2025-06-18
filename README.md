@@ -80,3 +80,8 @@ You can run the tagging script:
 or submit the tagging JCL:  
 
 2. In your build JCL library <GERS_ENV_HLQ>.JCL, submit TAGREL.
+
+### Db2 BIND jobs
+
+If the Db2 components for the assembler programs are requested, Db2 BIND JCL will be generated.  
+In your build JCL library <GERS_ENV_HLQ>.JCL, edit BINDPE and BINDPEX for your environment, and submit.
