@@ -97,7 +97,7 @@ if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then
   echo "$(date) ${BASH_SOURCE##*/} Performance Engine Extensions build JCL generated";
   if [ "$GERS_DB2_ASM" == "Y" ]; then 
 #  -- Generate BIND JCL
-    java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BINDPEX $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A/tablesPEX ../JCL/BINDPEX.jcl  2>> $err_log;
+    java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BINDPEX $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX ../JCL/BINDPEX.jcl  2>> $err_log;
     exitIfFTLError;
 #     Copy to data set for use at a later date
     cp ../JCL/BINDPEX.jcl "//'$GERS_TARGET_HLQ.JCL(BINDPEX)'"
