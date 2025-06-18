@@ -19,38 +19,17 @@
 * 
 * ******************************************************************
 * -->
-<#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
-//BLDPE    JOB (${env["GERS_JOB_ACCT_INFO"]}),
-//          'Build GenevaERS PE  ',
+<#include "SETVARS.ftl">
+//BINDPEX   JOB (${env["GERS_JOB_ACCT_INFO"]}),
+//          'Db2 Bind PEX',
 //          NOTIFY=${env["LOGNAME"]},
 //          CLASS=${env["GERS_JOB_CLASS"]},REGION=0M,
 //          MSGLEVEL=${env["GERS_MSG_LEVEL"]},
 //          MSGCLASS=${env["GERS_MSG_CLASS"]}
 //*
-<#--------- BUILD with DB2 -->
-<#if env["GERS_DB2_ASM"] == "Y">
-<#list PGM as pgmTable>
-<#include "HLASM.ftl">
-</#list> 
-<#-- Generate JCL for link -->
-<#list PGM as pgmTable>
-<#if  pgmTable.PMODTYPE == "LOADMOD">
-<#assign FTL_dir = "PE">
-<#include "LINKEDIT.ftl">
-</#if>
-</#list> 
-<#else>
-<#--------- BUILD without DB2 -->
-<#list PGM as pgmTable>
-<#if pgmTable.PDB2PRE != "Y">
-<#include "HLASM.ftl">
+<#-- Generate JCL for Db2 BIND -->
+<#list PGMEXT as pgmTable>
+<#if  pgmTable.PDB2PRE == "Y">
+<#include "BIND.ftl">
 </#if>
 </#list>
-<#-- Generate JCL for link -->
-<#list PGM as pgmTable>
-<#if  pgmTable.PMODTYPE == "LOADMOD" && pgmTable.PDB2PRE != "Y">
-<#assign FTL_dir = "PE">
-<#include "LINKEDIT.ftl">
-</#if>
-</#list> 
-</#if> 

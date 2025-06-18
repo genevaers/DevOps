@@ -75,17 +75,36 @@ if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then
   echo "$(date) ${BASH_SOURCE##*/} Performance Engine Extensions LINKPARMs copied";
 fi 
 #
-#
 # Create build JCL from templates
+#
 #  -- Generate for PE 
 java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BUILDPE $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A/tablesPE ../JCL/BUILDPE.jcl  2>> $err_log;
 exitIfFTLError;
 echo "$(date) ${BASH_SOURCE##*/} Performance Engine build JCL generated";
+#  -- Generate BIND JCL
+if [ "$GERS_DB2_ASM" == "Y" ]; then 
+  java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BINDPE $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A/tablesPE ../JCL/BINDPE.jcl  2>> $err_log;
+  exitIfFTLError;
+#     Copy to data set for use at a later date
+  cp ../JCL/BINDPE.jcl "//'$GERS_TARGET_HLQ.JCL(BINDPE)'"
+  exitIfError;
+  echo "$(date) ${BASH_SOURCE##*/} Performance Engine Db2 BIND JCL generated";
+fi
 #  -- Generate for PEX, if required
 if  [ "$GERS_INCLUDE_PEX" == "Y" ]; then 
   java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BUILDPEX $GERS_GIT_REPO_DIR/$PEX_REPO/TABLE_A/tablesPEX ../JCL/BUILDPEX.jcl 2>> $err_log;
   exitIfFTLError;
   echo "$(date) ${BASH_SOURCE##*/} Performance Engine Extensions build JCL generated";
+  if [ "$GERS_DB2_ASM" == "Y" ]; then 
+#  -- Generate BIND JCL
+    java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/BINDPEX $GERS_GIT_REPO_DIR/$PE_REPO/TABLE_A/tablesPEX ../JCL/BINDPEX.jcl  2>> $err_log;
+    exitIfFTLError;
+#     Copy to data set for use at a later date
+    cp ../JCL/BINDPEX.jcl "//'$GERS_TARGET_HLQ.JCL(BINDPEX)'"
+    exitIfError;
+    echo "$(date) ${BASH_SOURCE##*/} Performance Engine Extensions Db2 BIND JCL generated";
+  fi
+# Concatenate build JCL into one module  
   cd ../JCL;
   cat BUILDPEX.jcl ASMDONE.jcl >> BUILDPE.jcl ;
   exitIfError;

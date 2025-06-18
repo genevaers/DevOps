@@ -32,12 +32,6 @@
 <#include "LINKEDIT.ftl">
 </#if>
 </#list> 
-<#-- Generate JCL for Db2 BIND -->
-<#list PGMEXT as pgmTable>
-<#if  pgmTable.PDB2PRE == "Y">
-<#include "BIND.ftl">
-</#if>
-</#list>
 <#else>
 <#-------- BUILD WITHOUT DB2 -->
 <#list PGMEXT as pgmTable>
