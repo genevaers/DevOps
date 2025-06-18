@@ -33,6 +33,7 @@ if [ "$GERS_BUILD_RCA" == "ZOS" ]; then
 
   cp RCApps/target/rcapps-$rev-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/rcapps-$rev.jar;
   cd $GERS_RCA_JAR_DIR ;
+  exitIfError ;
 
   touch rcapps-latest.jar;
   rm rcapps-latest.jar;
@@ -47,6 +48,7 @@ if [ "$GERS_BUILD_RCA" == "ZOS" ]; then
     cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
     exitIfError;
     ./target/bin/gerstf;
+    exitIfError ;
     cd out;
     chtag  -R -c 819 *;
     chtag  -R -t *;
@@ -63,11 +65,13 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   echo "$(date) ${BASH_SOURCE##*/} RCA release number $rev";
 
   cd RCApps/target ;
+  exitIfError ;
   chtag -b *.jar ;
   chmod 755 *.jar ;
 
   cp rcapps-$rev-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/rcapps-$rev.jar;
   cd $GERS_RCA_JAR_DIR;
+  exitIfError ;  
 
   touch rcapps-latest.jar;
   rm rcapps-latest.jar;
@@ -79,6 +83,7 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
 
   cd $GERS_GIT_REPO_DIR/$RCA_REPO;
   cd PETestFramework/target;
+  exitIfError ;
   chtag -b  *.jar;
   chmod 755 *.jar;
   cd bin;
@@ -93,6 +98,7 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
     cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
     exitIfError ;
     ./target/bin/gerstf;
+    exitIfError ;
     cd out;
     chtag  -R -c 819 *;
     chtag  -R -t *;
