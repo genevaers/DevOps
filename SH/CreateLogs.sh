@@ -13,6 +13,7 @@ touch $out_log;
 chtag -c"iSO8859-1" -t $out_log;
 echo "$(date) ${BASH_SOURCE##*/} Create stdout log file  ${out_log##*/}" | tee $out_log ;
 exitIfError;
+echo "$(date) ${BASH_SOURCE##*/} Build run by $LOGNAME" | tee $out_log ;
 export err_log="$log_dir/err-$log_date.log";
 touch $err_log;
 chtag -c"iSO8859-1" -t $err_log;
