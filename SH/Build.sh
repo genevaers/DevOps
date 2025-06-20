@@ -35,6 +35,8 @@ sendTSOMsg 'Creating the build number...                        ';
 # Generate JCL to allocate data sets, then submit and wait for completion
 sendTSOMsg 'Allocating data sets...                             ';             
 . ./Allocate.sh  > >(tee -a $out_log);
+# Save Environment Variables in data set 
+. ./SaveEnvVars.sh ;
 # Clone the repositories if required, and checkout branches.
 sendTSOMsg 'Cloning the repositories...                         ';             
 . ./CloneRepos.sh  > >(tee -a $out_log);
