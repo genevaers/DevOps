@@ -32,6 +32,8 @@ env | grep 'GERS_' | sort | tee -a $out_log;
 # Do not pipe this output to tee (will break)
 sendTSOMsg 'Creating the build number...                        ';             
 . ./CreateBuildNum.sh ;
+# Build FTL2JCL tool for templates
+. ./BuildFTL2JCL.sh ;
 # Generate JCL to allocate data sets, then submit and wait for completion
 sendTSOMsg 'Allocating data sets...                             ';             
 . ./Allocate.sh  > >(tee -a $out_log);
