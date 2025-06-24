@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # BuildRCApps.sh Build RCA then run the regression suite
 #######################################
 main() {

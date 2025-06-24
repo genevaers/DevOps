@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # SaveEnvVars.sh - Save Environment Variables for this build to build data set
 ########################################################
 

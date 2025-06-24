@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # CreateLogs.sh - Create timestamped log files
 ########################################################
 

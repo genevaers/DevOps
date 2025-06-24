@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # GenBuild.sh - Generate build script and JCL
 ########################################################
 

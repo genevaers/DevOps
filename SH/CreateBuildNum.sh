@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 touch temp.txt;
 touch lst.txt;
 rm temp.txt;

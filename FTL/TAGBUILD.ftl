@@ -27,7 +27,7 @@
 <#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>
 <#assign RCA_REPO = env["GERS_REMOTE_RUN"]?keep_after_last("/")?keep_before(".")>
 <#include "SETVARS.ftl">  <#-- this set vars based on env vars -->
-#!/bin/bash
+#!/usr/bin/env bash
 main() {
 echo "$(date) ${r"${BASH_SOURCE##*/}"} Start tagging of build PM_${RELFMT}.B${env["BUILD_NBR"]}";
 <#--

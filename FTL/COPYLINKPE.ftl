@@ -19,7 +19,7 @@
 * 
 * ******************************************************************
 * -->
-#!/bin/bash
+#!/usr/bin/env bash
 <#-- get the repository names from the remote address string  -->
 <#assign PE_REPO = env["GERS_REMOTE_PEB"]?keep_after_last("/")?keep_before(".")>
 <#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>

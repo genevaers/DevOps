@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # CopySaveInfo.sh - Copy the job output from the spool to library members 
 #######################################
 main() {

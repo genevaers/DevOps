@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # BuildFTL2JCL.sh Build the Java tool for templates
 #######################################
 main() {
@@ -23,7 +23,7 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL2JCL;
   exitIfError ;
 
-  export rev=`grep "<revision>" pom.xml | awk -F'<revision>||</revision>' '{print $2}'`;
+  export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $2}'`;
   echo "FTL2JCL release number" $rev;
 
   chtag -b *.jar ;

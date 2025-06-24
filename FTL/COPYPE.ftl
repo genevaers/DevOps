@@ -19,7 +19,7 @@
 * 
 * ******************************************************************
 * -->
-#!/bin/bash
+#!/usr/bin/env bash
 <#--
  get the repository names from the remote address string 
  -->

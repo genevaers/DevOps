@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Allocate.sh - Allocate data sets
 ########################################################
 

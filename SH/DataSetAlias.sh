@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # DataSetAlias.sh - Create Aliases for data sets
 ########################################################
 
