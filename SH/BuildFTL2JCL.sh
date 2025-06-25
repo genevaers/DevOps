@@ -19,7 +19,7 @@ if [ "$GERS_BUILD_RCA" == "ZOS" ]; then
   
 elif [ "$GERS_BUILD_RCA" == "WIN" ]; then 
 # already built on Windows and uploaded to zOS
-  echo "$(date) ${BASH_SOURCE##*/} Copy and link Windows built RCA";
+  echo "$(date) ${BASH_SOURCE##*/} Copy and link Windows built FTL2JCL";
   cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL2JCL;
   exitIfError ;
 
