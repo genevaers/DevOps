@@ -16,6 +16,7 @@ if [ "$GERS_BUILD_RCA" == "ZOS" ]; then
   cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL2JCL;
   exitIfError ;
   ./build.sh ;
+  exitIfError ;
   
 elif [ "$GERS_BUILD_RCA" == "WIN" ]; then 
 # already built on Windows and uploaded to zOS
@@ -26,15 +27,20 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $2}'`;
   echo "FTL2JCL release number" $rev;
 
+  cd target ;
   chtag -b *.jar ;
   chmod 755 *.jar ;
+  exitIfError ;  
 
-  cp ./target/*-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar;                                       
+  cp ./*-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar;       
+  exitIfError ;                                  
+
   cd $GERS_RCA_JAR_DIR;                                                    
                                                                          
   touch ftl2jcl-latest.jar;                                                 
   rm ftl2jcl-latest.jar;                                                    
   ln -s ftl2jcl-$rev.jar ftl2jcl-latest.jar;
+  exitIfError ;
   
 fi 
 

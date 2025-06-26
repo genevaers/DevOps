@@ -68,24 +68,28 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   exitIfError ;
   chtag -b *.jar ;
   chmod 755 *.jar ;
+  exitIfError ;  
 
   cp rcapps-$rev-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/rcapps-$rev.jar;
-  cd $GERS_RCA_JAR_DIR;
   exitIfError ;  
+  cd $GERS_RCA_JAR_DIR;
 
   touch rcapps-latest.jar;
   rm rcapps-latest.jar;
   ln -s rcapps-$rev.jar rcapps-latest.jar;
+  exitIfError ;  
 
   touch rcapps-$MINOR_REL.jar;
   rm rcapps-$MINOR_REL.jar;
   ln -s rcapps-$rev.jar rcapps-$MINOR_REL.jar;
+  exitIfError ;  
 
   cd $GERS_GIT_REPO_DIR/$RCA_REPO;
   cd PETestFramework/target;
   exitIfError ;
   chtag -b  *.jar;
   chmod 755 *.jar;
+  exitIfError ;  
   cd bin;
 # To run on z/OS Unix the script gerstf must be in EBCDIC
   mv gerstf gerstf.old;
@@ -93,6 +97,7 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   rm gerstf.old;
   chtag -t -c"IBM-1047" gerstf;
   chmod 755 gerstf;
+  exitIfError ;  
 
   if [ "$GERS_RUN_TESTS" == "Y" ]; then 
     echo "$(date) ${BASH_SOURCE##*/} Run regression tests";

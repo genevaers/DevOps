@@ -12,7 +12,7 @@ mv envFile envFile.old;
 iconv -f"ISO8859-1" -t"IBM-1047" envFile.old > envFile;
 exitIfError;
 rm envFile.old;
-chtag -t -c"IBM-1047" envFile;;
+chtag -t -c"IBM-1047" envFile;
 #
 # Copy to data set for use at a later date
 #
