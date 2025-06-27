@@ -68,7 +68,7 @@
 //            SPACE=(TRK,(${row.BTRKSPRI},${row.BTRKSSEC}),RLSE),
 <#if env["GERS_DATASET_RETPD"] != "">
 //            RETPD=${env["GERS_DATASET_RETPD"]},
-</if>
+<#/if>
 //            DSORG=${row.BDSORG},RECFM=${row.BRECFM},LRECL=${row.BLRECL}${SBLKSIZE}
 //*
 </#list> 
