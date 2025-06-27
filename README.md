@@ -37,7 +37,8 @@ Utilities for Development and Operations for GenevaERS
     ```
 5. Clone the DevOps repository to your Git directory.
 6. Find the file .gers.profile in the DevOps directory and copy it to your z/OS UNIX home directory. Open this copy in a text editor.  (We recommend using ISPF option 3.17 for this.)
-7. Follow the instructions in .gers.profile and update your environment variables with the appropriate values.
+7. Follow the instructions in .gers.profile and update your environment variables with the appropriate values.  
+Note: GERS_GIT_REPO_DIR should match the directory created in step 4.  
 8. Save and close .gers.profile.
 9. Open the .profile file that is in your z/OS UNIX home directory (if it doesn't exist, create it), and add the following line:
 ```
@@ -80,3 +81,8 @@ You can run the tagging script:
 or submit the tagging JCL:  
 
 2. In your build JCL library <GERS_ENV_HLQ>.JCL, submit TAGREL.
+
+### Db2 BIND jobs
+
+If the Db2 components for the assembler programs are requested, Db2 BIND JCL will be generated.  
+In your build JCL library <GERS_ENV_HLQ>.JCL, edit BINDPE and BINDPEX for your environment, and submit.

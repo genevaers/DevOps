@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # JobWaiter.sh - check for job completion
 ########################################################
 

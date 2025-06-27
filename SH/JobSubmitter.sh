@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Invoke as follows: JobSubmitter.sh '//GEBT.RTC22964.JCL(LISTDS)' lockdone
 # Where submitter job includes last job step:

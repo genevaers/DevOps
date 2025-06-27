@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # GenTag.sh - Generate script to Tag builds
 ########################################################
 

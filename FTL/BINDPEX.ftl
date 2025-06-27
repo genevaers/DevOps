@@ -19,21 +19,17 @@
 * 
 * ******************************************************************
 * -->
-#!/usr/bin/env bash
-<#-- get the repository names from the remote address string  -->
-<#assign PEX_REPO = env["GERS_REMOTE_PEX"]?keep_after_last("/")?keep_before(".")>
-<#assign DEV_REPO = env["GERS_REMOTE_DEV"]?keep_after_last("/")?keep_before(".")>
 <#include "SETVARS.ftl">
-<#-- check we have dir to copy to -->
-FTL_dir=../FTL/PEX ;
-[ -d $FTL_dir ] || mkdir $FTL_dir ;
-<#-- change to repository directory -->
-cd ${env["GERS_GIT_REPO_DIR"]}/${PEX_REPO} ;
-exitIfError;
-<#-- create copy commands for all source elements -->
-<#list PGMEXT as programTable>
-<#if  programTable.PMODTYPE == "LOADMOD">
-cp LINKPARM/${programTable.PID}.ftl "${env["GERS_GIT_REPO_DIR"]}/${DEV_REPO}/FTL/PEX/${programTable.PID}.ftl"
-exitIfError;
+//BINDPEX   JOB (${env["GERS_JOB_ACCT_INFO"]}),
+//          'Db2 Bind PEX',
+//          NOTIFY=${env["LOGNAME"]},
+//          CLASS=${env["GERS_JOB_CLASS"]},REGION=0M,
+//          MSGLEVEL=${env["GERS_MSG_LEVEL"]},
+//          MSGCLASS=${env["GERS_MSG_CLASS"]}
+//*
+<#-- Generate JCL for Db2 BIND -->
+<#list PGMEXT as pgmTable>
+<#if  pgmTable.PDB2PRE == "Y">
+<#include "BIND.ftl">
 </#if>
-</#list> 
+</#list>

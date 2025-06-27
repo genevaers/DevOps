@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Build.sh - Build GenevaERS 
 ########################################################
 # set -x;
@@ -12,8 +12,9 @@ fi
 if [ -z "$USER" ] ; then
   userTSO='Y'; 
 fi 
+DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 sendTSOMsg 'Starting the PE build process...                    ';
-cd $GERS_GIT_REPO_DIR"/DevOps/SH";                                                                       
+cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
 # Re-read the gers profile in case anything changed
 source ~/.gers.profile ;
 exitIfError;
@@ -31,9 +32,13 @@ env | grep 'GERS_' | sort | tee -a $out_log;
 # Do not pipe this output to tee (will break)
 sendTSOMsg 'Creating the build number...                        ';             
 . ./CreateBuildNum.sh ;
+# Build FTL2JCL tool for templates
+. ./BuildFTL2JCL.sh ;
 # Generate JCL to allocate data sets, then submit and wait for completion
 sendTSOMsg 'Allocating data sets...                             ';             
 . ./Allocate.sh  > >(tee -a $out_log);
+# Save Environment Variables in data set 
+. ./SaveEnvVars.sh ;
 # Clone the repositories if required, and checkout branches.
 sendTSOMsg 'Cloning the repositories...                         ';             
 . ./CloneRepos.sh  > >(tee -a $out_log);
