@@ -27,7 +27,7 @@ if [ "$GERS_CLONE_PE" == "Y" ]; then
   exitIfError;
 fi
 cd $PE_REPO;
-git checkout $GERS_BRANCH_PE;
+git checkout $GERS_BRANCH_PE 2>&1;
 exitIfError;
 cd ..
 # Clone PE Extensions repo, if required
@@ -38,7 +38,7 @@ if [ "$GERS_CLONE_PEX" == "Y" ]; then
   exitIfError;
 fi
 cd $PEX_REPO;
-git checkout $GERS_BRANCH_PEX;
+git checkout $GERS_BRANCH_PEX 2>&1;
 exitIfError;
 cd ..
 # Clone RCA repo, or clean the Test Framework output dir
@@ -52,7 +52,7 @@ else
   exitIfError;
 fi
 cd $RCA_REPO;
-git checkout $GERS_BRANCH_RCA;
+git checkout $GERS_BRANCH_RCA 2>&1;
 exitIfError;
 cd ..
 echo "$(date) ${BASH_SOURCE##*/} Repositories cloned and branches checked out";
