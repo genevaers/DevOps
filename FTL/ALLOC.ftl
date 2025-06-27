@@ -66,6 +66,9 @@
 //            DISP=(NEW,CATLG,DELETE),
 //            UNIT=${env["GERS_PERM_UNIT_NAME"]}${SDSNTYPE},
 //            SPACE=(TRK,(${row.BTRKSPRI},${row.BTRKSSEC}),RLSE),
+<#if ${env["GERS_DATASET_RETPD"]} != "">
+//            RETPD=${env["GERS_DATASET_RETPD"]},
+</if>
 //            DSORG=${row.BDSORG},RECFM=${row.BRECFM},LRECL=${row.BLRECL}${SBLKSIZE}
 //*
 </#list> 

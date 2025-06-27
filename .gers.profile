@@ -252,6 +252,11 @@ export GERS_TEMP_UNIT_NAME='SYSDA'
 #
 export GERS_PERM_UNIT_NAME='SYSDA'
 
+#     Optional retention period for datasets in days.
+#     Not a required parameter
+#
+export GERS_DATASET_RETPD='999'
+
 #     The following environment variables set values that are needed
 #     to run UNIX System Services process from MVS batch JCL.  
 #
