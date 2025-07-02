@@ -47,7 +47,7 @@ if [ "$GERS_BUILD_RCA" == "ZOS" ]; then
     echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
     cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
     exitIfError;
-    ./target/bin/gerstf 2>&1;
+    ./target/bin/gerstf;
     exitIfError ;
     cd out;
     chtag  -R -c 819 *;
@@ -103,7 +103,7 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
     echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
     cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
     exitIfError ;
-    ./target/bin/gerstf 2>&1;
+    ./target/bin/gerstf ;
     exitIfError ;
     cd out;
     chtag  -R -c 819 *;
