@@ -44,13 +44,6 @@ Note: GERS_GIT_REPO_DIR should match the directory created in step 4.
 ```
 . ~/.gers.profile
 ```
-10. Navigate to the FTL2JCL directory under the DevOps directory.
-11. To build the FTL2JCL utility used to create the JCL during the Performance Engine build run the build.sh script using the following:
-```
-./build.sh
-```
- It will copy the .jar file to the RCA jar file directory created earlier and referenced by $GERS_RCA_JAR_DIR.
-
 ### Building the Performance Engine and running the regression tests
 1. Navigate to the SH directory under the DevOps directory. 
 2. To run the build enter the following:

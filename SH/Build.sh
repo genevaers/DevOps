@@ -33,20 +33,20 @@ env | grep 'GERS_' | sort | tee -a $out_log;
 sendTSOMsg 'Creating the build number...                        ';             
 . ./CreateBuildNum.sh ;
 # Build FTL2JCL tool for templates
-. ./BuildFTL2JCL.sh ;
+. ./BuildFTL2JCL.sh 2> >(tee -a $err_log) > >(tee -a $out_log);
 # Generate JCL to allocate data sets, then submit and wait for completion
 sendTSOMsg 'Allocating data sets...                             ';             
 . ./Allocate.sh  > >(tee -a $out_log);
 # Save Environment Variables in data set 
-. ./SaveEnvVars.sh ;
+. ./SaveEnvVars.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
 # Clone the repositories if required, and checkout branches.
 sendTSOMsg 'Cloning the repositories...                         ';             
-. ./CloneRepos.sh  > >(tee -a $out_log);
+. ./CloneRepos.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
 # Generate the script to copy source to data sets
 # Generate the JCL for ASM and LINK
 # These read tables in the PE and PEX repositories
 sendTSOMsg 'Generating the ASM and LINK JCL...                  ';             
-. ./GenBuild.sh  > >(tee -a $out_log);
+. ./GenBuild.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
 # Submit the generated assemble and link jobs
 sendTSOMsg 'Submitting the generated ASM and LINK jobs...       ';             
 . ./SubBuild.sh  > >(tee -a $out_log);
@@ -58,7 +58,7 @@ sendTSOMsg 'Saving the job output...                            ';
 . ./SaveJobInfo.sh > >(tee -a $out_log);
 # Build RCA and Run regression suite 
 sendTSOMsg 'Building the RCA and running the regression suite...';             
-. ./BuildRCApps.sh  > >(tee -a $out_log);
+. ./BuildRCApps.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
 # Generate Tag scripts
 sendTSOMsg 'Generating the tag scripts and JCL...               ';             
 . ./GenTag.sh  > >(tee -a $out_log);
