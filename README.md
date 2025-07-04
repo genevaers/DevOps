@@ -53,10 +53,9 @@ Note: GERS_GIT_REPO_DIR should match the directory created in step 4.
     ```
     git checkout V4
     ```
-3. Navigate to the SH directory under the DevOps directory. 
-4. To run the build enter the following:
+3. To run the build enter the following:
     ```
-    ./Build.sh
+    ./build.sh
     ```
 This will start a series of scripts and jobs which will build the Performance Engine then run the regression tests.  
 
