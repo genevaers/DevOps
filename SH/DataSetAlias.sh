@@ -11,9 +11,9 @@ exitIfFTLError;
 cat ../JCL/ALIASDONE.jcl >> ../JCL/ALIAS.jcl;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit JCL to set aliases for the build data sets";
-. ./JobSubmitter.sh '../JCL/ALIAS.jcl' aliasdone  &>> $err_log;
+. ./JobSubmitter.sh '../JCL/ALIAS.jcl' aliasdone  1>> $err_log;
 echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
-. ./JobWaiter.sh 60 aliasdone &>> $err_log;
+. ./JobWaiter.sh 60 aliasdone 1>> $err_log;
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;

@@ -11,9 +11,9 @@ save_pwd=$(pwd) ;
 cd $save_pwd ;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit the generated JCL to assemble and link the load modules";
-. ./JobSubmitter.sh '../JCL/BUILDPE.jcl' asmdone  &>> $err_log;
+. ./JobSubmitter.sh '../JCL/BUILDPE.jcl' asmdone  1>> $err_log;
 echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
-. ./JobWaiter.sh 120 asmdone  &>> $err_log ;
+. ./JobWaiter.sh 120 asmdone  1>> $err_log ;
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;

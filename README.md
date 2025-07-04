@@ -41,15 +41,22 @@ Utilities for Development and Operations for GenevaERS
 Note: GERS_GIT_REPO_DIR should match the directory created in step 4.  
 8. Save and close .gers.profile.
 9. Open the .profile file that is in your z/OS UNIX home directory (if it doesn't exist, create it), and add the following line:
-```
-. ~/.gers.profile
-```
+    ```
+    . ~/.gers.profile
+    ```
 ### Building the Performance Engine and running the regression tests
-1. Navigate to the SH directory under the DevOps directory. 
-2. To run the build enter the following:
-```
-./Build.sh
-```
+1. Navigate to the DevOps directory, and pull the latest copy:
+    ```
+    git pull
+    ```
+2. Check out the branch you require, for example:
+    ```
+    git checkout V4
+    ```
+3. To run the build enter the following:
+    ```
+    ./build.sh
+    ```
 This will start a series of scripts and jobs which will build the Performance Engine then run the regression tests.  
 
 The build process generates tagging scripts and JCL.
@@ -58,9 +65,9 @@ The build process generates tagging scripts and JCL.
 
 You can run the tagging script:  
 1. In the SH directory of DevOps run the generated script TAGBUILD.sh.
-```
-./TAGBUILD.sh
-```
+    ```
+    ./TAGBUILD.sh
+    ```
 or submit the tagging JCL:  
 
 2. In your build JCL library <GERS_ENV_HLQ>.JCL, submit TAGBLD.
@@ -68,9 +75,9 @@ or submit the tagging JCL:
 ### Tagging the release 
 You can run the tagging script:
 1. In the SH directory of DevOps run the generated script TAGREL.sh.
-```
-./TAGBUILD.sh
-```
+    ```
+    ./TAGBUILD.sh
+    ```
 or submit the tagging JCL:  
 
 2. In your build JCL library <GERS_ENV_HLQ>.JCL, submit TAGREL.

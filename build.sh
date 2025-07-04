@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build.sh - Build GenevaERS 
+# build.sh - Build GenevaERS 
 ########################################################
 # set -x;
 # set -e;

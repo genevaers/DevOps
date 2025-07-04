@@ -10,9 +10,9 @@ exitIfFTLError;
 cat ../JCL/SAVEDONE.jcl >> ../JCL/SAVEJOB.jcl;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit JCL to copy job output";
-. ./JobSubmitter.sh '../JCL/SAVEJOB.jcl' savedone &>> $err_log;
+. ./JobSubmitter.sh '../JCL/SAVEJOB.jcl' savedone 1>> $err_log;
 echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
-. ./JobWaiter.sh 60 savedone &>> $err_log;
+. ./JobWaiter.sh 60 savedone 1>> $err_log;
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;
