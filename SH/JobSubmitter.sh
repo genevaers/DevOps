@@ -32,18 +32,18 @@ fi
 
 Cmd1="$1";
 if [[ "$Cmd1" = "" ]]; then
-  echo "No JCL supplied";
-  exit 1;
+  echo "$(date) ${BASH_SOURCE##*/} No JCL supplied" >&2 ;             
+  return 1;
 else
-  echo "Command to submit $Cmd1"; 
+  echo "$(date) ${BASH_SOURCE##*/} Command to submit $Cmd1" ;  
 fi
 
 Filel="$2";
 if [[ "$Filel" = "" ]]; then
-  echo "No lock file supplied";
-  exit 1;
+  echo "$(date) ${BASH_SOURCE##*/} No lock file supplied" >&2;
+  return 1;
 else
-  echo "Lock signal file: $Filel";
+  echo "$(date) ${BASH_SOURCE##*/} Lock signal file: $Filel";
 fi
 
 touch $Filel;
@@ -52,6 +52,5 @@ rm $Filel;
 submit $Cmd1  > out.txt;
 job_rc=$?;
 export GERS_JOBID=$(awk '/JOB/ {print $2}' out.txt);
-echo "Job number $GERS_JOBID" ;
-echo "RC from submit: $job_rc";
-
+echo "$(date) ${BASH_SOURCE##*/} Job number $GERS_JOBID" >&2;
+echo "$(date) ${BASH_SOURCE##*/} RC from submit: $job_rc" >&2;

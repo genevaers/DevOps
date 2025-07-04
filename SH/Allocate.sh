@@ -11,9 +11,9 @@ exitIfFTLError;
 cat ../JCL/ALLOCDONE.jcl >> ../JCL/ALLOC.jcl;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit JCL to allocate the build data sets";
-. ./JobSubmitter.sh '../JCL/ALLOC.jcl' allocdone &>> $err_log;
+. ./JobSubmitter.sh '../JCL/ALLOC.jcl' allocdone 1>> $err_log;
 echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
-. ./JobWaiter.sh 60 allocdone &>> $err_log;
+. ./JobWaiter.sh 60 allocdone 1>> $err_log;
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;

@@ -36,7 +36,7 @@ sendTSOMsg 'Creating the build number...                        ';
 . ./BuildFTL2JCL.sh 2> >(tee -a $err_log) > >(tee -a $out_log);
 # Generate JCL to allocate data sets, then submit and wait for completion
 sendTSOMsg 'Allocating data sets...                             ';             
-. ./Allocate.sh  > >(tee -a $out_log);
+. ./Allocate.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
 # Save Environment Variables in data set 
 . ./SaveEnvVars.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
 # Clone the repositories if required, and checkout branches.
@@ -49,13 +49,13 @@ sendTSOMsg 'Generating the ASM and LINK JCL...                  ';
 . ./GenBuild.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
 # Submit the generated assemble and link jobs
 sendTSOMsg 'Submitting the generated ASM and LINK jobs...       ';             
-. ./SubBuild.sh  > >(tee -a $out_log);
+. ./SubBuild.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
 # Generate and submit JCL to set aliases
 sendTSOMsg 'Setting the aliases...                              ';             
-. ./DataSetAlias.sh  > >(tee -a $out_log);
+. ./DataSetAlias.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
 # Save job output from spool to data set
 sendTSOMsg 'Saving the job output...                            ';             
-. ./SaveJobInfo.sh > >(tee -a $out_log);
+. ./SaveJobInfo.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
 # Build RCA and Run regression suite 
 sendTSOMsg 'Building the RCA and running the regression suite...';             
 . ./BuildRCApps.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
