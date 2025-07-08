@@ -53,7 +53,21 @@ Note: GERS_GIT_REPO_DIR should match the directory created in step 4.
     ```
     git checkout V4
     ```
-3. To run the build enter the following:
+3. Edit and save the appropriate environment variables in ~/.gers.profile to:  
+   - set the build version number  
+   - point to the required repository branches  
+  For example:
+    ```
+    export GERS_BUILD_VERSION='4'
+    export GERS_BUILD_MAJOR='18'
+    export GERS_BUILD_MINOR='099'
+
+    export GERS_BRANCH_PE="PM_4.18.099.B0123_branch"
+    export GERS_BRANCH_PEX="PM_4.18.099.B0123_branch"
+    export GERS_BRANCH_RCA="PM_4.18.099.B0123_branch"
+
+    ```
+4. To run the build enter the following:
     ```
     ./build.sh
     ```
