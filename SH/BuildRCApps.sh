@@ -91,11 +91,6 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   chmod 755 *.jar;
   exitIfError ;  
   cd bin;
-# To run on z/OS Unix the script gerstf must be in EBCDIC
-  mv gerstf gerstf.old;
-  iconv -f"ISO8859-1" -t"IBM-1047" gerstf.old > gerstf;
-  rm gerstf.old;
-  chtag -t -c"IBM-1047" gerstf;
   chmod 755 gerstf;
   exitIfError ;  
 

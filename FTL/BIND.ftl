@@ -33,7 +33,7 @@
 //SYSTSIN  DD *
  DSN SYSTEM(${env["GERS_DB2_SUBSYSTEM"]})
   FREE PLAN(${pgmTable.PID}${env["GERS_DB2_PLAN_SUFFIX"]})
-  END                                                                  
+  END 
  CALL 'SYS1.LINKLIB(IEFBR14)'       /* ZERO OUT RETURN CODE */
 //*
 //*********************************************************************
@@ -51,9 +51,9 @@
 //SYSTSPRT DD SYSOUT=*
 //*
 //SYSTSIN  DD *
- DSN SYSTEM(${env["GERS_DB2_SUBSYSTEM"]})                                                      
-  BIND PLAN(${pgmTable.PID}${env["GERS_DB2_PLAN_SUFFIX"]}) MEM(${pgmTable.PID}) ACT(REP) ISOLATION(CS) -             
-  LIB('${TARGET_HLQ}.GVBDBRM') QUALIFIER(${env["GERS_DB2_QUALIFIER"]}) -             
+ DSN SYSTEM(${env["GERS_DB2_SUBSYSTEM"]})
+  BIND PLAN(${pgmTable.PID}${env["GERS_DB2_PLAN_SUFFIX"]}) MEM(${pgmTable.PID}) ACT(REP) ISOLATION(CS) -
+  LIB('${TARGET_HLQ}.GVBDBRM') QUALIFIER(${env["GERS_DB2_QUALIFIER"]}) -
   OWNER(${env["GERS_DB2_QUALIFIER"]})
 //*
 //*********************************************************************
@@ -69,11 +69,11 @@
 //SYSTSPRT DD SYSOUT=*                                                 
 //SYSPRINT DD SYSOUT=*                                                 
 //*
-//SYSTSIN  DD *                                                        
-  DSN SYSTEM(${env["GERS_DB2_SUBSYSTEM"]}) RETRY(0) TEST(0)                                    
-  RUN PROGRAM(DSNTIAD) PLAN(${env["GERS_DB2_UTILITY"]}) -                                
-  LIB('${env["GERS_DB2_RUN_LIB"]}')                                            
-//SYSIN    DD  *                                                       
- SET CURRENT SQLID='${env["GERS_DB2_QUALIFIER"]}';                                         
- GRANT EXECUTE ON PLAN ${pgmTable.PID}${env["GERS_DB2_PLAN_SUFFIX"]} TO PUBLIC;                              
+//SYSTSIN  DD *                                
+  DSN SYSTEM(${env["GERS_DB2_SUBSYSTEM"]}) RETRY(0) TEST(0) 
+  RUN PROGRAM(DSNTIAD) PLAN(${env["GERS_DB2_UTILITY"]}) - 
+  LIB('${env["GERS_DB2_RUN_LIB"]}') 
+//SYSIN    DD  *                               
+ SET CURRENT SQLID='${env["GERS_DB2_QUALIFIER"]}';
+ GRANT EXECUTE ON PLAN ${pgmTable.PID}${env["GERS_DB2_PLAN_SUFFIX"]} TO PUBLIC;
 //*

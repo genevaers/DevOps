@@ -32,7 +32,8 @@
 //STEPLIB  DD DISP=SHR,DSN=${env["GERS_DB2_EXIT_LIB"]}
 //         DD DISP=SHR,DSN=${env["GERS_DB2_LOAD_LIB"]}
 //*
-//SYSIN    DD DISP=SHR,DSN=${TARGET_HLQ}.ASM(${pgmTable.PID})
+//SYSIN    DD DSN=${TARGET_HLQ}.ASM(${pgmTable.PID}),
+//            DISP=SHR
 //*
 //SYSLIB   DD DISP=SHR,DSN=${TARGET_HLQ}.MAC
 //*
