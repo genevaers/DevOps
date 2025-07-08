@@ -50,7 +50,8 @@ SYSPARM(${RELFMT})
 //SYSIN    DD DSN=&&DB2PS,    from pre-compile 
 //            DISP=(OLD,DELETE)
 <#else>
-//SYSIN    DD DISP=SHR,DSN=${TARGET_HLQ}.ASM(${pgmTable.PID})
+//SYSIN    DD DSN=${TARGET_HLQ}.ASM(${pgmTable.PID}),
+//            DISP=SHR
 </#if>
 //SYSLIB   DD DISP=SHR,DSN=${TARGET_HLQ}.MAC
 //         DD DISP=SHR,DSN=${env["GERS_HLASM_TK_MAC_LIB"]}
