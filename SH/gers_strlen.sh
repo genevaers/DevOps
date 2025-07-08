@@ -34,4 +34,5 @@ echo "$(date) ${BASH_SOURCE##*/} Actual string length: $GERS_STRING_LENGTH";
 
 if [[ $GERS_STRING_LENGTH -gt $MaxLen ]]; then
   echo "$(date) ${BASH_SOURCE##*/} String is too long: $GERS_STRING_UPPER";
+  return 2;
 fi
