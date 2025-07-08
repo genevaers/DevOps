@@ -42,6 +42,9 @@ export GERS_INCLUDE_PEX='Y'
 #     GERS_BUILD_HLQ specifies the high-level qualifier(s) to be used 
 #     for build output files, such as load libraries.  
 #
+#     Note: This HLQ must be upper case, and 18 characters or less, 
+#     including periods ('.'), or the build will fail with JCL errors.
+#
 #     The Performance Engine build process increments a four-digit Build 
 #     Number, starting at 0000, for every build that is executed for 
 #     a given combination of Build HLQ and Release Name.  
@@ -63,6 +66,8 @@ export GERS_BUILD_HLQ='<your-build-hlq>'
 
 #     GERS_ENV_HLQ specifies the high-level qualifier(s) to be used for
 #     aliases for the build output files.
+#     Note: This HLQ must be upper case, and 35 characters or less, 
+#     including periods ('.'), or the build will fail with JCL errors.
 #
 #     Examples:
 #
@@ -80,7 +85,10 @@ export GERS_ENV_HLQ='<your-env-hlq>'
 export GERS_TEST_SPEC_LIST='JBasespeclist.yaml'
 
 #     GERS_TEST_HLQ specifies the high-level qualifier of the regression
-#     test output files.  
+#     test output files. 
+#     Note: This HLQ must be upper case, and 10 characters or less, 
+#     including periods ('.'), or the test framework will fail with
+#     dynamic allocation errors, or the tests with JCL errors.
 #
 export GERS_TEST_HLQ='<your-test-hlq>'
 
