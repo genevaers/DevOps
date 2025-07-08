@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 # build.sh - Build GenevaERS 
 ########################################################
-# set -x;
-# set -e;
 main() {
 opt1="$1";
 if [ "$opt1"  == "-v" ]; then
     echo "Verbose message level";
     export msgLevel=verbose;
 fi
-if [ -z "$USER" ] ; then
-  userTSO='Y'; 
-fi 
-DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
-sendTSOMsg 'Starting the PE build process...                    ';
-cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
 # Re-read the gers profile in case anything changed
 source ~/.gers.profile ;
 exitIfError;
+# Change to shell script directory
+DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
+cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
+# Check if run from TSO - used by sendTSOMsg
+if [ -z "$USER" ] ; then
+  userTSO='Y'; 
+fi 
+sendTSOMsg 'Starting the PE build process...                    ';
 # Create the log files
 sendTSOMsg 'Creating the log files...                           ';
 . ./CreateLogs.sh ;
