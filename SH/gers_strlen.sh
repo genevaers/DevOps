@@ -50,6 +50,6 @@ if [ "$msgLevel"  == "verbose" ]; then
 fi
 
 if [[ $GERS_STRING_LENGTH -gt $MaxLen ]]; then
-  echo "$(date) ${BASH_SOURCE##*/} $EnvName: $GERS_STRING_UPPER cannot be longer than $MaxLen";
+  echo "$(date) ${BASH_SOURCE##*/} $EnvName ($GERS_STRING_UPPER) cannot be longer than $MaxLen characters";
   return 2;
 fi
