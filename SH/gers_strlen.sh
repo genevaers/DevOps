@@ -9,6 +9,7 @@ if [ "$msgLevel"  == "verbose" ]; then
   echo "Arg0: $0";
   echo "Arg1: $1";
   echo "Arg2: $2";
+  echo "Arg3: $3";
 fi
 
 Str="${1^^}";
@@ -31,6 +32,16 @@ else
   fi
 fi
 
+EnvName="$3";
+if [[ "$EnvName" = "" ]]; then
+  echo "$(date) ${BASH_SOURCE##*/} No environment variable name supplied" >&2;
+  return 1;
+else
+  if [ "$msgLevel"  == "verbose" ]; then
+    echo "$(date) ${BASH_SOURCE##*/} Environment variale name: $EnvName";
+  fi
+fi
+
 GERS_STRING_UPPER=$Str;
 GERS_STRING_LENGTH=${#Str};
 
@@ -39,6 +50,6 @@ if [ "$msgLevel"  == "verbose" ]; then
 fi
 
 if [[ $GERS_STRING_LENGTH -gt $MaxLen ]]; then
-  echo "$(date) ${BASH_SOURCE##*/} String: $GERS_STRING_UPPER cannot be longer than $MaxLen";
+  echo "$(date) ${BASH_SOURCE##*/} $EnvName: $GERS_STRING_UPPER cannot be longer than $MaxLen";
   return 2;
 fi

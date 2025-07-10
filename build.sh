@@ -22,13 +22,13 @@ sendTSOMsg 'Starting the PE build process...                    ';
 sendTSOMsg 'Creating the log files...                           ';
 . ./CreateLogs.sh ;
 # Validate 'prefix' values do not exceed certain lengths
-. ./gers_strlen.sh $GERS_BUILD_HLQ 18 2> >(tee -a $err_log) > >(tee -a $out_log);
+. ./gers_strlen.sh $GERS_BUILD_HLQ 18 GERS_BUILD_HLQ 2> >(tee -a $err_log) > >(tee -a $out_log);
 exitIfError;
 export GERS_BUILD_HLQ=$GERS_STRING_UPPER
-. ./gers_strlen.sh $GERS_ENV_HLQ 35 2> >(tee -a $err_log) > >(tee -a $out_log);
+. ./gers_strlen.sh $GERS_ENV_HLQ 35 GERS_ENV_HLQ 2> >(tee -a $err_log) > >(tee -a $out_log);
 exitIfError;
 export GERS_ENV_HLQ=$GERS_STRING_UPPER
-. ./gers_strlen.sh $GERS_TEST_HLQ 10 2> >(tee -a $err_log) > >(tee -a $out_log);
+. ./gers_strlen.sh $GERS_TEST_HLQ 10 GERS_TEST_HLQ 2> >(tee -a $err_log) > >(tee -a $out_log);
 exitIfError;
 export GERS_TEST_HLQ=$GERS_STRING_UPPER
 # set env vars for build messages
