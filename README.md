@@ -45,9 +45,19 @@ Note: GERS_GIT_REPO_DIR should match the directory created in step 4.
     . ~/.gers.profile
     ```
 ### Building the Performance Engine and running the regression tests
-1. Navigate to the DevOps directory, and pull the latest copy:
+1. Get the latest copy of the DevOps directory.  
+   1. Change to the GenevaERS directory.
+   2. Remove the existing DevOps directory:
     ```
-    git pull
+    rm -rf DevOps
+    ```
+    3. Clone the DevOps repository, For example, using SSH:
+    ```
+    git clone git@github.com:genevaers/DevOps.git
+    ```
+    4. Change to the DevOps directory:
+    ```
+    cd DevOps
     ```
 2. Check out the branch you require, for example:
     ```
