@@ -22,7 +22,7 @@ sendTSOMsg 'Starting the PE build process...                    ';
 sendTSOMsg 'Creating the log files...                           ';
 . ./CreateLogs.sh ;
 # Validate 'prefix' values do not exceed certain lengths
-. ./gers_strlen.sh $GERS_BUILD_HLQ 20 2> >(tee -a $err_log) > >(tee -a $out_log);
+. ./gers_strlen.sh $GERS_BUILD_HLQ 18 2> >(tee -a $err_log) > >(tee -a $out_log);
 exitIfError;
 export GERS_BUILD_HLQ=$GERS_STRING_UPPER
 . ./gers_strlen.sh $GERS_ENV_HLQ 35 2> >(tee -a $err_log) > >(tee -a $out_log);

@@ -16,7 +16,9 @@ if [[ "$Str" = "" ]]; then
   echo "$(date) ${BASH_SOURCE##*/} No string supplied" >&2 ;
   return 1;
 else
-  echo "$(date) ${BASH_SOURCE##*/} String being measured (in upper case): $Str" ;
+  if [ "$msgLevel"  == "verbose" ]; then
+    echo "$(date) ${BASH_SOURCE##*/} String being measured (in upper case): $Str" ;
+  fi
 fi
 
 MaxLen="$2";
@@ -24,13 +26,17 @@ if [[ "$MaxLen" = "" ]]; then
   echo "$(date) ${BASH_SOURCE##*/} No max length supplied" >&2;
   return 1;
 else
-  echo "$(date) ${BASH_SOURCE##*/} Max allowed string length: $MaxLen";
+  if [ "$msgLevel"  == "verbose" ]; then
+    echo "$(date) ${BASH_SOURCE##*/} Max allowed string length: $MaxLen";
+  fi
 fi
 
 GERS_STRING_UPPER=$Str;
 GERS_STRING_LENGTH=${#Str};
 
-echo "$(date) ${BASH_SOURCE##*/} Actual string length: $GERS_STRING_LENGTH";
+if [ "$msgLevel"  == "verbose" ]; then
+  echo "$(date) ${BASH_SOURCE##*/} Actual string length: $GERS_STRING_LENGTH";
+fi
 
 if [[ $GERS_STRING_LENGTH -gt $MaxLen ]]; then
   echo "$(date) ${BASH_SOURCE##*/} String: $GERS_STRING_UPPER cannot be longer than $MaxLen";
