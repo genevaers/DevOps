@@ -90,7 +90,7 @@ fi
 
 checkPWD() {
 
-if [  "$(pwd)" != "$GERS_GIT_REPO_DIR/$DEV_REPO" ]; then
+if [  "$(pwd)" != "$GERS_GIT_REPO_DIR/$DEV_REPO" && "$(pwd)" != "$GERS_GIT_REPO_DIR/$DEV_REPO/" ]; then
   echo "$(date) ${BASH_SOURCE##*/} Environment Variable GERS_GIT_REPO_DIR = '$GERS_GIT_REPO_DIR'" | tee -a $out_log ;
   echo "$(date) ${BASH_SOURCE##*/} DevOps directory name ='$DEV_REPO'" | tee -a $out_log ;
   echo "$(date) ${BASH_SOURCE##*/} They must match with the current directory '$(pwd)'" | tee -a $out_log ;
