@@ -12,6 +12,8 @@ source ~/.gers.profile ;
 exitIfError;
 # Change to shell script directory
 DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
+checkPWD;
+exitIfError;
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
 # Check if run from TSO - used by sendTSOMsg
 if [ -z "$USER" ] ; then
@@ -85,6 +87,18 @@ if [ "$userTSO" == "Y" ]; then
 fi   
 
 }
+
+checkPWD() {
+
+if [  "$(pwd)" != "$GERS_GIT_REPO_DIR/$DEV_REPO" ]; then
+  echo "$(date) ${BASH_SOURCE##*/} Environment Variable GERS_GIT_REPO_DIR = '$GERS_GIT_REPO_DIR'" | tee -a $out_log ;
+  echo "$(date) ${BASH_SOURCE##*/} DevOps directory name ='$DEV_REPO'" | tee -a $out_log ;
+  echo "$(date) ${BASH_SOURCE##*/} They must match with the current directory '$(pwd)'" | tee -a $out_log ;
+  return 1;
+ fi 
+
+}
+
 
 exitIfError() {
 
