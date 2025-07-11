@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+# Determine if length greater than maximum allowed
+# Check for upper case characters
+# Return #GERS_STRING_UPPER
+# Return #GERS_STRING_LENGTH
+
+if [ "$msgLevel"  == "verbose" ]; then
+  echo "Arg0: $0";
+  echo "Arg1: $1";
+  echo "Arg2: $2";
+  echo "Arg3: $3";
+fi
+
+Str="${1^^}";
+if [[ "$Str" = "" ]]; then
+  echo "$(date) ${BASH_SOURCE##*/} No string supplied" >&2 ;
+  return 1;
+else
+  if [ "$msgLevel"  == "verbose" ]; then
+    echo "$(date) ${BASH_SOURCE##*/} String being measured (in upper case): $Str" ;
+  fi
+fi
+
+MaxLen="$2";
+if [[ "$MaxLen" = "" ]]; then
+  echo "$(date) ${BASH_SOURCE##*/} No max length supplied" >&2;
+  return 1;
+else
+  if [ "$msgLevel"  == "verbose" ]; then
+    echo "$(date) ${BASH_SOURCE##*/} Max allowed string length: $MaxLen";
+  fi
+fi
+
+EnvName="$3";
+if [[ "$EnvName" = "" ]]; then
+  echo "$(date) ${BASH_SOURCE##*/} No environment variable name supplied" >&2;
+  return 1;
+else
+  if [ "$msgLevel"  == "verbose" ]; then
+    echo "$(date) ${BASH_SOURCE##*/} Environment variale name: $EnvName";
+  fi
+fi
+
+GERS_STRING_UPPER=$Str;
+GERS_STRING_LENGTH=${#Str};
+
+if [ "$msgLevel"  == "verbose" ]; then
+  echo "$(date) ${BASH_SOURCE##*/} Actual string length: $GERS_STRING_LENGTH";
+fi
+
+if [[ $GERS_STRING_LENGTH -gt $MaxLen ]]; then
+  echo "$(date) ${BASH_SOURCE##*/} $EnvName ($GERS_STRING_UPPER) cannot be longer than $MaxLen characters";
+  return 2;
+fi
