@@ -29,7 +29,7 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
 
   cd target ;
   chtag -b *.jar ;
-  chmod 755 *.jar ;
+  chmod 775 *.jar ;
   exitIfError ;  
 
   cp ./*-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar;       

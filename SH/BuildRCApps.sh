@@ -67,7 +67,7 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   cd RCApps/target ;
   exitIfError ;
   chtag -b *.jar ;
-  chmod 755 *.jar ;
+  chmod 775 *.jar ;
   exitIfError ;  
 
   cp rcapps-$rev-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/rcapps-$rev.jar;
@@ -88,10 +88,10 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   cd PETestFramework/target;
   exitIfError ;
   chtag -b  *.jar;
-  chmod 755 *.jar;
+  chmod 775 *.jar;
   exitIfError ;  
   cd bin;
-  chmod 755 gerstf;
+  chmod 775 gerstf;
   exitIfError ;  
 
   if [ "$GERS_RUN_TESTS" == "Y" ]; then 
