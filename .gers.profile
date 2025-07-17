@@ -96,6 +96,12 @@ export GERS_TEST_HLQ='<your-test-hlq>'
 #      
 export GERS_RUN_TESTS='Y'
 
+#     GERS_PETEST_TIMEOUT is the maximum time in seconds that the PE  
+#     test framework will wait for jobs to complete. If the regression
+#     tests are failing with timeout errors, this can be increased.
+#      
+export GERS_PETEST_TIMEOUT=300
+
 #     GERS_JARS is the USS directory that contains your GERS .jar
 #     files.  
 #
