@@ -1,4 +1,3 @@
-
 # Environment variables for GenevaERS 
 # -----------------------------------
 # 
@@ -19,9 +18,9 @@ export GERS_BUILD_MINOR='001'
 #       GERS_CLONE_PEX - Performance-Engine-Extensions
 #       GERS_CLONE_RCA - Run-Control-Apps
 #
-export GERS_CLONE_PE=Y
-export GERS_CLONE_PEX=Y
-export GERS_CLONE_RCA=Y
+export GERS_CLONE_PE='Y'
+export GERS_CLONE_PEX='Y'
+export GERS_CLONE_RCA='Y'
 
 #     The following variables specify the branches or tags in the Git repositories to be used for the build:
 #       GERS_BRANCH_PE - Performance-Engine (base)
@@ -31,7 +30,7 @@ export GERS_CLONE_RCA=Y
 export GERS_BRANCH_PE="main"
 export GERS_BRANCH_PEX="main"
 export GERS_BRANCH_RCA="main"
-export GERS_BUILD_RCA=ZOS 
+export GERS_BUILD_RCA="ZOS" 
 
 #     A value of 'Y' for GERS_INCLUDE_PEX will cause the R&D components 
 #     of the Performance Engine to be included in the build.  Any 
@@ -96,6 +95,12 @@ export GERS_TEST_HLQ='<your-test-hlq>'
 #     GERS_TEST_SPEC_LIST will be executed.
 #      
 export GERS_RUN_TESTS='Y'
+
+#     GERS_PETEST_TIMEOUT is the maximum time in seconds that the PE  
+#     test framework will wait for jobs to complete. If the regression
+#     tests are failing with timeout errors, this can be increased.
+#      
+export GERS_PETEST_TIMEOUT=300
 
 #     GERS_JARS is the USS directory that contains your GERS .jar
 #     files.  
