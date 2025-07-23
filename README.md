@@ -4,11 +4,7 @@ Utilities for Development and Operations for GenevaERS
 ## Building the GenevaERS Performance Engine
 
 ### Setting up the PE build process [First time only]
-1. Enter the z/OS UNIX environment (also known as UNIX System Services, or USS).  One way to do this is to enter the following command on the ISPF command line: 
-    ```
-    TSO OMVS
-    ```
-    Another way is to enter the following on the Git Bash command line: 
+1. Enter the z/OS UNIX environment (also known as UNIX System Services, or USS).  Do this by entering the following on the Git Bash command line:  
     ```
     ssh <your-tso-id>@<server-name>
     ```
