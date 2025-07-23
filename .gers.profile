@@ -104,7 +104,7 @@ export GERS_PETEST_TIMEOUT=300
 
 #     GERS_JARS is the USS directory that contains your GERS .jar
 #     files.  
-#     Note: This parameter is needed only when GERS_BUILD_RCA is set to 
+#     Note: This variable is needed only when GERS_BUILD_RCA is set to 
 #     'ZOS'.  Otherwise, it can be left empty.
 #
 export GERS_JARS='<your-gers-jars-dir>'
