@@ -10,6 +10,8 @@ fi
 # Re-read the gers profile in case anything changed
 source ~/.gers.profile ;
 exitIfError;
+# Get DevOps repo name from repo address
+DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 # Check if run from TSO - used by sendTSOMsg
 if [ -z "$USER" ] ; then
     userTSO='Y'; 
@@ -19,7 +21,6 @@ else
     exitIfError;
 fi 
 # Change to shell script directory SH
-DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
 sendTSOMsg 'Starting the PE build process...                    ';
 # Create the log files
