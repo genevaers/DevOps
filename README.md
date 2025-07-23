@@ -88,9 +88,9 @@ The build process generates tagging scripts and JCL.
 ### Tagging the build 
 
 You can run the tagging script:  
-1. In the SH directory of DevOps run the generated script TAGBUILD.sh.
+1. In the SH directory of DevOps run the generated script TagBuild.sh.
     ```
-    ./TAGBUILD.sh
+    ./TagBuild.sh
     ```
 or submit the tagging JCL:  
 
@@ -98,9 +98,9 @@ or submit the tagging JCL:
 
 ### Tagging the release 
 You can run the tagging script:
-1. In the SH directory of DevOps run the generated script TAGREL.sh.
+1. In the SH directory of DevOps run the generated script TagRel.sh.
     ```
-    ./TAGBUILD.sh
+    ./TagRel.sh
     ```
 or submit the tagging JCL:  
 
