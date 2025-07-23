@@ -22,6 +22,7 @@ else
 fi 
 # Change to shell script directory SH
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
+exitIfError;
 sendTSOMsg 'Starting the PE build process...                    ';
 # Create the log files
 sendTSOMsg 'Creating the log files...                           ';
