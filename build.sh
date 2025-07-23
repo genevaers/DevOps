@@ -10,15 +10,17 @@ fi
 # Re-read the gers profile in case anything changed
 source ~/.gers.profile ;
 exitIfError;
-# Change to shell script directory
-DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
-checkPWD;
-exitIfError;
-cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
 # Check if run from TSO - used by sendTSOMsg
 if [ -z "$USER" ] ; then
-  userTSO='Y'; 
+    userTSO='Y'; 
+else 
+    userTSO='N'; 
+    checkPWD;
+    exitIfError;
 fi 
+# Change to shell script directory SH
+DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
+cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
 sendTSOMsg 'Starting the PE build process...                    ';
 # Create the log files
 sendTSOMsg 'Creating the log files...                           ';
