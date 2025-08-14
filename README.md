@@ -71,9 +71,17 @@ Note: GERS_GIT_REPO_DIR should match the directory created in step 4.
     export GERS_BRANCH_PE="PM_4.18.099.B0123_branch"
     export GERS_BRANCH_PEX="PM_4.18.099.B0123_branch"
     export GERS_BRANCH_RCA="PM_4.18.099.B0123_branch"
-
     ```
-4. To run the build enter the following:
+   - Review the environment variables that determine where the build output will be. For example: 
+    ```
+    export GERS_BUILD_HLQ="GENEVA.$LOGNAME"
+    export GERS_ENV_HLQ="GENEVA.$LOGNAME"
+    export GERS_RCA_JAR_DIR="$HOME/RCA"
+    ```
+Note that $LOGNAME will resolve to the user ID of the person running the build script, and $HOME to their home directory.
+See [Results of the Build](#results-of-the-build) for more information.
+
+1. To run the build enter the following:
     ```
     ./build.sh
     ```
