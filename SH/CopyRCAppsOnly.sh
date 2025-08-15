@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CopyRCAppsOnly.sh Copy RCA to RCA jar
+# CopyRCAppsOnly.sh Copy RCA to RCA jar directory
 #######################################
 main() {
 
@@ -49,6 +49,8 @@ if [ "$GERS_BUILD_RCA" == "WIN" ]; then
   exitIfError ;  
 
   if [ "$GERS_RUN_TESTS" == "Y" ]; then 
+  # regression tests will be run against 'GERS_ENV_HLQ'.GVBLOAD data set (often set as LATEST)
+  # and the newly copied and linked 'rcapps-latest.jar'
     echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
     cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
     exitIfError ;

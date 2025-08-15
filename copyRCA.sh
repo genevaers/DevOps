@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# build.sh - Build GenevaERS 
+# copyRCA.sh - Copy RCA executables (previously built on Windows) 
 ########################################################
 main() {
 opt1="$1";

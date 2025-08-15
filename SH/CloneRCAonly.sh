@@ -1,5 +1,5 @@
 #!/bin/sh
-# CloneRepos.sh - Clone required repositories ready for build
+# CloneRCAonly.sh - Clone RCA repository ready to copy executables
 ########################################################
 
 main() {
