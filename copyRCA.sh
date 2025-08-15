@@ -8,8 +8,7 @@ if [ "$opt1"  == "-v" ]; then
     export msgLevel=verbose;
 fi
 # Re-read the gers profile in case anything changed
-# source ~/.gers.profile ;
-source .gers.profile.gill ; 
+source ~/.gers.profile ;
 exitIfError;
 # Get DevOps repo name from repo address
 DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
@@ -42,7 +41,7 @@ sendTSOMsg 'Cloning the RCA repository...                       ';
 # Copy built RCA to jar directory
 sendTSOMsg 'Copying the RCA to the RCA jar directory';             
 . ./CopyRCAppsOnly.sh  2> >(tee -a $err_log) > >(tee -a $out_log);
-echo "$(date) ${BASH_SOURCE##*/} Build process completed for PM$GERS_PE_REL_NBR_FORMATTED.B$BUILD_NBR" | tee -a $out_log ;
+echo "$(date) ${BASH_SOURCE##*/} RCA Copy process completed" | tee -a $out_log ;
 }
 
 sendTSOMsg() {
@@ -66,7 +65,6 @@ if [  "$(pwd)" != "${GERS_GIT_REPO_DIR%/}/$DEV_REPO" ]; then
  fi 
 
 }
-
 
 exitIfError() {
 
