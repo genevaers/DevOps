@@ -42,7 +42,7 @@ git checkout $GERS_BRANCH_PEX ;
 exitIfError;
 cd ..
 # Are we building the RCA?
-if [ "$GERS_BUILD_RCA" != "N" ]; then
+if [[ "$GERS_BUILD_RCA" == "WIN" ]] || [[ "$GERS_BUILD_RCA" == "ZOS" ]]; then
 # Clone RCA repo, or clean the Test Framework output dir
   if [ "$GERS_CLONE_RCA" == "Y" ]; then
     rm -rf $RCA_REPO;
@@ -58,7 +58,7 @@ if [ "$GERS_BUILD_RCA" != "N" ]; then
   exitIfError;
   cd ..
 else
-  echo "$(date) ${BASH_SOURCE##*/} RCApps not cloned as GERS_BUILD_RCA set to N";
+  echo "$(date) ${BASH_SOURCE##*/} RCApps not cloned as GERS_BUILD_RCA not WIN or ZOS";
 fi 
 echo "$(date) ${BASH_SOURCE##*/} Repositories cloned and branches checked out";
 cd $save_pwd ;
