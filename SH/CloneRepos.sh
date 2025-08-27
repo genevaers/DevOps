@@ -41,20 +41,25 @@ cd $PEX_REPO;
 git checkout $GERS_BRANCH_PEX ;
 exitIfError;
 cd ..
+# Are we building the RCA?
+if [[ "$GERS_BUILD_RCA" == "WIN" ]] || [[ "$GERS_BUILD_RCA" == "ZOS" ]]; then
 # Clone RCA repo, or clean the Test Framework output dir
-if [ "$GERS_CLONE_RCA" == "Y" ]; then
-  rm -rf $RCA_REPO;
+  if [ "$GERS_CLONE_RCA" == "Y" ]; then
+    rm -rf $RCA_REPO;
+    exitIfError;
+    git clone --progress $GERS_REMOTE_RUN ;
+    exitIfError;
+  else
+    rm -rf $RCA_REPO/PETestFramework/out;
+    exitIfError;
+  fi
+  cd $RCA_REPO;
+  git checkout $GERS_BRANCH_RCA ;
   exitIfError;
-  git clone --progress $GERS_REMOTE_RUN ;
-  exitIfError;
+  cd ..
 else
-  rm -rf $RCA_REPO/PETestFramework/out;
-  exitIfError;
-fi
-cd $RCA_REPO;
-git checkout $GERS_BRANCH_RCA ;
-exitIfError;
-cd ..
+  echo "$(date) ${BASH_SOURCE##*/} RCApps not cloned as GERS_BUILD_RCA not WIN or ZOS";
+fi 
 echo "$(date) ${BASH_SOURCE##*/} Repositories cloned and branches checked out";
 cd $save_pwd ;
 
