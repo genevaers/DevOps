@@ -57,6 +57,8 @@ if [ "$GERS_BUILD_RCA" != "N" ]; then
   git checkout $GERS_BRANCH_RCA ;
   exitIfError;
   cd ..
+else
+  echo "$(date) ${BASH_SOURCE##*/} RCApps not cloned as GERS_BUILD_RCA set to N";
 fi 
 echo "$(date) ${BASH_SOURCE##*/} Repositories cloned and branches checked out";
 cd $save_pwd ;
