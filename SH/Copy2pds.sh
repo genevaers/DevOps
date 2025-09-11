@@ -8,15 +8,15 @@ if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
   exit 1
 fi
 
-FROM_DIR="$1"
-FROM_SUF="$2"
-TO_PDS="$3"
+FROM_DIR="$1";
+FROM_SUF="$2";
+TO_PDS="$3";
 
-echo "Copying files from directory '$FROM_DIR' with suffix '$FROM_SUF' to MVS '$TO_PDS'"
+echo "Copying files from directory: $FROM_DIR with suffix: $FROM_SUF to MVS dataset: $TO_PDS"
 
 # Determine directory contents
 
-echo "$FROM_DIR"/*."$FROM_SUF"
+# echo "$FROM_DIR"/*."$FROM_SUF"
 
 ls "$FROM_DIR"/*."$FROM_SUF" > "$FROM_DIR"/list.tmp
 
@@ -29,7 +29,8 @@ fi
 while IFS= read -r line; do
   # Process each line (record) here
   # echo "Record: $line";
-
+  # TO_PDS=""""$TO_PDS"""";
+  # echo "TO_PDS: $TO_PDS";
   # Find last index of test we're searching for
   echo $line > "$FROM_DIR"/text.tmp;
   staidx=$(awk -F"/" '{print length($0) - length($NF)}' "$FROM_DIR"/"text.tmp" );
@@ -39,8 +40,8 @@ while IFS= read -r line; do
   if [ $staidx -gt 0 ] && [ $endidx -gt $staidx ]; then
     file=$(expr substr "$line" 1 $((endidx-1)) );
     echo "Copying file: $file";
-    cp "$file" "$TO_PDS"
-    # cp -S d=."$FROM_SUF" "$FROM_DIR"/*."$FROM_SUF" "$TO_PDS"
+      cp -S d=."$FROM_SUF" "$file"."$FROM_SUF" "$TO_PDS";
+    # cp -S d=."$FROM_SUF" "$FROM_DIR"/*."$FROM_SUF" "$TO_PDS";
 
   fi
 
