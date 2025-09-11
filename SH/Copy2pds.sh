@@ -33,7 +33,7 @@ while IFS= read -r line; do
   # Find last index of test we're searching for
   echo $line > "$FROM_DIR"/text.tmp;
   endidx=$(awk -F"/" '{print length($0) - length($NF)}' "$FROM_DIR"/"text.tmp" );
-  # echo "Endidx: $endidx";
+  echo "Endidx: $endidx";
 
   if [ $endidx -gt 0 ]; then
 
