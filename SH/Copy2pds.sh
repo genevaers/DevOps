@@ -36,36 +36,11 @@ while IFS= read -r line; do
   endidx=$(awk -F"." '{print length($0) - length($NF)}' "$FROM_DIR"/"text.tmp" );
   echo "Staidx: $staidx Endidx: $endidx";
 
-  if [ $endidx -gt 0 ]; then
-
-    # Calculate starting index
-    startidx=$((endidx-12));
-#    echo "startidxi :startidx";
-
-    # Extract numerical value after "B"
-    bnumber=$(awk '{print substr($0,'$startidx',13)}' "$FROM_DIR"/"text.tmp" );
-#    echo "Build number and GVBLOAD string: $bnumber";
-#    echo "bnumber: $bnumber";
-
-# number4=$(expr substr "$bnumber" 1 5);
-
-#    if [[ "$number4" == '([B][0-9][0-9][0-9][0-9])' ]]; then
-#      echo "Matched pattern B000n.GVBLOAD: $bnumber";
-#    else
-#      echo "Pattern does not match: $bnumber";
-#    fi
-
-    number=$(expr substr "$bnumber" 2 4);
-#    echo "Last build number: $number";
+  if [ $staidx -gt 0 && $endidx > $staidx ]; then
+    file=$(expr substr "$line" 1, $endidx );
+    echo "Copying file: $file";
+#    cp -S d=."$FROM_SUF" "$FROM_DIR"/*."$FROM_SUF" "$TO_PDS"
 
   fi
 
-  # Add more processing logic as needed
 done < "$FILE"
-
-nextnumber=$(echo "$number" | awk '{ printf "%04.0f\n", $1+1 }');
-# echo "Next build qualifier: B$nextnumber";
-
-export BUILD_NBR=$nextnumber;
-
-# echo "Finished processing file and BLD_Nbr exported: $BUILD_NBR"
