@@ -37,7 +37,7 @@ while IFS= read -r line; do
   echo "Staidx: $staidx Endidx: $endidx";
 
   if [ $staidx -gt 0 ] && [ $endidx -gt $staidx ]; then
-    file=$(expr substr "$line" 1 $endidx-1 );
+    file=$(expr substr "$line" 1 $((endidx-1)) );
     echo "Copying file: $file";
 #    cp -S d=."$FROM_SUF" "$FROM_DIR"/*."$FROM_SUF" "$TO_PDS"
 
