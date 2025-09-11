@@ -20,7 +20,7 @@ echo "$FROM_DIR"/*."$FROM_SUF"
 
 ls "$FROM_DIR"/*."$FROM_SUF" > "$FROM_DIR"/list.tmp
 
-FILE="list.tmp"; # File to parse to get directory contents
+FILE="$FROM_DIR/list.tmp"; # File to parse to get directory contents
 if [ ! -f "$FILE" ]; then
   echo "Error: Temporary file '$FILE' not found.";
   exit 1;
