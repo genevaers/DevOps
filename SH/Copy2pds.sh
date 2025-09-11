@@ -36,7 +36,7 @@ while IFS= read -r line; do
   endidx=$(awk -F"." '{print length($0) - length($NF)}' "$FROM_DIR"/"text.tmp" );
   echo "Staidx: $staidx Endidx: $endidx";
 
-  if [ $staidx -gt 0 && $endidx -gt $staidx ]; then
+  if [ $staidx -gt 0 ] && [ $endidx -gt $staidx ]; then
     file=$(expr substr "$line" 1, $endidx );
     echo "Copying file: $file";
 #    cp -S d=."$FROM_SUF" "$FROM_DIR"/*."$FROM_SUF" "$TO_PDS"
