@@ -5,7 +5,7 @@
 main() {
 
 echo "$(date) ${BASH_SOURCE##*/} Generate JCL to allocate the build data sets";
-java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALLOC ../TABLE/tablesDevOps ../JCL/ALLOC.jcl 2>> $err_log; 
+java -Dfile.encoding=COMPAT -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/ALLOC ../TABLE/tablesDevOps ../JCL/ALLOC.jcl 2>> $err_log; 
 exitIfFTLError;
 
 cat ../JCL/ALLOCDONE.jcl >> ../JCL/ALLOC.jcl;

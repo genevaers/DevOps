@@ -4,7 +4,7 @@
 main() {
 
 echo "$(date) ${BASH_SOURCE##*/} Generate JCL to copy the job output from the spool to library members ";
-java -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/SAVEJOB ../TABLE/tablesDevOps ../JCL/SAVEJOB.jcl 2>> $err_log; 
+java -Dfile.encoding=COMPAT -jar $GERS_RCA_JAR_DIR/ftl2jcl-latest.jar ../FTL/SAVEJOB ../TABLE/tablesDevOps ../JCL/SAVEJOB.jcl 2>> $err_log; 
 exitIfFTLError;
 
 cat ../JCL/SAVEDONE.jcl >> ../JCL/SAVEJOB.jcl;
