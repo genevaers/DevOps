@@ -1,6 +1,4 @@
-// https://www.ibm.com/docs/en/db2-for-zos/12.0.0?topic=samples-example-simple-jdbc-application
-
-// VALIDATE TABLES AND COLUMNS
+package org.genevaers.db2check;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

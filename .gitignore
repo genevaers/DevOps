@@ -18,3 +18,13 @@ DB2CHECK/target/maven-archiver/pom.properties
 DB2CHECK/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 DB2CHECK/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 DB2CHECK/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+DB2CHECK/target/db2check-1.0.1-jar-with-dependencies.jar
+DB2CHECK/target/db2check-1.0.1.jar
+DB2CHECK/target/classes/org/genevaers/db2check/GvbSchemaValidate1.class
+DB2CHECK/target/classes/org/genevaers/db2check/GvbSchemaValidate2.class
+DB2CHECK/target/classes/org/genevaers/db2check/GvbSchemaValidate3.class
+DB2CHECK/target/classes/org/genevaers/db2check/GvbSchemaValidate4.class
+DB2CHECK/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+FTL2JCL/target/ftl2jcl-1.0.1-jar-with-dependencies.jar
+FTL2JCL/target/ftl2jcl-1.0.1.jar
+FTL2JCL/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst

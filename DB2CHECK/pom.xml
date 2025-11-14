@@ -73,7 +73,7 @@ under the License.
 			<version>2.13.0</version>
 		</dependency>
 		<dependency>
-            <groupId>com.ibm.db2</groupId>
+            <groupId>com.ibm</groupId>
             <artifactId>db2jcc4</artifactId>
             <version>4</version>
         </dependency>
@@ -110,7 +110,7 @@ under the License.
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass><org class="genevaers GvbSchemaValidate1"></org>ftl2jcl.CommandLineHandler</mainClass>
+							<mainClass>org.genevaers.db2check.GvbSchemaValidate1</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

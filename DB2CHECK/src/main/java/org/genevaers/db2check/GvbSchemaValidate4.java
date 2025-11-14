@@ -1,4 +1,4 @@
-// https://www.ibm.com/docs/en/db2-for-zos/12.0.0?topic=samples-example-simple-jdbc-application
+package org.genevaers.db2check;
 
 // VALIDATE FOREIGN KEYS
 

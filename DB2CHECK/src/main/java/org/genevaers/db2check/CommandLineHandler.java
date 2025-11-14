@@ -1,4 +1,4 @@
-package org.genevaers.ftl2jcl;
+package org.genevaers.db2check;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -54,7 +54,7 @@ public class CommandLineHandler {
 	public static void main(String[] args) {
 		try {
 			if (args.length == 3) {
-				logger.atInfo().log("FTL2JCL %s\nProcess %s.ftl, with tables from %s to produce %s", readVersion(),
+				logger.atInfo().log("db2check %s\nProcess %s.ftl, with tables from %s to produce %s", readVersion(),
 						args[0], args[1], args[2]);
 				buildAdditionalInfoFromCSV(args);
 				outputPath = Paths.get(args[2]);
