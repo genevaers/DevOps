@@ -45,7 +45,7 @@ under the License.
 	</properties>
 
 	<groupId>org.genevaers</groupId>
-	<artifactId>ftl2jcl</artifactId>
+	<artifactId>db2check</artifactId>
 	<version>${revision}</version>
 
 	<name>GenevaERS Build</name>
@@ -110,7 +110,7 @@ under the License.
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>org.genevaers.ftl2jcl.CommandLineHandler</mainClass>
+							<mainClass><org class="genevaers GvbSchemaValidate1"></org>ftl2jcl.CommandLineHandler</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
