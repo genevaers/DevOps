@@ -19,12 +19,12 @@ mvn clean
 mvn install $1
 
 export rev=`grep "<revision>" pom.xml | awk -F'<revision>||</revision>' '{print $2}'`;
-echo FTL2JCL release number $rev;
+echo DB2CHECK release number $rev;
 
-cp ./target/*-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar;                                       
+cp ./target/*-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/db2check-$rev.jar;                                       
                                                                          
 cd $GERS_RCA_JAR_DIR;                                                    
                                                                          
-touch ftl2jcl-latest.jar;                                                 
-rm ftl2jcl-latest.jar;                                                    
-ln -s ftl2jcl-$rev.jar ftl2jcl-latest.jar;
+touch db2check-latest.jar;                                                 
+rm db2check-latest.jar;                                                    
+ln -s db2check -$rev.jar db2check-latest.jar;
