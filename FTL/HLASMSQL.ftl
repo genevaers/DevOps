@@ -27,7 +27,7 @@
 //DB2${pgmSuffix} EXEC PGM=DSNHPC,
 //            COND=(4,LT),
 //            REGION=32M,
-//            PARM='HOST(ASM),STDSQL(NO),VERSION(PM&$RELEASE.)'    
+//            PARM='HOST(ASM),STDSQL(NO),VERSION(PM${env["GERS_PE_REL_NBR"]})'
 //*
 //STEPLIB  DD DISP=SHR,DSN=${env["GERS_DB2_EXIT_LIB"]}
 //         DD DISP=SHR,DSN=${env["GERS_DB2_LOAD_LIB"]}
