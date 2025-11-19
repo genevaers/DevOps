@@ -1,4 +1,4 @@
-//NGRAPDB2 JOB (ACCT),'CREATE DATABASE',
+//NGRAPDB2 JOB (ACCT),'MERGE UNLOAD FILES',
 //            NOTIFY=&SYSUID.,
 //            CLASS=A,
 //            MSGLEVEL=(1,1),
@@ -2305,86 +2305,6 @@
 //            DISP=SHR
 //SYSPRINT DD SYSOUT=*
 //*********************************************************************
-//STEP83 EXEC PGM=IEBGENER
-//SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPUE.DATA.XMIT,
-//            DISP=SHR
-//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM83),
-//            DISP=SHR
-//SYSPRINT DD SYSOUT=*
-//*********************************************************************
-//STEP84 EXEC PGM=IEBGENER
-//SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPUE.PNCH.XMIT,
-//            DISP=SHR
-//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM84),
-//            DISP=SHR
-//SYSPRINT DD SYSOUT=*
-//*********************************************************************
-//STEP85 EXEC PGM=IEBGENER
-//SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPUR.DATA.XMIT,
-//            DISP=SHR
-//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM85),
-//            DISP=SHR
-//SYSPRINT DD SYSOUT=*
-//*********************************************************************
-//STEP86 EXEC PGM=IEBGENER
-//SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPUR.PNCH.XMIT,
-//            DISP=SHR
-//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM86),
-//            DISP=SHR
-//SYSPRINT DD SYSOUT=*
-//*********************************************************************
-//STEP87 EXEC PGM=IEBGENER
-//SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPVF.DATA.XMIT,
-//            DISP=SHR
-//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM87),
-//            DISP=SHR
-//SYSPRINT DD SYSOUT=*
-//*********************************************************************
-//STEP88 EXEC PGM=IEBGENER
-//SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPVF.PNCH.XMIT,
-//            DISP=SHR
-//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM88),
-//            DISP=SHR
-//SYSPRINT DD SYSOUT=*
-//*********************************************************************
-//STEP89 EXEC PGM=IEBGENER
-//SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPVW.DATA.XMIT,
-//            DISP=SHR
-//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM89),
-//            DISP=SHR
-//SYSPRINT DD SYSOUT=*
-//*********************************************************************
-//STEP90 EXEC PGM=IEBGENER
-//SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPVW.PNCH.XMIT,
-//            DISP=SHR
-//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM90),
-//            DISP=SHR
-//SYSPRINT DD SYSOUT=*
-//*********************************************************************
-//STEP91 EXEC PGM=IEBGENER
-//SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..SERVER.DATA.XMIT,
-//            DISP=SHR
-//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM91),
-//            DISP=SHR
-//SYSPRINT DD SYSOUT=*
-//*********************************************************************
-//STEP92 EXEC PGM=IEBGENER
-//SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..SERVER.PNCH.XMIT,
-//            DISP=SHR
-//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM92),
-//            DISP=SHR
-//SYSPRINT DD SYSOUT=*
-//*********************************************************************
 //STEP57 EXEC PGM=IEBGENER
 //SYSIN    DD DUMMY
 //SYSUT1   DD DSN=&HLQ..&MLQ..USEREXIT.DATA.XMIT,
@@ -2590,6 +2510,86 @@
 //SYSUT1   DD DSN=&HLQ..&MLQ..VWSORTKY.PNCH.XMIT,
 //            DISP=SHR
 //SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM82),
+//            DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//*********************************************************************
+//STEP83 EXEC PGM=IEBGENER
+//SYSIN    DD DUMMY
+//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPUE.DATA.XMIT,
+//            DISP=SHR
+//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM83),
+//            DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//*********************************************************************
+//STEP84 EXEC PGM=IEBGENER
+//SYSIN    DD DUMMY
+//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPUE.PNCH.XMIT,
+//            DISP=SHR
+//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM84),
+//            DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//*********************************************************************
+//STEP85 EXEC PGM=IEBGENER
+//SYSIN    DD DUMMY
+//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPUR.DATA.XMIT,
+//            DISP=SHR
+//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM85),
+//            DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//*********************************************************************
+//STEP86 EXEC PGM=IEBGENER
+//SYSIN    DD DUMMY
+//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPUR.PNCH.XMIT,
+//            DISP=SHR
+//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM86),
+//            DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//*********************************************************************
+//STEP87 EXEC PGM=IEBGENER
+//SYSIN    DD DUMMY
+//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPVF.DATA.XMIT,
+//            DISP=SHR
+//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM87),
+//            DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//*********************************************************************
+//STEP88 EXEC PGM=IEBGENER
+//SYSIN    DD DUMMY
+//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPVF.PNCH.XMIT,
+//            DISP=SHR
+//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM88),
+//            DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//*********************************************************************
+//STEP89 EXEC PGM=IEBGENER
+//SYSIN    DD DUMMY
+//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPVW.DATA.XMIT,
+//            DISP=SHR
+//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM89),
+//            DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//*********************************************************************
+//STEP90 EXEC PGM=IEBGENER
+//SYSIN    DD DUMMY
+//SYSUT1   DD DSN=&HLQ..&MLQ..SECGRPVW.PNCH.XMIT,
+//            DISP=SHR
+//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM90),
+//            DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//*********************************************************************
+//STEP91 EXEC PGM=IEBGENER
+//SYSIN    DD DUMMY
+//SYSUT1   DD DSN=&HLQ..&MLQ..SERVER.DATA.XMIT,
+//            DISP=SHR
+//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM91),
+//            DISP=SHR
+//SYSPRINT DD SYSOUT=*
+//*********************************************************************
+//STEP92 EXEC PGM=IEBGENER
+//SYSIN    DD DUMMY
+//SYSUT1   DD DSN=&HLQ..&MLQ..SERVER.PNCH.XMIT,
+//            DISP=SHR
+//SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM92),
 //            DISP=SHR
 //SYSPRINT DD SYSOUT=*
 //*
