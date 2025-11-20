@@ -1,4 +1,4 @@
-//NUMERGE  JOB (ACCT),'CREATE DATABASE',
+//NUMERGE  JOB (ACCT),'RECEIVE UNLOADED DB',
 //            NOTIFY=&SYSUID.,
 //            REGION=0M,
 //            CLASS=A,
