@@ -46,6 +46,7 @@
 //* Note:
 //*   1) This job creates XMIT files from the unloaded DB2 schema
 //*      used for GenevaERS
+//* 
 //*   2) If any unload files are empty, such as the following ones
 //*      then RC=12 is returned for each such job step
 //* 
