@@ -2,6 +2,8 @@
 
 // VALIDATE FOREIGN KEYS
 
+package org.genevaers.db2check;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashMap;
@@ -129,7 +131,7 @@ public class GvbSchemaValidateD {
             //e.printStackTrace();
             return;
         } catch (IOException e) {
-            System.out.println("IO exception encountered in GvbSchemaValidateC");
+            System.out.println("IO exception encountered in GvbSchemaValidateD");
             //e.printStackTrace();
             return;
         } catch (NoSuchAlgorithmException e) {
