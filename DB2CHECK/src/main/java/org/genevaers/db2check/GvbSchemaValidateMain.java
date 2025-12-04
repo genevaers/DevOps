@@ -121,13 +121,13 @@ public class GvbSchemaValidateMain {
             // Do nothing: as we are generating digest values and not validating them
         } else {
             try {
-                Integer State = 0;
+                Integer State = -1;
 
                 ii = 0;
                 reader = new BufferedReader(new FileReader(System.getenv("HOMEPATH")+"\\SchemaDigest.txt"));
 		    	String line = reader.readLine();
 			    while (line != null) {
-                    if (line.contains("stored procedures")) { //// Populate digest map of stored procedures")) {
+                    if (line.contains("// Populate digest map of stored procedures")) { //// Populate digest map of stored procedures")) {
                         State = 1;
                     }
                     else {
@@ -147,6 +147,9 @@ public class GvbSchemaValidateMain {
                                     String[] values = line.split(","); // Split by comma
                                     //System.out.println("Values: " + values[0] + values[1]);
                                     switch (State) {
+                                        case -1:
+                                            State = 0;
+                                            break;
                                         case 1:
                                             spmap.put(values[0], values[1]);
                                             break;
