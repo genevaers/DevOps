@@ -119,7 +119,7 @@ under the License.
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>org.genevaers.db2check.GvbSchemaValidate1</mainClass>
+							<mainClass>org.genevaers.db2check.GvbSchemaValidateMain</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

@@ -1,3 +1,5 @@
+package org.genevaers.db2check;
+
 import java.io.BufferedWriter;
 import java.sql.*;
 import java.util.HashMap;
