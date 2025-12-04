@@ -28,7 +28,8 @@ public class GvbSchemaValidateMain {
         String schema_mask = "";
         Boolean makeHash = false;
         Boolean makeDef = false;
-        BufferedWriter fwriter; // general output
+        Boolean makeF = false;
+        BufferedWriter fwriter = null; // general output
         BufferedWriter hwriter = null; // digest output
         BufferedWriter[] dwriter = new BufferedWriter[4]; // Definition files: stored procedures, table/columns, indexes and foreign keys
         dwriter[0] = null;
@@ -64,8 +65,8 @@ public class GvbSchemaValidateMain {
 
         // ///////////////////////////////////////
         //  TEMPORARY ASSIGNMENTS
-        makeHash = false;
-        makeDef = true;
+        // makeHash = false;
+        // makeDef = true;
         // ///////////////////////////////////////
 
         if (makeHash) {
@@ -124,7 +125,7 @@ public class GvbSchemaValidateMain {
                 Integer State = -1;
 
                 ii = 0;
-                reader = new BufferedReader(new FileReader(System.getenv("HOMEPATH")+"\\SchemaDigest.txt"));
+                reader = new BufferedReader(new FileReader(System.getenv("HOMEPATH")+"\\GenevaERS\\SchemaDigest.txt"));
 		    	String line = reader.readLine();
 			    while (line != null) {
                     if (line.contains("// Populate digest map of stored procedures")) { //// Populate digest map of stored procedures")) {
@@ -200,17 +201,19 @@ public class GvbSchemaValidateMain {
 
             String homepath = System.getenv("HOMEPATH");
 
-            fwriter = new BufferedWriter(new FileWriter(homepath+"\\Schema_report.txt"));
+            if ( makeF ) {
+                fwriter = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\Schema_report.txt"));
+            }
 
             if (makeHash) {
-                hwriter = new BufferedWriter(new FileWriter(homepath+"\\SchemaDigest.txt"));
+                hwriter = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\SchemaDigest.txt"));
             }
 
             if (makeDef) {
-                dwriter[0] = new BufferedWriter(new FileWriter(homepath+"\\StoredProcedures.txt")); // stored procedures
-                dwriter[1] = new BufferedWriter(new FileWriter(homepath+"\\Tabledata.txt")); // tables and columns
-                dwriter[2] = new BufferedWriter(new FileWriter(homepath+"\\Indexdata.txt")); // indexes
-                dwriter[3] = new BufferedWriter(new FileWriter(homepath+"\\Foreignkeydata.txt")); // foreign assets
+                dwriter[0] = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\StoredProcedures.txt")); // stored procedures
+                dwriter[1] = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\Tabledata.txt")); // tables and columns
+                dwriter[2] = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\Indexdata.txt")); // indexes
+                dwriter[3] = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\Foreignkeydata.txt")); // foreign assets
             }
 
             // construct configuration object
@@ -228,7 +231,9 @@ public class GvbSchemaValidateMain {
             // call table column validation
             GvbSchemaValidateD mD = new GvbSchemaValidateD(sc);
 
-            fwriter.close();
+            if ( makeF ) {
+                fwriter.close();
+            }
 
             if (makeHash) {
                 hwriter.close();
