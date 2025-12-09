@@ -1,8 +1,8 @@
-//UNTERSE JOB (ACCT),'UNTERSE TRANSFER FILE',                          
-//          NOTIFY=&SYSUID.,                                           
-//          CLASS=A,                                                   
-//          MSGLEVEL=(1,1),                                            
-//          MSGCLASS=H                                                 
+//UNTERSE JOB (ACCT),'UNTERSE TRANSFER FILE',
+//          NOTIFY=&SYSUID.,
+//          CLASS=A,
+//          MSGLEVEL=(1,1),
+//          MSGCLASS=H
 //********************************************************************
 //*
 //* (C) COPYRIGHT IBM CORPORATION 2025.
@@ -29,7 +29,6 @@
 //* USED AFTER TRANSFERRING TERSED DATABASE UNLOAD CONTAINED IN A PDSE
 //******************************************************************
 //*
-//*
 //*   The following variables will need to be set to match the Db2
 //*   subsystem the packages are to reside.
 //*
@@ -39,32 +38,31 @@
 //*
 //   SET HLQ='GEBT'
 //   SET MLQ='GENERS.D240708U'
-
 //*
-//*******************************************************************                                                                    
-//*   DELETE DATA SET                                                  
 //*********************************************************************
-//*                                                                    
-//DELDS    EXEC PGM=IDCAMS                                             
-//*                                                                    
-//SYSPRINT DD SYSOUT=*,DCB=(LRECL=133,BLKSIZE=12901,RECFM=FBA)         
-//*                                                                    
-//SYSIN    DD *,SYMBOLS=EXECSYS                                                        
- DELETE &HLQ.&MLQ.PDS PURGE                                      
-    IF LASTCC > 0 THEN SET MAXCC = 0                                   
-//*                                                                    
+//*   DELETE DATA SET
 //*********************************************************************
-//*   UNPACK DATA SET                                                  
+//*
+//DELDS    EXEC PGM=IDCAMS
+//*
+//SYSPRINT DD SYSOUT=*,DCB=(LRECL=133,BLKSIZE=12901,RECFM=FBA)
+//*
+//SYSIN    DD *,SYMBOLS=EXECSYS
+ DELETE &HLQ.&MLQ.PDS PURGE
+    IF LASTCC > 0 THEN SET MAXCC = 0
+//*
 //*********************************************************************
-//*                                                                    
-//UNPACK   EXEC PGM=TRSMAIN,PARM='UNPACK'                              
-//*                                                                    
-//SYSPRINT DD SYSOUT=*,DCB=(LRECL=133,BLKSIZE=12901,RECFM=FBA)         
-//*                                                                    
-//INFILE   DD DISP=OLD,DSN=&HLQ.&MLQ.PDS.TRS                     
-//*                                                                    
-//OUTFILE  DD DSN=&HLQ.&MLQ.PDS,                          
-//            DISP=(NEW,CATLG,DELETE),                                 
-//             UNIT=SYSDA,DSNTYPE=LIBRARY,DSORG=PO,                    
-//             SPACE=(CYL,(4000,1000),RLSE)                            
+//*   UNPACK DATA SET
+//*********************************************************************
+//*
+//UNPACK   EXEC PGM=TRSMAIN,PARM='UNPACK'
+//*
+//SYSPRINT DD SYSOUT=*,DCB=(LRECL=133,BLKSIZE=12901,RECFM=FBA)
+//*
+//INFILE   DD DISP=OLD,DSN=&HLQ.&MLQ.PDS.TRS
+//*
+//OUTFILE  DD DSN=&HLQ.&MLQ.PDS,
+//            DISP=(NEW,CATLG,DELETE),
+//             UNIT=SYSDA,DSNTYPE=LIBRARY,DSORG=PO,
+//             SPACE=(CYL,(4000,1000),RLSE)
 //
