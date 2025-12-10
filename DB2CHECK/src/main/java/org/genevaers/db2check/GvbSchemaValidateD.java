@@ -16,7 +16,7 @@ import java.sql.*;
 
 public class GvbSchemaValidateD {
 
-    public Integer rc;
+    private Integer rc;
 
     public GvbSchemaValidateD(GvbSchemaConfig sc)
     {

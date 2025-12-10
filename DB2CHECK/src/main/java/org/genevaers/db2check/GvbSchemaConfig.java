@@ -6,18 +6,18 @@ import java.util.HashMap;
 
 public class GvbSchemaConfig {
 
-    public String digestType;
-    public Connection con;
-    public String schema_mask;
-    public Boolean makeHash;
-    public Boolean makeDef;
-    public BufferedWriter fwriter;
-    public BufferedWriter hwriter;
-    public BufferedWriter[] dwriter;
-    public HashMap<String, String> spmap;
-    public HashMap<String, String> tbmap;
-    public HashMap<String, String> ixmap;
-    public HashMap<String, String> fkmap;
+    private String digestType;
+    private Connection con;
+    private String schema_mask;
+    private Boolean makeHash;
+    private Boolean makeDef;
+    private BufferedWriter fwriter;
+    private BufferedWriter hwriter;
+    private BufferedWriter[] dwriter;
+    private HashMap<String, String> spmap;
+    private HashMap<String, String> tbmap;
+    private HashMap<String, String> ixmap;
+    private HashMap<String, String> fkmap;
 
     // Constructor
     public GvbSchemaConfig(String digestType, Connection con, String schema_mask, Boolean makeHash, Boolean makeDef,

@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+ import java.io.File;
 
 import java.sql.*;
 
@@ -119,16 +120,34 @@ public class GvbSchemaValidateMain {
 
         // read Digest information from home directory
         if (makeHash) {
-            // Do nothing: as we are generating digest values and not validating them
+            // check if our directory exists: if it doesn't create it, if it does fine
+            File newDir = new File(System.getenv("HOMEPATH")+"\\GenevaERS");
+            if (newDir.mkdir()) {
+                System.out.println("Directory: " + System.getenv("HOMEPATH")+"\\GenevaERS" + " just created, all good");
+            } else {
+                // this is ok too
+                System.out.println("Failed to create directory: " + System.getenv("HOMEPATH")+"\\GenevaERS, it probably already existed");
+            }
+ 
         } else {
             try {
                 Integer State = -1;
+
+                // check if our directory exists: it MUST
+                File newDir = new File(System.getenv("HOMEPATH")+"\\GenevaERS");
+                if (newDir.mkdir()) {
+                    System.out.println("Directory: " + System.getenv("HOMEPATH")+"\\GenevaERS" + " just created, therefore digest file does not exist. \nTerminating application.");
+                    return;
+                } else {
+                    // this is the happy path
+                    System.out.println("Failed to create directory: " + System.getenv("HOMEPATH")+"\\GenevaERS");
+                }
 
                 ii = 0;
                 reader = new BufferedReader(new FileReader(System.getenv("HOMEPATH")+"\\GenevaERS\\SchemaDigest.txt"));
 		    	String line = reader.readLine();
 			    while (line != null) {
-                    if (line.contains("// Populate digest map of stored procedures")) { //// Populate digest map of stored procedures")) {
+                    if (line.contains("// Populate digest map of stored procedures")) {
                         State = 1;
                     }
                     else {
@@ -280,7 +299,7 @@ public class GvbSchemaValidateMain {
             System.out.println("**** JDBC completed - no DB2 errors");
 
         } catch (SQLException e) {
-                System.out.println("SQLSTATE: " + e.getSQLState() + " creating database connection");
+                System.out.println("SQLSTATE: " + e.getSQLState() + " creating database connection for: " + url);
                 //e.printStackTrace();
                 return;
 
