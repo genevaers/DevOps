@@ -41,7 +41,6 @@
 //*
 //   SET HLQ='GEBT'
 //   SET MLQ='GENERS.D240708U'
-//*  SET MLQ='GENERS.D251114U'
 //*
 //* Note:
 //*   1) This job creates XMIT files from the unloaded DB2 schema

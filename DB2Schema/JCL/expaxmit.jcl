@@ -8,7 +8,6 @@
 //   EXPORT SYMLIST=*
 //   SET HLQ='GEBT'
 //   SET MLQ='GENERS.D240708U'
-//*  SET MLQ='GENERS.D251114U'
 //*
 //*************************************************************
 //*   DELETE RECEIVE'D FILES FROM LAST RUN
