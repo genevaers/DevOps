@@ -1,4 +1,4 @@
-# Helpful JCL for packaging DB2 schema unload files and performing the reverse operations
+# Helpful JCL for packaging DB2 schema unload files for transmission and performing the reverse operations
 
 These instructions provide a procedure used to package the schema unload files into a single compressed dataset. Six of the datasets are PDSE files from unloading LOB data. The remainder are DATA and PNCH files pertaining to each DB2 table. The resulting dataset is a TSO XMIT file of a final combined PDSE containing all the data.
 The final output file can be PACKED (TRSMAIN) for compression, although this step is not included.
