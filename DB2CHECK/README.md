@@ -1,6 +1,6 @@
 # Validation of GenevaERS DB2 Schema definition
 
-This application is prpvided to allow you to validate the DB2 schema has been correctly defined. It is written in Java and uses JDBC driver for DB2. The program uses digest values for each of the following sets of schema definitions to ensure correctlness. This validates the correctness of the schema structure.
+This application is provided to allow you to validate the DB2 schema has been correctly defined. It is written in Java and uses JDBC driver for DB2. The program uses digest values for each of the following sets of schema definitions to ensure correctlness. This validates the correctness of the schema structure.
 
 ## DB2 schema items checked
 <pre>
@@ -12,7 +12,7 @@ This application is prpvided to allow you to validate the DB2 schema has been co
 
 ## Configuration file
 
-This contains the userid, password, url of DB2 target and a matching value for the name of schema. For example:
+This contains the userid, password, url of DB2 target and a matching value for the name of schema. It must be located in your home directory.
 <pre>
 USERID
 RACFPWD
@@ -33,3 +33,11 @@ From directory DB2CHECK/target/ use the command:
 <pre>
 java -jar db2check-1.0.1-jar-with-dependencies.jar
 </pre>
+
+## Command line options
+
+From directory DB2CHECK/target/ use the command:
+<pre>
+java -jar db2check-1.0.1-jar-with-dependencies.jar -D   Generates files containing your schema definitions
+</pre>
+
