@@ -111,7 +111,8 @@ public class GvbSchemaValidateMain {
             finalI = ii;
 			reader.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+            System.out.println("IO exception encountered in GvbSchemaValidateMain reading configuration file");
+            //e.printStackTrace();
             return;
 		}
         // configuration information has been read
@@ -123,12 +124,10 @@ public class GvbSchemaValidateMain {
             // check if our directory exists: if it doesn't create it, if it does fine
             File newDir = new File(System.getenv("HOMEPATH")+"\\GenevaERS");
             if (newDir.mkdir()) {
-                System.out.println("Directory: " + System.getenv("HOMEPATH")+"\\GenevaERS" + " just created, all good");
+                System.out.println("Directory: " + System.getenv("HOMEPATH")+"\\GenevaERS" + " created.");
             } else {
                 // this is ok too
-                System.out.println("Failed to create directory: " + System.getenv("HOMEPATH")+"\\GenevaERS, it probably already existed");
             }
- 
         } else {
             try {
                 Integer State = -1;
@@ -136,11 +135,11 @@ public class GvbSchemaValidateMain {
                 // check if our directory exists: it MUST
                 File newDir = new File(System.getenv("HOMEPATH")+"\\GenevaERS");
                 if (newDir.mkdir()) {
-                    System.out.println("Directory: " + System.getenv("HOMEPATH")+"\\GenevaERS" + " just created, therefore digest file does not exist. \nTerminating application.");
+                    System.out.println("Directory: " + System.getenv("HOMEPATH")+"\\GenevaERS" + " did not previously exist.");
+                    System.out.println("Digest file does not exist. Terminating application.");
                     return;
                 } else {
                     // this is the happy path
-                    System.out.println("Failed to create directory: " + System.getenv("HOMEPATH")+"\\GenevaERS");
                 }
 
                 ii = 0;
@@ -197,7 +196,8 @@ public class GvbSchemaValidateMain {
                 finalI = ii;
 			    reader.close();
 		    } catch (IOException e) {
-			    e.printStackTrace();
+                System.out.println("IO exception encountered in GvbSchemaValidateMain reading schema digest file");
+                //e.printStackTrace();
                 return;
 		    }
         }
