@@ -114,7 +114,7 @@ public class GvbSchemaValidateMain {
             return;
 		}
         // configuration information has been read
-        System.out.println("User: " + user + " Url: " + url + " Schema mask: " + schema_mask + " Lines read: " + finalI);
+        System.out.println("User: " + user + " Url: " + url + " Schema mask: " + schema_mask + ". Config lines read: " + finalI);
 
 
         // read Digest information from home directory
@@ -231,6 +231,29 @@ public class GvbSchemaValidateMain {
             // call table column validation
             GvbSchemaValidateD mD = new GvbSchemaValidateD(sc);
 
+            Integer maxRc = Math.max( mA.getRc(), Math.max( mB.getRc(), Math.max ( mC.getRc(), mD.getRc() )));
+
+            switch ( maxRc ) {
+                case 0:
+                    System.out.println("All parts of schema validated successfully\n");
+                    break;
+                case 1:
+                    System.out.println("One or more parts of schema failed validation\n");
+                    break;
+                case 4:
+                    System.out.println("DB2 SQL error\n");
+                    break;
+                case 8:
+                    System.out.println("IO error\n");
+                    break;
+                case 12:
+                    System.out.println("No such algorithm found: " + digestType + "\n" );
+                    break;
+                default:
+                    System.out.println("Incorrect max return code: " + maxRc + "\n");
+                    break;
+            }
+
             if ( makeF ) {
                 fwriter.close();
             }
@@ -248,7 +271,7 @@ public class GvbSchemaValidateMain {
 
             // Connection must be on a unit-of-work boundary to allow close
             con.commit();
-            System.out.println ( "**** Transaction committed" );
+            System.out.println ( "**** SQL statements completed on transaction boundary" );
       
             // Close the connection
             con.close();

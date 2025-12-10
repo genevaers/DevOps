@@ -15,6 +15,9 @@ import java.util.Base64;
 import java.sql.*;
 
 public class GvbSchemaValidateA {
+
+    public Integer rc;
+
     public GvbSchemaValidateA(GvbSchemaConfig sc)
     {
         Boolean match = true;
@@ -123,28 +126,40 @@ public class GvbSchemaValidateA {
         } catch (SQLException e) {
             System.out.println("SQLSTATE: " + e.getSQLState() + " executing: " + SQLstmt);
             //e.printStackTrace();
+            rc = 4;
             return;
         } catch (IOException e) {
             System.out.println("IO exception encountered in GvbSchemaValidateA");
             //e.printStackTrace();
+            rc = 8;
             return;
         } catch (NoSuchAlgorithmException e) {
             System.out.println("Digest algorithm: " + digestType + " not available");
             //e.printStackTrace();
+            rc = 12;
             return;
         }
 
         if (makeHash) {
             System.out.println("\nStored procedure digest hashmap created\n");
+            rc = 2;
+            return;
         } else {
             if ( match )
             {
                 System.out.println("\nAll stored procedure definitions match.\n");
+                rc = 0;
+                return;
             }
             else
             {
                 System.out.println("\nOne or more stored procedures do not match expected definitions !!!\n");
+                rc = 1;
+                return;
             }
         }
     }
+
+    public Integer getRc() {return rc;}
+
 }

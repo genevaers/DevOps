@@ -15,6 +15,9 @@ import java.util.Base64;
 import java.sql.*;
 
 public class GvbSchemaValidateB {
+
+    public Integer rc;
+
     public GvbSchemaValidateB(GvbSchemaConfig sc)
     {
         Boolean match = true;
@@ -133,30 +136,42 @@ public class GvbSchemaValidateB {
         } catch (SQLException e) {
             System.out.println("SQLSTATE: " + e.getSQLState() + " executing: " + SQLstmt);
             //e.printStackTrace();
+            rc = 4;
             return;
         } catch (IOException e) {
             System.out.println("IO exception encountered in GvbSchemaValidateB");
             //e.printStackTrace();
+            rc = 8;
             return;
         } catch (NoSuchAlgorithmException e) {
             System.out.println("Digest algorithm: " + digestType + " not available");
             //e.printStackTrace();
+            rc = 12;
             return;
         }
         
         if ( makeHash ) {
             System.out.println("\nTable digest hashmap created\n");
+            rc = 2;
+            return;
         }
         else
         {
             if ( match )
             {
                 System.out.println("\nAll table definitions match.\n");
+                rc = 0;
+                return;
             }
             else
             {
                 System.out.println("\nOne or more tables do not match expected definitions !!!\n");
+                rc = 1;
+                return;
             }
         }
     }
+
+    public Integer getRc() {return rc;}
+
 }

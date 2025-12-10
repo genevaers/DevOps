@@ -15,6 +15,9 @@ import java.util.Base64;
 import java.sql.*;
 
 public class GvbSchemaValidateD {
+
+    public Integer rc;
+
     public GvbSchemaValidateD(GvbSchemaConfig sc)
     {
         Boolean match = true;
@@ -129,27 +132,39 @@ public class GvbSchemaValidateD {
         } catch (SQLException e) {
             System.out.println("SQLSTATE: " + e.getSQLState() + " executing: " + SQLstmt);
             //e.printStackTrace();
+            rc = 4;
             return;
         } catch (IOException e) {
             System.out.println("IO exception encountered in GvbSchemaValidateD");
             //e.printStackTrace();
+            rc = 8;
             return;
         } catch (NoSuchAlgorithmException e) {
             System.out.println("Digest algorithm: " + digestType + " not available");
             //e.printStackTrace();
+            rc = 12;
             return;
         }
         
         if ( makeHash ) {
             System.out.println("\nForeign key digest hashmap created\n");
+            rc = 2;
+            return;
         }
         else {
             if ( match ) {
                 System.out.println("\nAll foreign key definitions match.\n");
+                rc = 0;
+                return;
             }
             else {
                 System.out.println("\nOne or more foreign keys do not match expected definitions !!!\n");
+                rc = 1;
+                return;
             }
         } 
     }
+
+    public Integer getRc() {return rc;}
+
 }
