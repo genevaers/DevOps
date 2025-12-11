@@ -59,6 +59,9 @@ public class GvbSchemaValidateMain {
                     case "D":
                         makeDef = true;
                         break;
+                    case "h":
+                        System.out.println("-D (write schema definitions)\n-A (create schema digest map)");
+                        return;
                     default:
                         break;
                 }
