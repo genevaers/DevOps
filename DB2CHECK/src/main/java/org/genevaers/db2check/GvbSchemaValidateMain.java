@@ -37,15 +37,10 @@ public class GvbSchemaValidateMain {
         dwriter[1] = null;
         dwriter[2] = null;
         dwriter[3] = null;
-
-        String os = System.getProperty("os.name");
-        char osType = 0;
-
-        String userhome = System.getProperty("user.home");
-        System.out.println("User home: " + userhome);
-        
         Connection con;
 
+        String userhome = System.getProperty("user.home");
+    
         System.out.println ("**** Running GvbSchemaValidateMain: checking DB2 Schema");
 
         Integer nArgs =args.length;
@@ -86,7 +81,7 @@ public class GvbSchemaValidateMain {
         // read configurtion information from home directory
         try {
             ii = 0;
-            reader = new BufferedReader(new FileReader(System.getenv("HOMEPATH")+"\\password.txt"));
+            reader = new BufferedReader(new FileReader(userhome + "/password.txt"));
 			String line = reader.readLine();
 			while (line != null) {
                 if ( 0 == ii) {
@@ -128,9 +123,9 @@ public class GvbSchemaValidateMain {
         // read Digest information from home directory
         if (makeHash) {
             // check if our directory exists: if it doesn't create it, if it does fine
-            File newDir = new File(System.getenv("HOMEPATH")+"\\GenevaERS");
+            File newDir = new File(userhome+"/GenevaERS");
             if (newDir.mkdir()) {
-                System.out.println("Directory: " + System.getenv("HOMEPATH")+"\\GenevaERS" + " created.");
+                System.out.println("Directory: " + userhome+"/GenevaERS" + " created.");
             } else {
                 // this is ok too
             }
@@ -139,9 +134,9 @@ public class GvbSchemaValidateMain {
                 Integer State = -1;
 
                 // check if our directory exists: it MUST
-                File newDir = new File(System.getenv("HOMEPATH")+"\\GenevaERS");
+                File newDir = new File(userhome+"/GenevaERS");
                 if (newDir.mkdir()) {
-                    System.out.println("Directory: " + System.getenv("HOMEPATH")+"\\GenevaERS" + " did not previously exist.");
+                    System.out.println("Directory: " + userhome + "/GenevaERS" + " did not previously exist.");
                     System.out.println("Digest file does not exist. Terminating application.");
                     return;
                 } else {
@@ -149,7 +144,7 @@ public class GvbSchemaValidateMain {
                 }
 
                 ii = 0;
-                reader = new BufferedReader(new FileReader(System.getenv("HOMEPATH")+"\\GenevaERS\\SchemaDigest.txt"));
+                reader = new BufferedReader(new FileReader(userhome + "/GenevaERS/SchemaDigest.txt"));
 		    	String line = reader.readLine();
 			    while (line != null) {
                     if (line.contains("// Populate digest map of stored procedures")) {
@@ -224,21 +219,19 @@ public class GvbSchemaValidateMain {
             con.setAutoCommit(false);
             System.out.println("**** Created a JDBC connection to the data source\n");
 
-            String homepath = System.getenv("HOMEPATH");
-
             if ( makeF ) {
-                fwriter = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\Schema_report.txt"));
+                fwriter = new BufferedWriter(new FileWriter(userhome + "/GenevaERS/Schema_report.txt"));
             }
 
             if (makeHash) {
-                hwriter = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\SchemaDigest.txt"));
+                hwriter = new BufferedWriter(new FileWriter(userhome + "/GenevaERS/SchemaDigest.txt"));
             }
 
             if (makeDef) {
-                dwriter[0] = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\StoredProcedures.txt")); // stored procedures
-                dwriter[1] = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\Tabledata.txt")); // tables and columns
-                dwriter[2] = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\Indexdata.txt")); // indexes
-                dwriter[3] = new BufferedWriter(new FileWriter(homepath+"\\GenevaERS\\Foreignkeydata.txt")); // foreign assets
+                dwriter[0] = new BufferedWriter(new FileWriter(userhome + "/GenevaERS/StoredProcedures.txt")); // stored procedures
+                dwriter[1] = new BufferedWriter(new FileWriter(userhome + "/GenevaERS/Tabledata.txt")); // tables and columns
+                dwriter[2] = new BufferedWriter(new FileWriter(userhome + "/GenevaERS/Indexdata.txt")); // indexes
+                dwriter[3] = new BufferedWriter(new FileWriter(userhome + "/GenevaERS/Foreignkeydata.txt")); // foreign assets
             }
 
             // construct configuration object
