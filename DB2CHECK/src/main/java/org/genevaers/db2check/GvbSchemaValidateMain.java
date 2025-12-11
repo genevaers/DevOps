@@ -37,6 +37,12 @@ public class GvbSchemaValidateMain {
         dwriter[1] = null;
         dwriter[2] = null;
         dwriter[3] = null;
+
+        String os = System.getProperty("os.name");
+        char osType = 0;
+
+        String userhome = System.getProperty("user.home");
+        System.out.println("User home: " + userhome);
         
         Connection con;
 
