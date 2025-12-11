@@ -258,6 +258,9 @@ public class GvbSchemaValidateMain {
                 case 1:
                     System.out.println("One or more parts of schema failed validation\n");
                     break;
+                case 2:
+                    System.out.println("Schema digest map created\n");
+                    break;
                 case 4:
                     System.out.println("DB2 SQL error\n");
                     break;
