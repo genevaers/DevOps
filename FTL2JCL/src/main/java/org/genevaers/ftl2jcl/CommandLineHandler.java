@@ -57,14 +57,10 @@ public class CommandLineHandler {
 				logger.atInfo().log("FTL2JCL %s\nProcess %s.ftl, with tables from %s to produce %s", readVersion(),
 						args[0], args[1], args[2]);
 				buildAdditionalInfoFromCSV(args);
-				String myString = args[2];
-				System.out.println("MyString:" + myString + ":");
-				outputPath = Paths.get(myString);
-				if ( outputPath == null) {
-					outputPath.getParent().toFile().mkdirs(); //if null can't use normalized
-				} else {
-					Path normalizedOutputPath = outputPath.normalize();
-					normalizedOutputPath.getParent().toFile().mkdirs();
+				Path baseDir = Paths.get("/safe/output/directory").toAbsolutePath().normalize();
+				outputPath = baseDir.resolve(args[2]).normalize();
+				if (!outputPath.startsWith(baseDir)) {
+				    throw new SecurityException("Invalid output path: path traversal detected.");
 				}
 				writeTemplatedOutput(args[0]);
 				logger.atInfo().log("Process %s.ftl to produce %s", args[0], args[2]);
