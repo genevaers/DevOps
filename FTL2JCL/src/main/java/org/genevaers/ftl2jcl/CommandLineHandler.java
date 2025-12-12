@@ -58,7 +58,8 @@ public class CommandLineHandler {
 						args[0], args[1], args[2]);
 				buildAdditionalInfoFromCSV(args);
 				outputPath = Paths.get(args[2]);
-				outputPath.getParent().toFile().mkdirs();
+				Path normalizedOutputPath = outputPath.normalize();
+				normalizedOutputPath.getParent().toFile().mkdirs();
 				writeTemplatedOutput(args[0]);
 				logger.atInfo().log("Process %s.ftl to produce %s", args[0], args[2]);
 			} else {
@@ -152,7 +153,7 @@ public class CommandLineHandler {
 	public static void generateTestTemplatedOutput(Template temp, Map<String, Object> templateModel, Path target)
 			throws IOException, TemplateException {
 		logger.atInfo().log("Write to %s", target.toString());
-		FileWriter cfgWriter = new FileWriter(target.toFile());
+		FileWriter cfgWriter = new FileWriter(target.normalize().toFile());
 		temp.process(templateModel, cfgWriter);
 		cfgWriter.close();
 	}
