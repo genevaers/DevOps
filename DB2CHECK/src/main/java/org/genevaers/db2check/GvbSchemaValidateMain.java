@@ -300,7 +300,6 @@ public class GvbSchemaValidateMain {
             // Close the connection
             con.close();
             System.out.println("**** Disconnected from data source");
-
             System.out.println("**** JDBC completed - no DB2 errors");
 
         } catch (SQLException e) {
@@ -313,5 +312,6 @@ public class GvbSchemaValidateMain {
                 //e.printStackTrace();
                 return;
         }
+        return;
     }
 }
