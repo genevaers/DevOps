@@ -58,8 +58,12 @@ public class CommandLineHandler {
 						args[0], args[1], args[2]);
 				buildAdditionalInfoFromCSV(args);
 				outputPath = Paths.get(args[2]);
-				Path normalizedOutputPath = outputPath.normalize();
-				normalizedOutputPath.getParent().toFile().mkdirs();
+				if ( outputPath == null) {
+					outputPath.getParent().toFile().mkdirs(); //if null can't use normalized
+				} else {
+					Path normalizedOutputPath = outputPath.normalize();
+					normalizedOutputPath.getParent().toFile().mkdirs();
+				}
 				writeTemplatedOutput(args[0]);
 				logger.atInfo().log("Process %s.ftl to produce %s", args[0], args[2]);
 			} else {
