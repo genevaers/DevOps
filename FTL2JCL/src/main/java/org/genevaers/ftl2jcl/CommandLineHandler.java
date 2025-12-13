@@ -60,18 +60,14 @@ public class CommandLineHandler {
 						args[0], args[1], args[2]);
 				buildAdditionalInfoFromCSV(args);
 				
-				String currentdir = System.getProperty("user.dir");
-		        System.out.println("Base directory: " + currentdir);
-		        baseDir = Paths.get(currentdir).toAbsolutePath().normalize();
-				String StrOutputPath = args[2];
-				Integer lastSlash = StrOutputPath.lastIndexOf("/");
-				String StrOutputPathUpOne = StrOutputPath.substring(0,lastSlash) + "/..";
-				outputPath = baseDir.resolve(StrOutputPath).normalize();
-				outputPathUpOne= baseDir.resolve(StrOutputPathUpOne).normalize();
-				System.out.println("Base Dir path: " + baseDir);
-				System.out.println("output path: " + outputPath);
-				System.out.println("output pathupone: " + outputPathUpOne);
-	        	if (!baseDir.startsWith(outputPathUpOne)) {
+				String currentdir = System.getProperty("user.dir"); // get a valid reference point
+		        baseDir = Paths.get(currentdir).toAbsolutePath().normalize(); // and path to go with it
+				String StrOutputPath = args[2]; // get output path string but 
+				Integer lastSlash = StrOutputPath.lastIndexOf("/"); // without file name
+				String StrOutputPathUpOne = StrOutputPath.substring(0,lastSlash) + "/.."; // up one level
+				outputPath = baseDir.resolve(StrOutputPath).normalize(); // output path
+				outputPathUpOne= baseDir.resolve(StrOutputPathUpOne).normalize(); // output path up one
+	        	if (!baseDir.startsWith(outputPathUpOne)) { // is output path up one consistent with reference point
             		throw new SecurityException("Invalid output path: path traversal detected.");
         		}
 				outputPath.getParent().toFile().mkdirs();
