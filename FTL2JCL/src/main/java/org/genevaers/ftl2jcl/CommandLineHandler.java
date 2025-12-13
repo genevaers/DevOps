@@ -50,6 +50,7 @@ public class CommandLineHandler {
 	private static List<Map<String, String>> tables = new ArrayList<Map<String, String>>();
 	private static Path parent;
 	private static Path outputPath = null;
+	private static Path outputPathUpOne = null;
 	private static Path baseDir = null;
 
 	public static void main(String[] args) {
@@ -62,12 +63,17 @@ public class CommandLineHandler {
 				String currentdir = System.getProperty("user.dir");
 		        System.out.println("Base directory: " + currentdir);
 		        baseDir = Paths.get(currentdir).toAbsolutePath().normalize();
-				outputPath = baseDir.resolve(args[2]).normalize();
+				String StrOutputPath = args[2];
+				String StrOutputPathUpOne = StrOutputPath + "/..";
+				outputPath = baseDir.resolve(StrOutputPath).normalize();
+				outputPathUpOne= baseDir.resolve(StrOutputPathUpOne).normalize();
 				System.out.println("Base Dir path: " + baseDir);
 				System.out.println("output path: " + outputPath);
-	        	if (!outputPath.startsWith(baseDir)) {
+				System.out.println("output pathupone: " + outputPathUpOne);
+	        	if (!outputPathUpOne.startsWith(baseDir)) {
             		throw new SecurityException("Invalid output path: path traversal detected.");
         		}
+				outputPath.getParent().toFile().mkdirs();
 				writeTemplatedOutput(args[0]);
 				logger.atInfo().log("Process %s.ftl to produce %s", args[0], args[2]);
 			} else {
