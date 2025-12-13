@@ -50,6 +50,7 @@ public class CommandLineHandler {
 	private static List<Map<String, String>> tables = new ArrayList<Map<String, String>>();
 	private static Path parent;
 	private static Path outputPath = null;
+	private static Path baseDir = null;
 
 	public static void main(String[] args) {
 		try {
@@ -57,11 +58,16 @@ public class CommandLineHandler {
 				logger.atInfo().log("FTL2JCL %s\nProcess %s.ftl, with tables from %s to produce %s", readVersion(),
 						args[0], args[1], args[2]);
 				buildAdditionalInfoFromCSV(args);
-				Path baseDir = Paths.get("/safe/output/directory").toAbsolutePath().normalize();
+				
+				String currentdir = System.getProperty("user.dir");
+		        System.out.println("Base directory: " + currentdir);
+		        baseDir = Paths.get(currentdir).toAbsolutePath().normalize();
 				outputPath = baseDir.resolve(args[2]).normalize();
-				if (!outputPath.startsWith(baseDir)) {
-				    throw new SecurityException("Invalid output path: path traversal detected.");
-				}
+				System.out.println("Base Dir path: " + baseDir);
+				System.out.println("output path: " + outputPath);
+	        	if (!outputPath.startsWith(baseDir)) {
+            		throw new SecurityException("Invalid output path: path traversal detected.");
+        		}
 				writeTemplatedOutput(args[0]);
 				logger.atInfo().log("Process %s.ftl to produce %s", args[0], args[2]);
 			} else {
