@@ -65,7 +65,7 @@ public class CommandLineHandler {
 		        baseDir = Paths.get(currentdir).toAbsolutePath().normalize();
 				String StrOutputPath = args[2];
 				Integer lastSlash = StrOutputPath.lastIndexOf("/");
-				String StrOutputPathUpOne = StrOutputPath.substring(0,lastSlash) + "..";
+				String StrOutputPathUpOne = StrOutputPath.substring(0,lastSlash) + "/..";
 				outputPath = baseDir.resolve(StrOutputPath).normalize();
 				outputPathUpOne= baseDir.resolve(StrOutputPathUpOne).normalize();
 				System.out.println("Base Dir path: " + baseDir);
