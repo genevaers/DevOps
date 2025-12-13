@@ -71,7 +71,7 @@ public class CommandLineHandler {
 				System.out.println("Base Dir path: " + baseDir);
 				System.out.println("output path: " + outputPath);
 				System.out.println("output pathupone: " + outputPathUpOne);
-	        	if (!outputPathUpOne.startsWith(baseDir)) {
+	        	if (!baseDir.startsWith(outputPathUpOne)) {
             		throw new SecurityException("Invalid output path: path traversal detected.");
         		}
 				outputPath.getParent().toFile().mkdirs();
