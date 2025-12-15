@@ -14,5 +14,5 @@ EXPAXMIT.JCL  involves performing TSO RECEIVE operations to obtain the original 
 ## Unterse transmission file
 This job may be needed where TRSMAIN is used as part of the transmission process between mainframes.
 <pre>
-UNTERSE.JCL  TRSMAIN UNPACK operation which restores the original combined transmission file.
+UNTERSE.JCL  TRSMAIN UNPACK operation which restores the original combined transmission PDS file.
 </pre>
