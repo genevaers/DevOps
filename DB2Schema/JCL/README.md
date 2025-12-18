@@ -4,9 +4,9 @@ These instructions provide a procedure used to package the schema unload files i
 The final output file can be PACKED (TRSMAIN) for compression, although this step is not included.
 
 ## Package unload data
-'''
+```
 RECURMIT.JCL  involves performing recursive TSO XMIT steps to obtain a single PDS dataset containing all DB2 unload files for the schema.
-'''
+```
 ## Unpackage unload data
 <pre>
 EXPAXMIT.JCL  involves performing TSO RECEIVE operations starting with an XMIT file of the single PDS dataset to obtain the original unload datasets.
