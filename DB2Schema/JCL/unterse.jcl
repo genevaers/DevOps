@@ -1,4 +1,4 @@
-//UNTERSE JOB (ACCT),'UNTERSE TRANSFER FILE',
+//UNTERSE JOB (ACCT),'UNTERSE PDS',
 //          NOTIFY=&SYSUID.,
 //          CLASS=A,
 //          MSGLEVEL=(1,1),
@@ -26,18 +26,16 @@
 //*
 //******************************************************************
 //* UNTERSE TRANSMISSION FILE
-//* USED AFTER TRANSFERRING TERSED DATABASE UNLOAD CONTAINED IN A PDSE
+//* USED AFTER TRANSFERRING TERSED VERSION OF PDS[E]
 //******************************************************************
-//*
-//*   The following variables will need to be set to match the Db2
-//*   subsystem the packages are to reside.
 //*
 //*   .   ensure variables are exportable
 //*
 //         EXPORT SYMLIST=*
 //*
 //   SET HLQ='GEBT'
-//   SET MLQ='GENERS.D240708U'
+//   SET MLQ='GENERS'
+//   SET LLQ='D250101U'
 //*
 //*********************************************************************
 //*   DELETE DATA SET
@@ -48,7 +46,7 @@
 //SYSPRINT DD SYSOUT=*,DCB=(LRECL=133,BLKSIZE=12901,RECFM=FBA)
 //*
 //SYSIN    DD *,SYMBOLS=EXECSYS
- DELETE &HLQ.&MLQ.PDS PURGE
+ DELETE &HLQ..&MLQ..&LLQ..PDS      PURGE
     IF LASTCC > 0 THEN SET MAXCC = 0
 //*
 //*********************************************************************
@@ -59,10 +57,11 @@
 //*
 //SYSPRINT DD SYSOUT=*,DCB=(LRECL=133,BLKSIZE=12901,RECFM=FBA)
 //*
-//INFILE   DD DISP=OLD,DSN=&HLQ..&MLQ..RECEIVE.PDS.TRS
+//INFILE   DD DSN=&HLQ..&MLQ..&LLQ..TRS,
+//            DISP=OLD
 //*
-//OUTFILE  DD DSN=&HLQ..&MLQ..RECEIVE.PDS
+//OUTFILE  DD DSN=&HLQ..&MLQ..&LLQ..PDS,
 //            DISP=(NEW,CATLG,DELETE),
-//             UNIT=SYSDA,DSNTYPE=LIBRARY,DSORG=PO,
-//             SPACE=(CYL,(4000,1000),RLSE)
+//            UNIT=SYSDA,DSNTYPE=LIBRARY,DSORG=PO,
+//            SPACE=(CYL,(4000,1000),RLSE)
 //
