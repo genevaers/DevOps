@@ -59,7 +59,7 @@
 //*      SECGRPVW
 //* 
 //********************************************************************
-//*   DELETE XMIT-FORMAT DATASETS
+//*   DELETE XMIT-FORMAT DATASETS 
 //*********************************************************************
 //*
 //DELFILE  EXEC PGM=IDCAMS
@@ -2266,7 +2266,7 @@
 //*********************************************************************
 //STEP60 EXEC PGM=IEBGENER
 //SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..USERTS.DATA.XMIT,
+//SYSUT1   DD DSN=&HLQ..&MLQ..USERTS.PNCH.XMIT,
 //            DISP=SHR
 //SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM60),
 //            DISP=SHR
@@ -2282,7 +2282,7 @@
 //*********************************************************************
 //STEP62 EXEC PGM=IEBGENER
 //SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..VDPBATCH.DATA.XMIT,
+//SYSUT1   DD DSN=&HLQ..&MLQ..VDPBATCH.PNCH.XMIT,
 //            DISP=SHR
 //SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM62),
 //            DISP=SHR
@@ -2346,7 +2346,7 @@
 //*********************************************************************
 //STEP70 EXEC PGM=IEBGENER
 //SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..VIEWFOLD.DATA.XMIT,
+//SYSUT1   DD DSN=&HLQ..&MLQ..VIEWFOLD.PNCH.XMIT,
 //            DISP=SHR
 //SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM70),
 //            DISP=SHR
@@ -2362,7 +2362,7 @@
 //*********************************************************************
 //STEP72 EXEC PGM=IEBGENER
 //SYSIN    DD DUMMY
-//SYSUT1   DD DSN=&HLQ..&MLQ..VIEWHDFT.DATA.XMIT,
+//SYSUT1   DD DSN=&HLQ..&MLQ..VIEWHDFT.PNCH.XMIT,
 //            DISP=SHR
 //SYSUT2   DD DSN=&HLQ..&MLQ..COMBINE.PDS(MEM72),
 //            DISP=SHR
