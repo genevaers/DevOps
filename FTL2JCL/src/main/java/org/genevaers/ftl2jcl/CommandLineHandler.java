@@ -50,6 +50,8 @@ public class CommandLineHandler {
 	private static List<Map<String, String>> tables = new ArrayList<Map<String, String>>();
 	private static Path parent;
 	private static Path outputPath = null;
+	private static Path outputPathUpOne = null;
+	private static Path baseDir = null;
 
 	public static void main(String[] args) {
 		try {
@@ -57,7 +59,17 @@ public class CommandLineHandler {
 				logger.atInfo().log("FTL2JCL %s\nProcess %s.ftl, with tables from %s to produce %s", readVersion(),
 						args[0], args[1], args[2]);
 				buildAdditionalInfoFromCSV(args);
-				outputPath = Paths.get(args[2]);
+				
+				String currentdir = System.getProperty("user.dir"); // get a valid reference point
+		        baseDir = Paths.get(currentdir).toAbsolutePath().normalize(); // and path to go with it
+				String StrOutputPath = args[2]; // get output path string but 
+				Integer lastSlash = StrOutputPath.lastIndexOf("/"); // without file name
+				String StrOutputPathUpOne = StrOutputPath.substring(0,lastSlash) + "/.."; // up one level
+				outputPath = baseDir.resolve(StrOutputPath).normalize(); // output path
+				outputPathUpOne= baseDir.resolve(StrOutputPathUpOne).normalize(); // output path up one
+	        	if (!baseDir.startsWith(outputPathUpOne)) { // is output path up one consistent with reference point
+            		throw new SecurityException("Invalid output path: path traversal detected.");
+        		}
 				outputPath.getParent().toFile().mkdirs();
 				writeTemplatedOutput(args[0]);
 				logger.atInfo().log("Process %s.ftl to produce %s", args[0], args[2]);
@@ -152,7 +164,7 @@ public class CommandLineHandler {
 	public static void generateTestTemplatedOutput(Template temp, Map<String, Object> templateModel, Path target)
 			throws IOException, TemplateException {
 		logger.atInfo().log("Write to %s", target.toString());
-		FileWriter cfgWriter = new FileWriter(target.toFile());
+		FileWriter cfgWriter = new FileWriter(target.normalize().toFile());
 		temp.process(templateModel, cfgWriter);
 		cfgWriter.close();
 	}
