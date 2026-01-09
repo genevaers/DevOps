@@ -71,15 +71,89 @@ Note: GERS_GIT_REPO_DIR should match the directory created in step 4.
     export GERS_BRANCH_PE="PM_4.18.099.B0123_branch"
     export GERS_BRANCH_PEX="PM_4.18.099.B0123_branch"
     export GERS_BRANCH_RCA="PM_4.18.099.B0123_branch"
-
     ```
-4. To run the build enter the following:
+   - Review the environment variables that determine where the build output will be. For example: 
+    ```
+    export GERS_BUILD_HLQ="GENEVA.$LOGNAME"
+    export GERS_ENV_HLQ="GENEVA.$LOGNAME"
+    export GERS_RCA_JAR_DIR="$HOME/RCA"
+    ```
+Note that $LOGNAME will resolve to the user ID of the person running the build script, and $HOME to their home directory.
+See [Results of the Build](#results-of-the-build) for more information.
+
+1. To run the build enter the following:
     ```
     ./build.sh
     ```
 This will start a series of scripts and jobs which will build the Performance Engine then run the regression tests.  
 
 The build process generates tagging scripts and JCL.
+
+### Results of the Build
+
+#### Assembler modules
+
+The build will create data sets based on the environment variables specified in .gers.profile .
+For example:
+```
+export GERS_BUILD_VERSION='4'
+export GERS_BUILD_MAJOR='18'
+export GERS_BUILD_MINOR='099'
+```
+In conjunction with the build HLQ:
+```
+export GERS_BUILD_HLQ='GENEVA.USERID'
+```
+Will produce: 
+```
+GENEVA.USERID.PM418099.B0001.ADATA   
+GENEVA.USERID.PM418099.B0001.ASM     
+GENEVA.USERID.PM418099.B0001.ASMLANGX
+GENEVA.USERID.PM418099.B0001.ENV     
+GENEVA.USERID.PM418099.B0001.GVBDBRM 
+GENEVA.USERID.PM418099.B0001.GVBLOAD <-- load library
+GENEVA.USERID.PM418099.B0001.JCL     
+GENEVA.USERID.PM418099.B0001.LINKPARM 
+GENEVA.USERID.PM418099.B0001.LISTASM  
+GENEVA.USERID.PM418099.B0001.LISTDB2  
+GENEVA.USERID.PM418099.B0001.LISTJOB  
+GENEVA.USERID.PM418099.B0001.LISTLINK 
+GENEVA.USERID.PM418099.B0001.MAC      
+GENEVA.USERID.PM418099.B0001.OBJ      
+```
+
+The “B” number increments for every time you run the build with the same HLQ and version/major/minor numbers.
+
+The following aliases will be set for all the data sets:
+
+One set is based on the major build number. For example
+```
+GENEVA.USERID.PM418.*
+```
+Another set of aliases uses the 'environment HLQ' set in .gers.profile, for example:
+
+export GERS_ENV_HLQ=GENEVA.LATEST
+
+will produce a set of aliases 
+```
+GENEVA.LATEST.*
+```
+#### RCApps
+
+The RCApps jar file location is determined in .gers.profile by the environment variable GERS_RCA_JAR_DIR.
+
+For example:
+
+export GERS_RCA_JAR_DIR='/u/USERID/RCA'
+
+Will copy the RCApps jar to this directory, and create symbolic links (aliases), as shown below.
+```
+/u/USERID/RCA> ls -la
+<snip>
+-rwxr-xr-x    1 USERID   GENEVA   24062073 Aug  5 18:21 rcapps-1.1.0_RC18.jar
+lrwxrwxrwx    1 USERID   GENEVA        21 Aug  5 18:21 rcapps-PM418018.jar -> rcapps-1.1.0_RC18.jar
+lrwxrwxrwx    1 USERID   GENEVA        21 Aug  5 18:21 rcapps-latest.jar -> rcapps-1.1.0_RC18.jar
+```
 
 ### Tagging the build 
 
