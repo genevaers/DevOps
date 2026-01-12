@@ -8,3 +8,11 @@ Ftl2Jcl/target/maven-archiver/pom.properties
 Ftl2Jcl/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 Ftl2Jcl/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 Ftl2Jcl/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+DSNMOD/target/dsnmod-1.0.0-jar-with-dependencies.jar
+DSNMOD/target/dsnmod-1.0.0.jar
+DSNMOD/target/classes/application.properties
+DSNMOD/target/classes/org/genevaers/dsnmod/dsnmod.class
+DSNMOD/target/maven-archiver/pom.properties
+DSNMOD/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+DSNMOD/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+DSNMOD/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
