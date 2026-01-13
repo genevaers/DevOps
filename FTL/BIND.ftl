@@ -54,7 +54,7 @@
  DSN SYSTEM(${env["GERS_DB2_SUBSYSTEM"]})
   BIND PLAN(${pgmTable.PID}${env["GERS_DB2_PLAN_SUFFIX"]}) MEM(${pgmTable.PID}) ACT(REP) ISOLATION(CS) -
   LIB('${TARGET_HLQ}.GVBDBRM') QUALIFIER(${env["GERS_DB2_QUALIFIER"]}) -
-  OWNER(${env["GERS_DB2_QUALIFIER"]}) VERSION(PM${env["GERS_PE_REL_NBR"]})
+  OWNER(${env["GERS_DB2_QUALIFIER"]})
 //*
 //*********************************************************************
 //*   Grant execute authority to plan
