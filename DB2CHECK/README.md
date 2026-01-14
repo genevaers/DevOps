@@ -37,7 +37,8 @@ java -jar db2check-1.0.1-jar-with-dependencies.jar
 ## Command line options
 
 From directory DB2CHECK/target/ use the command:
+This generates files containing your schema definitions
 <pre>
-java -jar db2check-1.0.1-jar-with-dependencies.jar -D   Generates files containing your schema definitions
+java -jar db2check-1.0.1-jar-with-dependencies.jar -D
 </pre>
 
