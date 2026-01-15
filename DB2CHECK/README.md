@@ -41,4 +41,3 @@ This generates files containing your schema definitions
 <pre>
 java -jar db2check-1.0.1-jar-with-dependencies.jar -D
 </pre>
-
