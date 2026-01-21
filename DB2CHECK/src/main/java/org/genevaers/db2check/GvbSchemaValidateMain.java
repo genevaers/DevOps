@@ -5,13 +5,18 @@ import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+//import java.lang.System.Logger;
 import java.util.HashMap;
- import java.io.File;
+import java.io.File;
+import java.util.logging.Logger;
 
 import java.sql.*;
 
 public class GvbSchemaValidateMain {
     @SuppressWarnings("resource")
+
+    private static final Logger logger = Logger.getLogger(GvbSchemaValidateMain.class.getName());
+
     public static void main(String[] args)
     {
         HashMap<String, String> spmap = new HashMap<>(30); // stored procedures digest
@@ -29,7 +34,7 @@ public class GvbSchemaValidateMain {
         String schema_mask = "";
         Boolean makeHash = false;
         Boolean makeDef = false;
-        Boolean makeF = false;
+        Boolean makeF = true;
         BufferedWriter fwriter = null; // general output
         BufferedWriter hwriter = null; // digest output
         BufferedWriter[] dwriter = new BufferedWriter[4]; // Definition files: stored procedures, table/columns, indexes and foreign keys
@@ -41,11 +46,13 @@ public class GvbSchemaValidateMain {
 
         String userhome = System.getProperty("user.home");
     
-        System.out.println ("**** Running GvbSchemaValidateMain: checking DB2 Schema");
+        logger.info("**** Running GvbSchemaValidateMain: checking DB2 Schema.");
+        //System.out.println ("**** Running GvbSchemaValidateMain: checking DB2 Schema");
 
         Integer nArgs =args.length;
         Integer n;
 
+        // parse
         // command line argument[s]
         for (n = 0; n < nArgs; n++) {
             if (args[n].substring(0,1).equals("-")) {
@@ -60,7 +67,8 @@ public class GvbSchemaValidateMain {
                         makeDef = true;
                         break;
                     case "h":
-                        System.out.println("-D (write schema definitions)\n-A (create schema digest map)");
+                        logger.info("-D (-D (write schema definitions)\n-A (create schema digest map)");
+                        //System.out.println("-D (write schema definitions)\n-A (create schema digest map)");
                         return;
                     default:
                         break;
@@ -68,23 +76,19 @@ public class GvbSchemaValidateMain {
             }
         }
 
-        // ///////////////////////////////////////
-        //  TEMPORARY ASSIGNMENTS
-        // makeHash = false;
-        // makeDef = true;
-        // ///////////////////////////////////////
-
         if (makeHash) {
-            System.out.println("Option to generate Schema digest from DB2 catalog: " + makeHash);
+            logger.info("Option set to generate Schema digest from DB2 catalog");
+            //System.out.println("Option to generate Schema digest from DB2 catalog: " + makeHash);
         }
         if (makeDef) {
-            System.out.println("Option to generate Schema definitions from DB2 catalog: " + makeDef);
+            logger.info("Option set to generate Schema definitions from DB2 catalog");
+            //System.out.println("Option to generate Schema definitions from DB2 catalog: " + makeDef);
         }
 
         // read configurtion information from home directory
         try {
             ii = 0;
-            reader = new BufferedReader(new FileReader(userhome + "/password.txt"));
+            reader = new BufferedReader(new FileReader(userhome + "/db2check.config"));
 			String line = reader.readLine();
 			while (line != null) {
                 if ( 0 == ii) {
@@ -115,12 +119,14 @@ public class GvbSchemaValidateMain {
             finalI = ii;
 			reader.close();
 		} catch (IOException e) {
-            System.out.println("IO exception encountered in GvbSchemaValidateMain reading configuration file");
+            logger.severe("IO exception encountered in GvbSchemaValidateMain reading configuration file: " + e.getMessage());
+            // System.out.println("IO exception encountered in GvbSchemaValidateMain reading configuration file");
             //e.printStackTrace();
             return;
 		}
         // configuration information has been read
-        System.out.println("User: " + user + " Url: " + url + " Schema mask: " + schema_mask + ". Config lines read: " + finalI);
+        logger.fine("User: " + user + " Url: " + url + " Schema mask: " + schema_mask + ". Config lines read: " + finalI);
+        //System.out.println("User: " + user + " Url: " + url + " Schema mask: " + schema_mask + ". Config lines read: " + finalI);
 
 
         // read Digest information from home directory
@@ -128,7 +134,8 @@ public class GvbSchemaValidateMain {
             // check if our directory exists: if it doesn't create it, if it does fine
             File newDir = new File(userhome+"/GenevaERS");
             if (newDir.mkdir()) {
-                System.out.println("Directory: " + userhome+"/GenevaERS" + " created.");
+                logger.info("Directory: " + userhome+"/GenevaERS" + " created");
+                //System.out.println("Directory: " + userhome+"/GenevaERS" + " created.");
             } else {
                 // this is ok too
             }
@@ -139,8 +146,10 @@ public class GvbSchemaValidateMain {
                 // check if our directory exists: it MUST
                 File newDir = new File(userhome+"/GenevaERS");
                 if (newDir.mkdir()) {
-                    System.out.println("Directory: " + userhome + "/GenevaERS" + " did not previously exist.");
-                    System.out.println("Digest file does not exist. Terminating application.");
+                    logger.info("Directory: " + userhome + "/GenevaERS" + " did not previously exist");
+                    logger.severe("Digest file does not exist. Terminating application");
+                    //System.out.println("Directory: " + userhome + "/GenevaERS" + " did not previously exist.");
+                    //System.out.println("Digest file does not exist. Terminating application.");
                     return;
                 } else {
                     // this is the happy path
@@ -186,7 +195,8 @@ public class GvbSchemaValidateMain {
                                             fkmap.put(values[0], values[1]);
                                             break;
                                         default:
-                                            System.out.println("Invalid State:" + State + " Line: " + ii + " record: " + line);
+                                            logger.severe("Invalid State:" + State + " Line: " + ii + " record: " + line);
+                                            //System.out.println("Invalid State:" + State + " Line: " + ii + " record: " + line);
                                             break;
                                     }
                                 }
@@ -200,7 +210,8 @@ public class GvbSchemaValidateMain {
                 finalI = ii;
 			    reader.close();
 		    } catch (IOException e) {
-                System.out.println("IO exception encountered in GvbSchemaValidateMain reading schema digest file");
+                logger.severe("IO exception encountered in GvbSchemaValidateMain reading schema digest file: " + e.getMessage());
+                //System.out.println("IO exception encountered in GvbSchemaValidateMain reading schema digest file");
                 //e.printStackTrace();
                 return;
 		    }
@@ -210,20 +221,24 @@ public class GvbSchemaValidateMain {
         try {
             Class.forName("com.ibm.db2.jcc.DB2Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Error encountered loading DB2 SQLJ driver");
+            logger.severe("Error encountered loading DB2 SQLJ driver: " + e.getMessage());
+            //System.out.println("Error encountered loading DB2 SQLJ driver");
             //e.printStackTrace();
             return;
         }
-        System.out.println("**** Loaded the JDBC driver");
+        logger.fine("**** Loaded the JDBC driver");
+        //System.out.println("**** Loaded the JDBC driver");
 
         // Create the connection using the IBM Data Server Driver for JDBC and SQLJ and open output file[s]
         try {
             con = DriverManager.getConnection (url, user, password);
             con.setAutoCommit(false);
-            System.out.println("**** Created a JDBC connection to the data source\n");
+            logger.fine("**** Created a JDBC connection to the data source\n");
+            //System.out.println("**** Created a JDBC connection to the data source\n");
 
             if ( makeF ) {
                 fwriter = new BufferedWriter(new FileWriter(userhome + "/GenevaERS/Schema_report.txt"));
+                fwriter.write("GenevaERS DB2 Schema Report for: " + schema_mask + "\n");
             }
 
             if (makeHash) {
@@ -256,25 +271,32 @@ public class GvbSchemaValidateMain {
 
             switch ( maxRc ) {
                 case 0:
-                    System.out.println("All parts of schema validated successfully\n");
+                    logger.info("All parts of schema validated successfully\n");
+                    //System.out.println("All parts of schema validated successfully\n");
                     break;
                 case 1:
-                    System.out.println("One or more parts of schema failed validation\n");
+                    logger.warning("One or more parts of schema failed validation\n");
+                    //System.out.println("One or more parts of schema failed validation\n");
                     break;
                 case 2:
-                    System.out.println("Schema digest map created\n");
+                    logger.info("Schema digest map created\n");
+                    //System.out.println("Schema digest map created\n");
                     break;
                 case 4:
-                    System.out.println("DB2 SQL error\n");
+                    logger.severe("DB2 SQL error\n");
+                    //System.out.println("DB2 SQL error\n");
                     break;
                 case 8:
-                    System.out.println("IO error\n");
+                    logger.severe("IO error\n");
+                    //System.out.println("IO error\n");
                     break;
                 case 12:
-                    System.out.println("No such algorithm found: " + digestType + "\n" );
+                    logger.severe("IO and DB2 SQL error\n");
+                    //System.out.println("No such algorithm found: " + digestType + "\n" );
                     break;
                 default:
-                    System.out.println("Incorrect max return code: " + maxRc + "\n");
+                    logger.severe("Incorrect max return code: " + maxRc + "\n");
+                    //System.out.println("Incorrect max return code: " + maxRc + "\n");
                     break;
             }
 
@@ -295,20 +317,25 @@ public class GvbSchemaValidateMain {
 
             // Connection must be on a unit-of-work boundary to allow close
             con.commit();
-            System.out.println ( "**** SQL statements completed on transaction boundary" );
+            logger.fine("**** SQL statements completed on transaction boundary");
+            //System.out.println ( "**** SQL statements completed on transaction boundary" );
       
             // Close the connection
             con.close();
-            System.out.println("**** Disconnected from data source");
-            System.out.println("**** JDBC completed - no DB2 errors");
+            logger.fine(userhome + "**** Disconnected from data source");
+            //System.out.println("**** Disconnected from data source");
+            logger.fine("**** JDBC completed - no DB2 errors");
+            //System.out.println("**** JDBC completed - no DB2 errors");
 
         } catch (SQLException e) {
-                System.out.println("SQLSTATE: " + e.getSQLState() + " creating database connection for: " + url);
+                logger.severe("SQLSTATE: " + e.getSQLState() + " creating database connection for: " + url + e.getMessage());
+                //System.out.println("SQLSTATE: " + e.getSQLState() + " creating database connection for: " + url);
                 //e.printStackTrace();
                 return;
 
         } catch (IOException e) {
-                System.out.println("IO exception encountered in GvbSchemaValidateMain");
+                logger.severe("IO exception encountered in GvbSchemaValidateMain" + e.getMessage());
+                //System.out.println("IO exception encountered in GvbSchemaValidateMain");
                 //e.printStackTrace();
                 return;
         }

@@ -7,7 +7,7 @@ package org.genevaers.db2check;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.HashMap;
-
+import java.util.logging.Logger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -17,6 +17,7 @@ import java.sql.*;
 public class GvbSchemaValidateB {
 
     private Integer rc;
+    private static final Logger logger = Logger.getLogger(GvbSchemaValidateB.class.getName());
 
     public GvbSchemaValidateB(GvbSchemaConfig sc)
     {
@@ -24,6 +25,7 @@ public class GvbSchemaValidateB {
 
         BufferedWriter hwriter = sc.getHwriter(); // For writing digest values of hashmaps
         BufferedWriter[] dwriter = new BufferedWriter[4]; // For writing Schema definitions
+        BufferedWriter fwriter = sc.getFwriter(); // General output writers
         dwriter = sc.getDwriter();
         String digestType = sc.getDigestType();
         Connection con = sc.getCon();
@@ -42,7 +44,8 @@ public class GvbSchemaValidateB {
         Statement stmt;
         ResultSet rs;
 
-        System.out.println ("**** GvbSchemaValidateB: checking tables and colums for schema: " + schema_mask);
+        logger.info("**** GvbSchemaValidateB: checking tables and columns for schema: " + schema_mask);
+        //System.out.println ("**** GvbSchemaValidateB: checking tables and colums for schema: " + schema_mask);
 
         String SQLstmt = "SELECT TBCREATOR, TBNAME, NAME, COLTYPE, LENGTH FROM SYSIBM.SYSCOLUMNS WHERE TBCREATOR LIKE '" + schema_mask + "' ORDER BY TBNAME, NAME";
 
@@ -56,11 +59,15 @@ public class GvbSchemaValidateB {
 
             // Create the SQL statement
             stmt = con.createStatement();
-            System.out.println("**** Created JDBC Statement object");
+            logger.fine("**** Created JDBC Statement object");
+            //System.out.println("**** Created JDBC Statement object");
 
             // Execute a query and generate a ResultSet instance
             rs = stmt.executeQuery(SQLstmt);
-            System.out.println("**** Created JDBC ResultSet object");
+            logger.fine("**** Created JDBC ResultSet object");
+            //System.out.println("**** Created JDBC ResultSet object");
+
+            fwriter.write("\nTable and Column Validation Report for schema: " + schema_mask + "\n\n");
 
             MessageDigest md = MessageDigest.getInstance(digestType);
             while (rs.next()) {
@@ -87,25 +94,36 @@ public class GvbSchemaValidateB {
                         }
                         else {
                             // report on schema correctness
-                            System.out.println("Table: " + tname + " Digest: " + digestType + ": " + encodedHash);
+                            fwriter.write("Table: " + tname + " Digest: " + digestType + ": " + encodedHash + "\n");
+                            //System.out.println("Table: " + tname + " Digest: " + digestType + ": " + encodedHash);
                             String hashvalue = tbmap.get(tname);
                             if (hashvalue == null)
                             {
-                                System.out.println("HASH value mismatch for table: " + tname);
-                                System.out.println("No stored hash value");
-                                System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+                                logger.warning("HASH value mismatch for table: " + tname + " - no stored hash value");
+                                fwriter.write("HASH value mismatch for table: " + tname + " - no stored hash value\n");
+                                //System.out.println("HASH value mismatch for table: " + tname);
+                                //System.out.println("No stored hash value");
+                                fwriter.write("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+                                //System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
                                 match = false;                            }
                             else
                             {
                                 if ( hashvalue.equals(encodedHash))
                                 {
-                                    System.out.println("HASH value matches for table: " + tname);
+                                    fwriter.write("HASH value matches for table: " + tname + "\n");
+                                    //System.out.println("HASH value matches for table: " + tname);
                                 }
                                 else
                                 {
-                                    System.out.println("HASH value mismatch for table: " + tname);
-                                    System.out.println("Stored hash value: " + hashvalue);
-                                    System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+                                    logger.warning("HASH value mismatch for table: " + tname);
+                                    fwriter.write("HASH value mismatch for table: " + tname + "\n");
+                                    //System.out.println("HASH value mismatch for table: " + tname);
+                                    fwriter.write("Computed hash value: " + encodedHash + "\n");
+                                    //System.out.println("Computed hash value: " + encodedHash);
+                                    fwriter.write("Stored hash value  : " + hashvalue + "\n");
+                                    //System.out.println("Stored hash value: " + hashvalue);
+                                    fwriter.write("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
+                                    //System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
                                     match = false;
                                 }
                             }
@@ -123,35 +141,42 @@ public class GvbSchemaValidateB {
                 }
                 lastTab = tname;
             }
-            System.out.println("**** Fetched all rows from JDBC ResultSet");
+            logger.fine("**** Fetched all rows from JDBC ResultSet");
+            //System.out.println("**** Fetched all rows from JDBC ResultSet");
 
             // Close the ResultSet
             rs.close();
-            System.out.println("**** Closed JDBC ResultSet");
+            logger.fine("**** Closed JDBC ResultSet");
+            //System.out.println("**** Closed JDBC ResultSet");
       
             // Close the Statement
             stmt.close();
-            System.out.println("**** Closed JDBC Statement");
+            logger.fine("**** Closed JDBC Statement");
+            //System.out.println("**** Closed JDBC Statement");
 
         } catch (SQLException e) {
-            System.out.println("SQLSTATE: " + e.getSQLState() + " executing: " + SQLstmt);
+            logger.severe("SQLSTATE: " + e.getSQLState() + " executing: " + SQLstmt + e.getMessage());
+            //System.out.println("SQLSTATE: " + e.getSQLState() + " executing: " + SQLstmt);
             //e.printStackTrace();
             rc = 4;
             return;
         } catch (IOException e) {
-            System.out.println("IO exception encountered in GvbSchemaValidateB");
+            logger.severe("IO exception encountered in GvbSchemaValidateB");
+            //System.out.println("IO exception encountered in GvbSchemaValidateB");
             //e.printStackTrace();
             rc = 8;
             return;
         } catch (NoSuchAlgorithmException e) {
-            System.out.println("Digest algorithm: " + digestType + " not available");
+            logger.severe("Digest algorithm: " + digestType + " not available");
+            //System.out.println("Digest algorithm: " + digestType + " not available");
             //e.printStackTrace();
             rc = 12;
             return;
         }
         
         if ( makeHash ) {
-            System.out.println("\nTable digest hashmap created\n");
+            logger.info("Table digest hashmap created");
+            //System.out.println("\nTable digest hashmap created\n");
             rc = 2;
             return;
         }
@@ -159,13 +184,15 @@ public class GvbSchemaValidateB {
         {
             if ( match )
             {
-                System.out.println("\nAll table definitions match.\n");
+                logger.info("**** All table definitions match");
+                //System.out.println("\nAll table definitions match.\n");
                 rc = 0;
                 return;
             }
             else
             {
-                System.out.println("\nOne or more tables do not match expected definitions !!!\n");
+                logger.warning("**** One or more tables do not match expected definitions !!!");
+                //System.out.println("\nOne or more tables do not match expected definitions !!!\n");
                 rc = 1;
                 return;
             }
