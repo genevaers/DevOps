@@ -92,13 +92,13 @@ public class GvbSchemaValidateC {
                         }
                         else {
                             // report on schema correctness
-                            fwriter.write("Table: " + tname + " Digest: " + digestType + ": " + encodedHash + "\n");
+                            fwriter.write("Indexes for Table: " + tname + " Digest: " + digestType + ": " + encodedHash + "\n");
                             //System.out.println("Table: " + tname + " Digest: " + digestType + ": " + encodedHash);
                             String hashvalue = ixmap.get(tname);
 
                             if (hashvalue == null) {
-                                logger.warning("HASH value mismatch for table: " + tname + " - no stored hash value");
-                                fwriter.write("HASH value mismatch for table: " + tname + " - no stored hash value\n");
+                                logger.warning("HASH value mismatch for indexes of table: " + tname + " - no stored hash value");
+                                fwriter.write("HASH value mismatch for indexes of table: " + tname + " - no stored hash value\n");
                                 //System.out.println("HASH value mismatch for table: " + tname);
                                 //System.out.println("No stored hash value");
                                 fwriter.write("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n");
@@ -107,13 +107,13 @@ public class GvbSchemaValidateC {
                             }
                             else {
                                 if ( hashvalue.equals(encodedHash) ) {
-                                    fwriter.write("HASH value matches for table: " + tname + "\n");
+                                    fwriter.write("HASH value matches for indexes of table: " + tname + "\n");
                                     //System.out.println("HASH value matches for table: " + tname);
                                 }
                                 else
                                 {
-                                    logger.warning("HASH value mismatch for table: " + tname);
-                                    fwriter.write("HASH value mismatch for table: " + tname + "\n");
+                                    logger.warning("HASH value mismatch for indexes of table: " + tname);
+                                    fwriter.write("HASH value mismatch for indexes of table: " + tname + "\n");
                                     //System.out.println("HASH value mismatch for table: " + tname);
                                     fwriter.write("Computed hash value: " + encodedHash + "\n");
                                     //System.out.println("Computed hash value: " + encodedHash);
