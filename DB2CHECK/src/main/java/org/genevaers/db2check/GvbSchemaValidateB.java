@@ -44,7 +44,7 @@ public class GvbSchemaValidateB {
         Statement stmt;
         ResultSet rs;
 
-        logger.info("**** GvbSchemaValidateB: checking tables and columns for schema: " + schema_mask);
+        logger.info("GvbSchemaValidateB: checking tables and columns for schema: " + schema_mask);
         //System.out.println ("**** GvbSchemaValidateB: checking tables and colums for schema: " + schema_mask);
 
         String SQLstmt = "SELECT TBCREATOR, TBNAME, NAME, COLTYPE, LENGTH FROM SYSIBM.SYSCOLUMNS WHERE TBCREATOR LIKE '" + schema_mask + "' ORDER BY TBNAME, NAME";
@@ -59,12 +59,12 @@ public class GvbSchemaValidateB {
 
             // Create the SQL statement
             stmt = con.createStatement();
-            logger.fine("**** Created JDBC Statement object");
+            logger.fine("Created JDBC Statement object");
             //System.out.println("**** Created JDBC Statement object");
 
             // Execute a query and generate a ResultSet instance
             rs = stmt.executeQuery(SQLstmt);
-            logger.fine("**** Created JDBC ResultSet object");
+            logger.fine("Created JDBC ResultSet object");
             //System.out.println("**** Created JDBC ResultSet object");
 
             fwriter.write("\nTable and Column Validation Report for schema: " + schema_mask + "\n\n");
@@ -141,17 +141,17 @@ public class GvbSchemaValidateB {
                 }
                 lastTab = tname;
             }
-            logger.fine("**** Fetched all rows from JDBC ResultSet");
+            logger.fine("Fetched all rows from JDBC ResultSet");
             //System.out.println("**** Fetched all rows from JDBC ResultSet");
 
             // Close the ResultSet
             rs.close();
-            logger.fine("**** Closed JDBC ResultSet");
+            logger.fine("Closed JDBC ResultSet");
             //System.out.println("**** Closed JDBC ResultSet");
       
             // Close the Statement
             stmt.close();
-            logger.fine("**** Closed JDBC Statement");
+            logger.fine("Closed JDBC Statement");
             //System.out.println("**** Closed JDBC Statement");
 
         } catch (SQLException e) {
@@ -184,14 +184,14 @@ public class GvbSchemaValidateB {
         {
             if ( match )
             {
-                logger.info("**** All table definitions match");
+                logger.info("All table definitions match");
                 //System.out.println("\nAll table definitions match.\n");
                 rc = 0;
                 return;
             }
             else
             {
-                logger.warning("**** One or more tables do not match expected definitions !!!");
+                logger.warning("One or more tables do not match expected definitions ***");
                 //System.out.println("\nOne or more tables do not match expected definitions !!!\n");
                 rc = 1;
                 return;

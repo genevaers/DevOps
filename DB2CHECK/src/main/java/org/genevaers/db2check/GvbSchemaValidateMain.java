@@ -46,7 +46,7 @@ public class GvbSchemaValidateMain {
 
         String userhome = System.getProperty("user.home");
     
-        logger.info("**** Running GvbSchemaValidateMain: checking DB2 Schema.");
+        logger.info("Running GvbSchemaValidateMain: checking DB2 Schema.");
         //System.out.println ("**** Running GvbSchemaValidateMain: checking DB2 Schema");
 
         Integer nArgs =args.length;
@@ -226,14 +226,14 @@ public class GvbSchemaValidateMain {
             //e.printStackTrace();
             return;
         }
-        logger.fine("**** Loaded the JDBC driver");
+        logger.fine("Loaded the JDBC driver");
         //System.out.println("**** Loaded the JDBC driver");
 
         // Create the connection using the IBM Data Server Driver for JDBC and SQLJ and open output file[s]
         try {
             con = DriverManager.getConnection (url, user, password);
             con.setAutoCommit(false);
-            logger.fine("**** Created a JDBC connection to the data source\n");
+            logger.fine("Created a JDBC connection to the data source\n");
             //System.out.println("**** Created a JDBC connection to the data source\n");
 
             if ( makeF ) {
@@ -317,14 +317,14 @@ public class GvbSchemaValidateMain {
 
             // Connection must be on a unit-of-work boundary to allow close
             con.commit();
-            logger.fine("**** SQL statements completed on transaction boundary");
+            logger.fine("SQL statements completed on transaction boundary");
             //System.out.println ( "**** SQL statements completed on transaction boundary" );
       
             // Close the connection
             con.close();
-            logger.fine(userhome + "**** Disconnected from data source");
+            logger.fine(userhome + "Disconnected from data source");
             //System.out.println("**** Disconnected from data source");
-            logger.fine("**** JDBC completed - no DB2 errors");
+            logger.fine("JDBC completed - no DB2 errors");
             //System.out.println("**** JDBC completed - no DB2 errors");
 
         } catch (SQLException e) {

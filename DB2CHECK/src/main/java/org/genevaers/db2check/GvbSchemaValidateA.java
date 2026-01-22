@@ -44,7 +44,7 @@ public class GvbSchemaValidateA {
         Statement stmt;
         ResultSet rs;
 
-        logger.info("**** GvbSchemaValidateA: checking stored procedures for schema: " + schema_mask);
+        logger.info("GvbSchemaValidateA: checking stored procedures for schema: " + schema_mask);
         //System.out.println ("**** GvbSchemaValidateA: checking stored procedures for schema: " + schema_mask);
 
         String SQLstmt = "SELECT SCHEMA, NAME, VERSION, TEXT FROM SYSIBM.SYSROUTINES WHERE SCHEMA LIKE '"+schema_mask+"' ORDER BY SCHEMA, NAME";
@@ -58,12 +58,12 @@ public class GvbSchemaValidateA {
 
             // Create the SQL statement
             stmt = con.createStatement();
-            logger.fine("**** Created JDBC Statement object");
+            logger.fine("Created JDBC Statement object");
             //System.out.println("**** Created JDBC Statement object");
 
             // Execute a query and generate a ResultSet instance
             rs = stmt.executeQuery(SQLstmt);
-            logger.fine("**** Created JDBC ResultSet object");
+            logger.fine("Created JDBC ResultSet object");
             //System.out.println("**** Created JDBC ResultSet object");
 
             fwriter.write("\nStored Procedures Validation Report for schema: " + schema_mask + "\n\n");
@@ -137,18 +137,18 @@ public class GvbSchemaValidateA {
                     }
                 }
             }
-            logger.fine("**** Fetched all rows from JDBC ResultSet");
+            logger.fine("Fetched all rows from JDBC ResultSet");
             //System.out.println("**** Fetched all rows from JDBC ResultSet");
 
             // Close the ResultSet
             rs.close();
 
-            logger.fine("**** Closed JDBC ResultSet");
+            logger.fine("Closed JDBC ResultSet");
             //System.out.println("**** Closed JDBC ResultSet");
       
             // Close the Statement
             stmt.close();
-            logger.fine("**** Closed JDBC Statement");
+            logger.fine("Closed JDBC Statement");
             //System.out.println("**** Closed JDBC Statement");
 
         } catch (SQLException e) {
@@ -172,21 +172,21 @@ public class GvbSchemaValidateA {
         }
 
         if (makeHash) {
-            logger.info("**** Stored procedure digest hashmap created");
+            logger.info("Stored procedure digest hashmap created");
             //System.out.println("\nStored procedure digest hashmap created\n");
             rc = 2;
             return;
         } else {
             if ( match )
             {
-                logger.info("**** All stored procedure definitions match");
+                logger.info("All stored procedure definitions match");
                 //System.out.println("\nAll stored procedure definitions match.\n");
                 rc = 0;
                 return;
             }
             else
             {
-                logger.warning("**** One or more stored procedures do not match expected definitions !!!");
+                logger.warning("One or more stored procedures do not match expected definitions ***");
                 //System.out.println("\nOne or more stored procedures do not match expected definitions !!!\n");
                 rc = 1;
                 return;
