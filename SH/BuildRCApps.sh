@@ -114,8 +114,10 @@ cd $save_pwd ;
 
 exitIfError() {
 
-if [ $? != 0 ]
+ret_code=$?;
+if [ $ret_code != 0 ]
 then
+    echo "Return code: $ret_code";
     echo "*** Process terminated: see error message above";
     exit 1;
 fi 
