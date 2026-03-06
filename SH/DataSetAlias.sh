@@ -12,6 +12,7 @@ cat ../JCL/ALIASDONE.jcl >> ../JCL/ALIAS.jcl;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit JCL to set aliases for the build data sets";
 . ./JobSubmitter.sh '../JCL/ALIAS.jcl' aliasdone  1>> $err_log;
+exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
 . ./JobWaiter.sh 60 aliasdone 1>> $err_log;
 exitIfError;
