@@ -24,7 +24,7 @@ if [ "$GERS_BUILD_RCA" == "WIN" ]; then
   chtag -b *.jar ;
   chmod 775 *.jar ;
   exitIfError ;  
-  cp rcapps-$rev-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/rcapps-$rev.jar;
+  cp -p rcapps-$rev-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/rcapps-$rev.jar;
   exitIfError ;  
   cd $GERS_RCA_JAR_DIR;
 
