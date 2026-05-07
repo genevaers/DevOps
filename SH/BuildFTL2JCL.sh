@@ -32,7 +32,7 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   chmod 775 *.jar ;
   exitIfError ;  
 
-  cp ./*-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar;       
+  cp -p ./*-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar;       
   exitIfError ;                                  
 
   cd $GERS_RCA_JAR_DIR;                                                    
