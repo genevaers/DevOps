@@ -7,7 +7,7 @@ main() {
 USER="$1";
 PWD="$2";
 
-if [[ -z "$1" ] || [ "$1" = "" ]; then
+if [[ -z "$1" ] || [ "$1" = "" ]]; then
   echo "No user ID has been supplied";
   exit 1;
 fi
