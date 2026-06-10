@@ -7,14 +7,12 @@ main() {
 USER="$1";
 PWD="$2";
 
-# echo "  IdentityFile ~/.ssh/identity" >> ssh_config;
-# echo "  IdentityFile ~/.ssh/id_rsa" >> ssh_config;
-# echo "  IdentityFile ~/.ssh/id_dsa" >> ssh_config;
+if [[ -z "$1" ] || [ "$1" = "" ]; then
+  echo "No user ID has been supplied";
+  exit 1;
+fi
 
-# echo "  RhostsRSAAuthentication no" >> ssh_config;
-# echo "  RSAAuthentication no" >> ssh_config;
-
-echo "$(date) ${BASH_SOURCE##*/} Retrieving file from transfer server";
+echo "$(date) ${BASH_SOURCE##*/} Retrieving file from transfer server for $USER";
 
 echo "Host *" >  ssh_config;
 echo "  ForwardAgent no" >> ssh_config;
@@ -35,7 +33,7 @@ echo "  Cipher 3des" >> ssh_config;
 echo "  Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc" >> ssh_config;
 echo "  EscapeChar ~" >> ssh_config;
 
-sftp -F ssh_config neil.beesley@ibm.com@w3-transfer.boulder.ibm.com;
+sftp -F ssh_config -t $USER@w3-transfer.boulder.ibm.com;
 # exitIfError;
 
 # cd www/prot/SAFR;
