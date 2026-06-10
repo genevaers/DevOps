@@ -38,7 +38,7 @@ echo "  EscapeChar ~" >> ssh_config;
 sftp -F ssh_config neil.beesley@ibm.com@w3-transfer.boulder.ibm.com;
 exitIfError;
 
-cd www/prot;
+cd www/prot/SAFR;
 
 ls
 }
