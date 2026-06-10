@@ -7,6 +7,10 @@ main() {
 USER="$1";
 PWD="$2";
 
+# echo "  IdentityFile ~/.ssh/identity" >> ssh_config;
+# echo "  IdentityFile ~/.ssh/id_rsa" >> ssh_config;
+# echo "  IdentityFile ~/.ssh/id_dsa" >> ssh_config;
+
 echo "$(date) ${BASH_SOURCE##*/} Retrieving file from transfer server";
 
 echo "Host *" >  ssh_config;
@@ -22,9 +26,7 @@ echo "  CheckHostIP yes" >> ssh_config;
 echo "  AddressFamily any" >> ssh_config;
 echo "  ConnectTimeout 0" >> ssh_config;
 echo "  StrictHostKeyChecking ask" >> ssh_config;
-echo "  IdentityFile ~/.ssh/identity" >> ssh_config;
 echo "  IdentityFile ~/.ssh/id_rsa" >> ssh_config;
-echo "  IdentityFile ~/.ssh/id_dsa" >> ssh_config;
 echo "  Port 22" >> ssh_config;
 echo "  Protocol 2,1" >> ssh_config;
 echo "Protocol 2" >> ssh_config;
