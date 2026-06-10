@@ -36,9 +36,9 @@ echo "  Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc,aes192-cbc,
 echo "  EscapeChar ~" >> ssh_config;
 
 sftp -F ssh_config neil.beesley@ibm.com@w3-transfer.boulder.ibm.com;
-exitIfError;
+# exitIfError;
 
-cd www/prot/SAFR;
+# cd www/prot/SAFR;
 
 ls
 }
