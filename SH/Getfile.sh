@@ -33,7 +33,7 @@ echo "  Cipher 3des" >> ssh_config;
 echo "  Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc" >> ssh_config;
 echo "  EscapeChar ~" >> ssh_config;
 
-sftp -F ssh_config -t $USER@w3-transfer.boulder.ibm.com;
+sftp -F ssh_config $USER@w3-transfer.boulder.ibm.com;
 # exitIfError;
 
 # cd www/prot/SAFR;
