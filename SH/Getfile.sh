@@ -11,14 +11,15 @@ PWD="$2";
 # echo "  IdentityFile ~/.ssh/id_rsa" >> ssh_config;
 # echo "  IdentityFile ~/.ssh/id_dsa" >> ssh_config;
 
+# echo "  RhostsRSAAuthentication no" >> ssh_config;
+# echo "  RSAAuthentication no" >> ssh_config;
+
 echo "$(date) ${BASH_SOURCE##*/} Retrieving file from transfer server";
 
 echo "Host *" >  ssh_config;
 echo "  ForwardAgent no" >> ssh_config;
 echo "  ForwardX11 no" >> ssh_config;
 echo "  RhostsAuthentication no" >> ssh_config;
-echo "  RhostsRSAAuthentication no" >> ssh_config;
-echo "  RSAAuthentication no" >> ssh_config;
 echo "  PasswordAuthentication yes" >> ssh_config;
 echo "  HostbasedAuthentication no" >> ssh_config;
 echo "  BatchMode no" >> ssh_config;
