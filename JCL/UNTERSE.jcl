@@ -21,7 +21,7 @@
 //* *******************************************************************
 //COPYDSN  EXEC PGM=IEFBR14                    
 //DD1      DD DSN=&SYSUID..TRANSFER.TRS,     
-//            DCB=(RECFM=FB,LRECL=1024,BLKSIZE=4096,DSORG=PO),
+//            DCB=(RECFM=FB,LRECL=1024,BLKSIZE=4096,DSORG=PS),
 //            DISP=(,CATLG,DELETE),            
 //            SPACE=(CYL,(100,100),RLSE),    
 //            UNIT=SYSDA
@@ -38,7 +38,9 @@ set -o xtrace;
 echo;
 cd ~/git/public/DevOps/SH;
 cp 99914.122.000.JCL.TRS "//'&SYSUID..TRANSFER.TRS'";
+echo $?
 /*
+//
 //* *******************************************************************
 //UNTERSE  EXEC PGM=TRSMAIN,PARM=UNPACK              
 //SYSPRINT DD   SYSOUT=*                             
