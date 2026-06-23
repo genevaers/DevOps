@@ -37,7 +37,7 @@ set -e;
 set -o xtrace;
 echo;
 cd ~/git/public/DevOps/SH;
-cp 99914.122.000.JCL.TRS "//'&SYSUID..TRANSFER.TRS'";
+cp 99914.122.000.JCL.TRS //'&SYSUID..TRANSFER.TRS';
 /*
 //* *******************************************************************
 //UNTERSE  EXEC PGM=TRSMAIN,PARM=UNPACK              
