@@ -49,6 +49,6 @@ cp 99914.122.000.JCL.TRS "//'&SYSUID..TRANSFER.TRS'";
 //* willbe DSNTYPE LIBRARY or BASIC                              
 //OUTFILE  DD DSN=&SYSUID..TRANSFER.UNPACK,                   
 //            DSORG=PO,DSNTYPE=LIBRARY,              
-// SPACE=(CYL,(500,500),RLSE),DISP=(NEW,CATLG,DELETE)
+// SPACE=(CYL,(500,500),RLSE),DISP=(,CATLG,DELETE)
 //*                                                  
 //            
