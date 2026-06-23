@@ -16,6 +16,9 @@
   DELETE  &SYSUID..TRANSFER.TRS        PURGE
   IF LASTCC > 0  THEN
       SET MAXCC = 0  
+  DELETE  &SYSUID..TRANSFER.UNPACK     PURGE
+  IF LASTCC > 0  THEN
+      SET MAXCC = 0  
 /*
 //* *******************************************************************
 //COPYDSN  EXEC PGM=IEFBR14                    
