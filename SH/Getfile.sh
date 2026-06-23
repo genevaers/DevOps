@@ -5,14 +5,19 @@
 main() {
 
 USER="$1";
-PWD="$2";
+RACFID="$2";
 
 if [ -z "$1" ] || [[ "$1" = "" ]]; then
-  echo "No user ID has been supplied";
+  echo "No user ID and domain has been supplied";
   exit 1;
 fi
 
-echo "$(date) ${BASH_SOURCE##*/} Retrieving file from transfer server for $USER";
+if [ -z "$2" ] || [[ "$2" = "" ]]; then
+  echo "No user RACF ID has been supplied";
+  # exit 1;
+fi
+
+echo "$(date) ${BASH_SOURCE##*/} Retrieving file from transfer server for $USER ($RACFID)";
 
 echo "Host *" >  ssh_config;
 echo "  ForwardAgent no" >> ssh_config;
