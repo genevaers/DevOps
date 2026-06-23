@@ -4,6 +4,12 @@
 //            MSGLEVEL=(1,1),
 //            MSGCLASS=H
 //*
+//* Need to pass:
+//* 1) USS file name being received
+//* 2) Size of data ???
+//* 3) DSNTYPE
+//* 
+/* *******************************************************************
 //DELDSN   EXEC PGM=IDCAMS
 //SYSPRINT DD SYSOUT=*
 //SYSIN    DD *,SYMBOLS=EXECSYS                 
@@ -32,4 +38,14 @@ echo;
 cd ~/git/public/DevOps/SH/;
 cp 99914.122.000.JCL.TRS "//'&SYSUID..TRANSFER.TRS'";
 /*
+//* *******************************************************************
+//UNTERSE  EXEC PGM=TRSMAIN,PARM=UNPACK              
+//SYSPRINT DD   SYSOUT=*                             
+//INFILE   DD DSN=&SYSUID..TRANSFER.TRS,                   
+//             DISP=SHR
+//* willbe DSNTYPE LIBRARY or BASIC                              
+//OUTFILE  DD DSN=&SYSUID..TRANSFER.TRS,                   
+//            DSORG=PO,DSNTYPE=LIBRARY,              
+// SPACE=(CYL,(500,500),RLSE),DISP=(NEW,CATLG,DELETE)
+//*                                                  
 //            
