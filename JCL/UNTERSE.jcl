@@ -13,8 +13,8 @@
 //DELDSN   EXEC PGM=IDCAMS
 //SYSPRINT DD SYSOUT=*
 //SYSIN    DD *,SYMBOLS=EXECSYS                 
- DELETE  &SYSUID..TRANSFER.TRS        PURGE
- DELETE  &SYSUID..TRANSFER.UNPACK     PURGE
+ DELETE  &SYSUID..TRANSFER.TRS     PURGE
+ DELETE  &SYSUID..TRANSFER.PDS     PURGE
   IF LASTCC > 0  THEN
       SET MAXCC = 0  
 /*
@@ -40,14 +40,12 @@ cd ~/git/public/DevOps/SH;
 cp 99914.122.000.JCL.TRS "//'&SYSUID..TRANSFER.TRS'";
 echo $?
 /*
-//
 //* *******************************************************************
 //UNTERSE  EXEC PGM=TRSMAIN,PARM=UNPACK              
 //SYSPRINT DD   SYSOUT=*                             
 //INFILE   DD DSN=&SYSUID..TRANSFER.TRS,                   
 //             DISP=SHR
-//* will be DSNTYPE LIBRARY or BASIC                              
-//OUTFILE  DD DSN=&SYSUID..TRANSFER.UNPACK,                   
+//OUTFILE  DD DSN=&SYSUID..TRANSFER.PDS,                   
 //            DSORG=PO,DSNTYPE=LIBRARY,              
 // SPACE=(CYL,(500,500),RLSE),DISP=(,CATLG,DELETE)
 //*                                                  
