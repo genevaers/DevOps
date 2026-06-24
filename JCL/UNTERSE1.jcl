@@ -6,6 +6,8 @@
 //*
 //   EXPORT SYMLIST=*
 //   SET FILENAME=&$FILENM.
+//   SET FILECYLS=&$FILECY.
+//   SET RUNPATH=&$RUNPTH.
 //*
 //* 1) USS file name being received
 //* 2) Size of data ???
@@ -24,7 +26,7 @@
 //DD1      DD DSN=&SYSUID..TRANSFER.TRS,     
 //            DCB=(RECFM=FB,LRECL=1024,BLKSIZE=4096,DSORG=PS),
 //            DISP=(,CATLG,DELETE),            
-//            SPACE=(CYL,(100,100),RLSE),    
+//            SPACE=(CYL,(&FILECYLS.,&FILECYLS.),RLSE),    
 //            UNIT=SYSDA
 //* *******************************************************************
 //DSNCOPY  EXEC PGM=BPXBATCH,
@@ -37,9 +39,9 @@ sh ;
 set -e;
 set -o xtrace;
 echo;
-cd ~/git/public/DevOps/SH;
+cd &RUNPATH./DevOps/SH;
 cp &FILENAME "//'&SYSUID..TRANSFER.TRS'";
 echo $?
 /*
 //
-//* cp 99914.122.000.JCL.TRS "//'&SYSUID..TRANSFER.TRS'";
+//* cd ~/git/public/DevOps/SH;
