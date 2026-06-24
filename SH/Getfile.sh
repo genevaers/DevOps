@@ -55,7 +55,7 @@ mkdir prep;
 FILENAME=$GERS_FILESEQN.$GERS_FILEMLLQ;
 mycmdstr1='s/&$FILENM.'/${GERS_FILENAME}/'g';
 mycmdstr2='s/&$FILECY.'/${GERS_FILECYLS}/'g';
-mycmdstr3='s/&$RUNPTH.'/${GERS_GIT_REPO_DIR}/'g';
+mycmdstr3='s/&$RUNPTH.'/${GERS_RUNPATH}/'g';
 
 echo "cmd: $mycmdstr3";
 
