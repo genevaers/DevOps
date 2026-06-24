@@ -17,7 +17,6 @@ if [ -z "$2" ] || [[ "$2" = "" ]]; then
   # exit 1;
 fi
 
-
 echo "$(date) ${BASH_SOURCE##*/} Retrieving file from server $SERVER for $USER";
 
 echo "Host *" >  ssh_config;

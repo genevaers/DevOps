@@ -35,6 +35,8 @@ else
   exit 1;
 fi
 
+./SSHfile.sh $SECUREID $SERVERID
+
 }
 
 exitIfError() {
