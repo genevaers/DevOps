@@ -62,8 +62,6 @@ sed $mycmdstr1 ../JCL/UNTERSE1.jcl > prep/tmp1;
 sed $mycmdstr2 prep/tmp1 > prep/tmp2;
 sed $mycmdstr2 prep/tmp2 > prep/tmp3;
 
-GERS_GIT_REPO_DIR
-
 #convert output back to EBCDIC again
 iconv -f ISO8859-1 -t IBM-1047 prep/tmp3 > prep/UNTERSE1.jcl;
 chtag -r prep/UNTERSE1.jcl;
