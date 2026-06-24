@@ -28,7 +28,7 @@ if [ -z "$FILESEQN.$FILEMLLQ" ] || [[ "$FILESEQN.$FILEMLLQ" = "" ]]; then
   exit 1;
 fi
 
-if [ "$FILETYPE = "PDS" ] || [ "$FILETYPE = "PS" ]; then
+if [ "$FILETYPE" = "PDS" ] || [ "$FILETYPE" = "PS" ]; then
   echo "$(date) ${BASH_SOURCE##*/} Retrieving file $FILESEQN.$FILEMLLQ from server $SERVERID for $SECUREID";
 else
   echo "FILETYPE of $FILETYPE given. Either PDS or PS must be specified";
