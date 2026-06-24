@@ -4,45 +4,37 @@
 
 main() {
 
-USER="$1";
-SERVER="$2";
+echo "$(date) ${BASH_SOURCE##*/} Copying files from server to ZOS";
 
-if [ -z "$1" ] || [[ "$1" = "" ]]; then
-  echo "No user ID and domain has been supplied";
+# Re-read .gers.DB2Schema.profile in case anything changed
+source ~/.gers.profile ;
+exitIfError;
+
+# Create the log files
+. ./CreateLogs.sh ;
+
+if [ -z "$SECUREID" ] || [[ "$SECUREID" = "" ]]; then
+  echo "No secure user ID has been supplied";
   exit 1;
 fi
 
-if [ -z "$2" ] || [[ "$2" = "" ]]; then
+if [ -z "$SERVERID" ] || [[ "$SERVERID" = "" ]]; then
   echo "No server has been supplied";
-  # exit 1;
+  exit 1;
 fi
 
-echo "$(date) ${BASH_SOURCE##*/} Retrieving file from transfer server for $USER ($RACFID)";
+if [ "$FILETYPE != "PDS" ] && ["$FILETYPE != "SEQ"]; then
+  echo "FILETYPE of either PDS or PS must be specified";
+  exit 1;
+fi
 
-echo "Host *" >  ssh_config;
-echo "  ForwardAgent no" >> ssh_config;
-echo "  ForwardX11 no" >> ssh_config;
-echo "  RhostsAuthentication no" >> ssh_config;
-echo "  PasswordAuthentication yes" >> ssh_config;
-echo "  HostbasedAuthentication no" >> ssh_config;
-echo "  BatchMode no" >> ssh_config;
-echo "  CheckHostIP yes" >> ssh_config;
-echo "  AddressFamily any" >> ssh_config;
-echo "  ConnectTimeout 0" >> ssh_config;
-echo "  StrictHostKeyChecking ask" >> ssh_config;
-echo "  IdentityFile ~/.ssh/id_rsa" >> ssh_config;
-echo "  Port 22" >> ssh_config;
-echo "  Protocol 2,1" >> ssh_config;
-echo "Protocol 2" >> ssh_config;
-echo "  Cipher 3des" >> ssh_config;
-echo "  Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc" >> ssh_config;
-echo "  EscapeChar ~" >> ssh_config;
+if [ -z "$FILESEQN.$FILEMLLQ" ] || [[ "$FILESEQN.$FILEMLLQ" = "" ]]; then
+  echo "No file name has been supplied";
+  exit 1;
+fi
 
-sftp -F ssh_config $USER@$SERVER;
-# sftp -F ssh_config $USER@w3-transfer.boulder.ibm.com;
-exitIfError;
+echo "$(date) ${BASH_SOURCE##*/} Retrieving file $FILESEQN.$FILEMLLQ from server $SERVERID for $SECUREID";
 
-ls
 }
 
 exitIfError() {
