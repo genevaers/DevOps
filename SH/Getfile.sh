@@ -55,11 +55,14 @@ mkdir prep;
 
 # tailor JCL
 FILENAME=$GERS_FILESEQN.$GERS_FILEMLLQ;
+
 mycmdstr1='s/&$FILENM.'/${GERS_FILENAME}/'g';
 mycmdstr2='s/&$FILECY.'/${GERS_FILECYLS}/'g';
 mycmdstr3='s/&$RUNPTH.'/${GERS_RUNPATH}/'g';
 
-echo "cmd: $mycmdstr3";
+echo "cmd1: $mycmdstr1";
+echo "cmd2: $mycmdstr2";
+echo "cmd3: $mycmdstr3";
 
 # perform substitutions which unfortunately still converts to ACII with -W filecodeset=IBM-1047 
 sed $mycmdstr1 ../JCL/UNTERSE1.jcl > prep/tmp1;

@@ -5,9 +5,9 @@
 //            MSGCLASS=H
 //*
 //   EXPORT SYMLIST=*
-//   SET FILENAME=&$FILENM.
-//   SET FILECYLS=&$FILECY.
-//   SET RUNPATH=&$RUNPTH.
+//   SET FILENAME='&$FILENM.'
+//   SET FILECYLS='&$FILECY.'
+//   SET RUNPATH='&$RUNPTH.'
 //*
 //* 1) USS file name being received
 //* 2) Size of data ???
