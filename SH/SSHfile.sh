@@ -19,26 +19,7 @@ fi
 
 echo "$(date) ${BASH_SOURCE##*/} Retrieving file from server $SERVER for $USER";
 
-echo "Host *" >  ssh_config;
-echo "  ForwardAgent no" >> ssh_config;
-echo "  ForwardX11 no" >> ssh_config;
-echo "  RhostsAuthentication no" >> ssh_config;
-echo "  PasswordAuthentication yes" >> ssh_config;
-echo "  HostbasedAuthentication no" >> ssh_config;
-echo "  BatchMode no" >> ssh_config;
-echo "  CheckHostIP yes" >> ssh_config;
-echo "  AddressFamily any" >> ssh_config;
-echo "  ConnectTimeout 0" >> ssh_config;
-echo "  StrictHostKeyChecking ask" >> ssh_config;
-echo "  IdentityFile ~/.ssh/id_rsa" >> ssh_config;
-echo "  Port 22" >> ssh_config;
-echo "  Protocol 2,1" >> ssh_config;
-echo "Protocol 2" >> ssh_config;
-echo "  Cipher 3des" >> ssh_config;
-echo "  Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc" >> ssh_config;
-echo "  EscapeChar ~" >> ssh_config;
-
-sftp -F ssh_config $USER@$SERVER;
+sftp -F ~/.ssh_config $USER@$SERVER;
 exitIfError;
 
 ls
