@@ -5,7 +5,7 @@
 main() {
 
 USER="$1";
-RACFID="$2";
+SERVER="$2";
 
 if [ -z "$1" ] || [[ "$1" = "" ]]; then
   echo "No user ID and domain has been supplied";
@@ -13,7 +13,7 @@ if [ -z "$1" ] || [[ "$1" = "" ]]; then
 fi
 
 if [ -z "$2" ] || [[ "$2" = "" ]]; then
-  echo "No user RACF ID has been supplied";
+  echo "No server has been supplied";
   # exit 1;
 fi
 
@@ -38,10 +38,9 @@ echo "  Cipher 3des" >> ssh_config;
 echo "  Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc" >> ssh_config;
 echo "  EscapeChar ~" >> ssh_config;
 
-sftp -F ssh_config $USER@w3-transfer.boulder.ibm.com;
-# exitIfError;
-
-# cd www/prot/SAFR;
+sftp -F ssh_config $USER@$SERVER;
+# sftp -F ssh_config $USER@w3-transfer.boulder.ibm.com;
+exitIfError;
 
 ls
 }
