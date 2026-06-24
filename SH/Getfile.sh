@@ -56,7 +56,7 @@ mkdir prep;
 # tailor JCL
 FILENAME=$GERS_FILESEQN.$GERS_FILEMLLQ;
 
-mycmdstr1='s/&$FILENM.'/${GERS_FILENAME}/'g';
+mycmdstr1='s/&$FILENM.'/${FILENAME}/'g';
 mycmdstr2='s/&$FILECY.'/${GERS_FILECYLS}/'g';
 mycmdstr3='s/&$RUNPTH.'/${GERS_RUNPATH}/'g';
 
