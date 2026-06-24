@@ -9,10 +9,6 @@
 //   SET FILECYLS='&$FILECY.'
 //   SET RUNPATH='&$RUNPTH.'
 //*
-//* 1) USS file name being received
-//* 2) Size of data ???
-//* 3) DSNTYPE
-//* 
 /* *******************************************************************
 //DELDSN   EXEC PGM=IDCAMS
 //SYSPRINT DD SYSOUT=*
@@ -44,4 +40,3 @@ cp &FILENAME "//'&SYSUID..TRANSFER.TRS'";
 echo $?
 /*
 //
-//* cd ~/git/public/DevOps/SH;

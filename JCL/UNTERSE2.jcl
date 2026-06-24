@@ -1,13 +1,11 @@
-//UNTERSE2 JOB (ACCT),'UNTERSE TRANSFER',
+//UNTERSE2 JOB (ACCT),'UNTERSE TRANSFER2',
 //            NOTIFY=&SYSUID.,             
 //            CLASS=A,                     
 //            MSGLEVEL=(1,1),
 //            MSGCLASS=H
 //*
-//* Need to pass:
-//* 1) USS file name being received
-//* 2) Size of data ???
-//* 3) DSNTYPE
+//   EXPORT SYMLIST=*
+//   SET FILECYLS='&$FILECY.'
 //* 
 /* *******************************************************************
 //DELDSN   EXEC PGM=IDCAMS
@@ -19,11 +17,11 @@
 /*
 //* *******************************************************************
 //UNTERSE  EXEC PGM=TRSMAIN,PARM=UNPACK
-//SYSPRINT DD   SYSOUT=*
-//INFILE   DD DSN=&SYSUID..TRANSFER.TRS,                   
+//SYSPRINT DD  SYSOUT=*
+//INFILE   DD  DSN=&SYSUID..TRANSFER.TRS,                   
 //             DISP=SHR
-//OUTFILE  DD DSN=&SYSUID..TRANSFER.PDS,
-//            DSORG=PO,DSNTYPE=LIBRARY,
-// SPACE=(CYL,(500,500),RLSE),DISP=(,CATLG,DELETE)
-//*
+//OUTFILE  DD  DSN=&SYSUID..TRANSFER.PDS,
+//             DSORG=PO,DSNTYPE=LIBRARY,
+//             SPACE=(CYL,(&FILECYLS.,&FILECYLS.),RLSE),
+//             DISP=(,CATLG,DELETE)
 //

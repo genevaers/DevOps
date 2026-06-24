@@ -37,7 +37,7 @@ if [ "$GERS_FILETYPE" = "PDS" ] || [ "$GERS_FILETYPE" = "PS" ]; then
   else
     echo "Override file size of $GERS_FILECYLS cylinders provided";
   fi
-  echo "Following temporary files will be used/overwritted for retrieving data:";
+  echo "Following temporary files will be used/overwritted when retrieving data (exit if needed):";
   echo "  &SYSUID..TRANSFER.TRS";
   echo "  &SYSUID..TRANSFER.PDS";
   echo "  &SYSUID..TRANSFER.SEQ";
@@ -55,14 +55,17 @@ mkdir prep;
 
 # tailor JCL
 FILENAME=$GERS_FILESEQN.$GERS_FILEMLLQ;
+EXPCYL=$(( GERS_FILECYLS * 7 ))
 
 mycmdstr1='s/&$FILENM.'/${FILENAME}/'g';
 mycmdstr2='s/&$FILECY.'/${GERS_FILECYLS}/'g';
 mycmdstr3='s/&$RUNPTH.'/${GERS_RUNPATH}/'g';
+mycmdstr4='s/&$FILECY.'/${EXPCYL}/'g';
 
 echo "cmd1: $mycmdstr1";
 echo "cmd2: $mycmdstr2";
 echo "cmd3: $mycmdstr3";
+echo "cmd4: $mycmdstr4";
 
 # perform substitutions which unfortunately still converts to ACII with -W filecodeset=IBM-1047 
 sed $mycmdstr1 ../JCL/UNTERSE1.jcl > prep/tmp1;
@@ -72,6 +75,11 @@ sed $mycmdstr3 prep/tmp2 > prep/tmp3;
 #convert output back to EBCDIC again
 iconv -f ISO8859-1 -t IBM-1047 prep/tmp3 > prep/UNTERSE1.jcl;
 chtag -r prep/UNTERSE1.jcl;
+
+sed $mycmdstr4 ../JCL/UNTERSE2.jcl > prep/tmp4;
+
+iconv -f ISO8859-1 -t IBM-1047 prep/tmp4 > prep/UNTERSE2.jcl;
+chtag -r prep/UNTERSE2.jcl;
 
 }
 
