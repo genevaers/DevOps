@@ -57,10 +57,12 @@ mycmdstr1='s/&$FILENM.'/${GERS_FILENAME}/'g';
 mycmdstr2='s/&$FILECY.'/${GERS_FILECYLS}/'g';
 mycmdstr3='s/&$RUNPTH.'/${GERS_GIT_REPO_DIR}/'g';
 
+echo "cmd: $mycmdstr3";
+
 # perform substitutions which unfortunately still converts to ACII with -W filecodeset=IBM-1047 
 sed $mycmdstr1 ../JCL/UNTERSE1.jcl > prep/tmp1;
 sed $mycmdstr2 prep/tmp1 > prep/tmp2;
-sed $mycmdstr2 prep/tmp2 > prep/tmp3;
+sed $mycmdstr3 prep/tmp2 > prep/tmp3;
 
 #convert output back to EBCDIC again
 iconv -f ISO8859-1 -t IBM-1047 prep/tmp3 > prep/UNTERSE1.jcl;
