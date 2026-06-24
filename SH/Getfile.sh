@@ -34,7 +34,7 @@ if [ "$FILETYPE" = "PDS" ] || [ "$FILETYPE" = "PS" ]; then
     echo "Default file size 100 cylinders";
   else
     echo "Override file size of $FILECYLS cylinders provided";
-  end
+  fi
   echo "Following temporary files will be used/overwritted for retrieving data:";
   echo "  &SYSUID..TRANSFER.TRS";
   echo "  &SYSUID..TRANSFER.PDS";
