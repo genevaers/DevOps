@@ -23,18 +23,17 @@ if [ -z "$SERVERID" ] || [[ "$SERVERID" = "" ]]; then
   exit 1;
 fi
 
-if [ "$FILETYPE = "PDS" ] || [ "$FILETYPE = "PS" ]; then
-else
-  echo "FILETYPE of $FILETYPE given. Either PDS or PS must be specified";
-  exit 1;
-fi
-
 if [ -z "$FILESEQN.$FILEMLLQ" ] || [[ "$FILESEQN.$FILEMLLQ" = "" ]]; then
   echo "No file name has been supplied";
   exit 1;
 fi
 
-echo "$(date) ${BASH_SOURCE##*/} Retrieving file $FILESEQN.$FILEMLLQ from server $SERVERID for $SECUREID";
+if [ "$FILETYPE = "PDS" ] || [ "$FILETYPE = "PS" ]; then
+  echo "$(date) ${BASH_SOURCE##*/} Retrieving file $FILESEQN.$FILEMLLQ from server $SERVERID for $SECUREID";
+else
+  echo "FILETYPE of $FILETYPE given. Either PDS or PS must be specified";
+  exit 1;
+fi
 
 }
 
