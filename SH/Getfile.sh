@@ -23,7 +23,7 @@ if [ -z "$SERVERID" ] || [[ "$SERVERID" = "" ]]; then
   exit 1;
 fi
 
-if [ "$FILETYPE != "PDS" ] && [ "$FILETYPE != "PS" ]; then
+if ! [ "$FILETYPE = "PDS" ] && ! [ "$FILETYPE = "PS" ]; then
   echo "FILETYPE of either PDS or PS must be specified";
   exit 1;
 fi
