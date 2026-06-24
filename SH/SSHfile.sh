@@ -17,11 +17,10 @@ if [ -z "$2" ] || [[ "$2" = "" ]]; then
   # exit 1;
 fi
 
-echo "$(date) ${BASH_SOURCE##*/} Retrieving file from server $SERVER for $USER";
-
 sftp -F ~/.ssh_config $USER@$SERVER;
 exitIfError;
 
+echo "$(date) ${BASH_SOURCE##*/} Successfully retrieved file from server $SERVER for $USER";
 ls
 }
 

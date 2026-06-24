@@ -4,7 +4,9 @@
 //            MSGLEVEL=(1,1),
 //            MSGCLASS=H
 //*
-//* Need to pass:
+//   EXPORT SYMLIST=*
+//   SET FILENAME=&$FILENM.
+//*
 //* 1) USS file name being received
 //* 2) Size of data ???
 //* 3) DSNTYPE
@@ -36,7 +38,8 @@ set -e;
 set -o xtrace;
 echo;
 cd ~/git/public/DevOps/SH;
-cp 99914.122.000.JCL.TRS "//'&SYSUID..TRANSFER.TRS'";
+cp &FILENAME "//'&SYSUID..TRANSFER.TRS'";
 echo $?
 /*
 //
+//* cp 99914.122.000.JCL.TRS "//'&SYSUID..TRANSFER.TRS'";
