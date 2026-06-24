@@ -4,6 +4,8 @@
 
 main() {
 
+source ~/.gers.profile ;
+
 echo "$(date) ${BASH_SOURCE##*/} Copying files from server to ZOS";
 
 # Re-read .gers.DB2Schema.profile in case anything changed
