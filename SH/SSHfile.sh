@@ -8,12 +8,12 @@ USER="$1";
 SERVER="$2";
 
 if [ -z "$1" ] || [[ "$1" = "" ]]; then
-  echo "No user ID and domain has been supplied";
+  echo "$(date) ${BASH_SOURCE##*/} No user ID and domain has been supplied";
   exit 1;
 fi
 
 if [ -z "$2" ] || [[ "$2" = "" ]]; then
-  echo "No server has been supplied";
+  echo "$(date) ${BASH_SOURCE##*/} No server has been supplied";
   # exit 1;
 fi
 

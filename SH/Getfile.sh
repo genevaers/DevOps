@@ -16,33 +16,33 @@ exitIfError;
 . ./CreateLogs.sh ;
 
 if [ -z "$GERS_SECUREID" ] || [[ "$GERS_SECUREID" = "" ]]; then
-  echo "No secure user ID has been supplied";
+  echo "$(date) ${BASH_SOURCE##*/} No secure user ID has been supplied";
   exit 1;
 fi
 
 if [ -z "$GERS_SERVERID" ] || [[ "$GERS_SERVERID" = "" ]]; then
-  echo "No server has been supplied";
+  echo "$(date) ${BASH_SOURCE##*/} No server has been supplied";
   exit 1;
 fi
 
 if [ -z "$GERS_FILESEQN.$GERS_FILEMLLQ" ] || [[ "$GERS_FILESEQN.$GERS_FILEMLLQ" = "" ]]; then
-  echo "No file name has been supplied";
+  echo "$(date) ${BASH_SOURCE##*/} No file name has been supplied";
   exit 1;
 fi
 
 if [ "$GERS_FILETYPE" = "PDS" ] || [ "$GERS_FILETYPE" = "PS" ]; then
   echo "$(date) ${BASH_SOURCE##*/} Retrieving $GERS_FILETYPE file $GERS_FILESEQN.$GERS_FILEMLLQ from server $GERS_SERVERID for $GERS_SECUREID";
   if [ -z "$GERS_SECUREID" ] || [[ "$GERS_SECUREID" = "" ]]; then
-    echo "Default file size 100 cylinders";
+    echo "$(date) ${BASH_SOURCE##*/} Default file size 100 cylinders";
   else
-    echo "Override file size of $GERS_FILECYLS cylinders provided";
+    echo "$(date) ${BASH_SOURCE##*/} Override file size of $GERS_FILECYLS cylinders provided";
   fi
-  echo "Following temporary files will be used/overwritted when retrieving data (exit if needed):";
-  echo "  &SYSUID..TRANSFER.TRS";
-  echo "  &SYSUID..TRANSFER.PDS";
-  echo "  &SYSUID..TRANSFER.SEQ";
+  echo "$(date) ${BASH_SOURCE##*/} Following temporary files will be used/overwritted when retrieving data (exit if needed):";
+  echo "$(date) ${BASH_SOURCE##*/}   &SYSUID..TRANSFER.TRS";
+  echo "$(date) ${BASH_SOURCE##*/}   &SYSUID..TRANSFER.PDS";
+  echo "$(date) ${BASH_SOURCE##*/}   &SYSUID..TRANSFER.SEQ";
 else
-  echo "FILETYPE of $GERS_FILETYPE given. Either PDS or PS must be specified";
+  echo "$(date) ${BASH_SOURCE##*/} FILETYPE of ' $GERS_FILETYPE ' given. Either PDS or PS must be specified";
   exit 1;
 fi
 
@@ -55,6 +55,7 @@ mkdir prep;
 
 # tailor JCL
 FILENAME=$GERS_FILESEQN.$GERS_FILEMLLQ;
+# 7 times as much space for unpacked file
 EXPCYL=$(( GERS_FILECYLS * 7 ))
 
 mycmdstr1='s/&$FILENM.'/${FILENAME}/'g';
@@ -80,6 +81,15 @@ sed $mycmdstr4 ../JCL/UNTERSE2.jcl > prep/tmp4;
 
 iconv -f ISO8859-1 -t IBM-1047 prep/tmp4 > prep/UNTERSE2.jcl;
 chtag -r prep/UNTERSE2.jcl;
+
+# batch jobs to run TRSMAIN UNPACK under MVS
+echo "$(date) ${BASH_SOURCE##*/} Submit generated JCL to copy USS file to MVS dataset";
+. ./JobSubmitter.sh 'prep/UNTERSE1.jcl' unterse1done  1>> $err_log;
+echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
+. ./JobWaiter.sh 120 unterse1done  1>> $err_log ;
+exitIfError;
+echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
+echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;
 
 }
 
