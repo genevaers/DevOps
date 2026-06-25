@@ -88,9 +88,9 @@ iconv -f ISO8859-1 -t IBM-1047 prep/tmp5 > prep/UNTERS3.jcl;
 chtag -r prep/UNTERS2.jcl;
 
 # append completion status job step
-cat prep/UNTERS1.jcl ../JCL/UNTERSEDONE > prep/UNTERSE1.jcl
-cat prep/UNTERS2.jcl ../JCL/UNTERSEDONE > prep/UNTERSE2.jcl
-cat prep/UNTERS3.jcl ../JCL/UNTERSEDONE > prep/UNTERSE3.jcl
+cat prep/UNTERS1.jcl ../JCL/UNTERSEDONE.jcl > prep/UNTERSE1.jcl
+cat prep/UNTERS2.jcl ../JCL/UNTERSEDONE.jcl > prep/UNTERSE2.jcl
+cat prep/UNTERS3.jcl ../JCL/UNTERSEDONE.jcl > prep/UNTERSE3.jcl
 
 # run UNTERSE1 to copy USS file to MVS dataset
 echo "$(date) ${BASH_SOURCE##*/} Submit generated JCL to copy USS file to MVS dataset";
