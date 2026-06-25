@@ -24,5 +24,3 @@
 //         DSORG=PS,DSNTYPE=BASIC,
 //         SPACE=(CYL,(&FILECYLS.,&FILECYLS.),RLSE),
 //         DISP=(,CATLG,DELETE)
-//*
-//

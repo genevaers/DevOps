@@ -73,23 +73,53 @@ sed $mycmdstr1 ../JCL/UNTERSE1.jcl > prep/tmp1;
 sed $mycmdstr2 prep/tmp1 > prep/tmp2;
 sed $mycmdstr3 prep/tmp2 > prep/tmp3;
 
-#convert output back to EBCDIC again
-iconv -f ISO8859-1 -t IBM-1047 prep/tmp3 > prep/UNTERSE1.jcl;
-chtag -r prep/UNTERSE1.jcl;
-
 sed $mycmdstr4 ../JCL/UNTERSE2.jcl > prep/tmp4;
 
-iconv -f ISO8859-1 -t IBM-1047 prep/tmp4 > prep/UNTERSE2.jcl;
-chtag -r prep/UNTERSE2.jcl;
+sed $mycmdstr4 ../JCL/UNTERSE3.jcl > prep/tmp5;
 
-# batch jobs to run TRSMAIN UNPACK under MVS
+#convert output back to EBCDIC again
+iconv -f ISO8859-1 -t IBM-1047 prep/tmp3 > prep/UNTERS1.jcl;
+chtag -r prep/UNTERS1.jcl;
+
+iconv -f ISO8859-1 -t IBM-1047 prep/tmp4 > prep/UNTERS2.jcl;
+chtag -r prep/UNTERS2.jcl;
+
+iconv -f ISO8859-1 -t IBM-1047 prep/tmp5 > prep/UNTERS3.jcl;
+chtag -r prep/UNTERS2.jcl;
+
+# append completion status job step
+cat prep/UNTERS1.jcl ../JCL/UNTERSEDONE > prep/UNTERSE1.jcl
+cat prep/UNTERS2.jcl ../JCL/UNTERSEDONE > prep/UNTERSE2.jcl
+cat prep/UNTERS3.jcl ../JCL/UNTERSEDONE > prep/UNTERSE3.jcl
+
+# run UNTERSE1 to copy USS file to MVS dataset
 echo "$(date) ${BASH_SOURCE##*/} Submit generated JCL to copy USS file to MVS dataset";
-. ./JobSubmitter.sh 'prep/UNTERSE1.jcl' unterse1done  1>> $err_log;
+. ./JobSubmitter.sh 'prep/UNTERSE1.jcl' untersedone  1>> $err_log;
 echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
-. ./JobWaiter.sh 120 unterse1done  1>> $err_log ;
+. ./JobWaiter.sh 120 untersedone  1>> $err_log ;
 exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
 echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;
+
+# run UNTERSE2 to perform TRSMAIN to UNPACK PDS dataset
+if [ "$GERS_FILETYPE" = "PDS" ]; then
+  echo "$(date) ${BASH_SOURCE##*/} Submit generated JCL to UNTERSE MVS partitioned dataset";
+  . ./JobSubmitter.sh 'prep/UNTERSE2.jcl' untersedone  1>> $err_log;
+  echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
+  . ./JobWaiter.sh 120 untersedone  1>> $err_log ;
+  exitIfError;
+  echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
+  echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;
+else
+# run UNTERSE3 to perform TRSMAIN to UNPACK PS dataset
+  echo "$(date) ${BASH_SOURCE##*/} Submit generated JCL to UNTERSE MVS sequential dataset";
+  . ./JobSubmitter.sh 'prep/UNTERSE3.jcl' untersedone  1>> $err_log;
+  echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
+  . ./JobWaiter.sh 120 untersedone  1>> $err_log ;
+  exitIfError;
+  echo "$(date) ${BASH_SOURCE##*/} Job complete: $GERS_JOBID" ;
+  echo "$(date) ${BASH_SOURCE##*/} Job statusRC: $GERS_JOBSTATUS" ;
+fi
 
 }
 
