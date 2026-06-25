@@ -20,7 +20,7 @@ fi
 sftp -F ~/.ssh_config $USER@$SERVER;
 exitIfError;
 
-echo "$(date) ${BASH_SOURCE##*/} Successfully retrieved file from server $SERVER for $USER";
+echo "$(date) ${BASH_SOURCE##*/} By now you should have retrieved your desired file from server $SERVER";
 ls
 }
 

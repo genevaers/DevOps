@@ -71,7 +71,7 @@ EXPCYL=$(( GERS_FILECYLS * 7 ));
 
 mycmdstr1='s/&$FILENM.'/${FILENAME}/'g';
 mycmdstr2='s/&$FILECY.'/${GERS_FILECYLS}/'g';
-mycmdstr3='s|&$RUNPTH.'|${$GERS_GIT_REPO_DIR}|'g';
+mycmdstr3='s@&$RUNPTH.'@${GERS_GIT_REPO_DIR}@'g';
 mycmdstr4='s/&$FILECY.'/${EXPCYL}/'g';
 
 echo "cmd1: $mycmdstr1";
