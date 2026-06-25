@@ -28,8 +28,8 @@ set -e;
 DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 echo $DEV_REPO ;
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
-echo "GERS_JOBSTATUS=LE4" > unterse1done;
-cat unterse1done;
+echo "GERS_JOBSTATUS=LE4" > untersedone;
+cat untersedone;
 /*
 //CONDGE8 ELSE
 //STEP9N   EXEC PGM=BPXBATCH
@@ -42,8 +42,8 @@ set -e;
 DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
 echo $DEV_REPO ;
 cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
-echo "GERS_JOBSTATUS=GE8" > unterse1done;
-cat unterse1done;
+echo "GERS_JOBSTATUS=GE8" > untersedone;
+cat untersedone;
 /*
 //        ENDIF
 //        ENDIF
