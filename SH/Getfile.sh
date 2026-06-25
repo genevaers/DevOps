@@ -30,8 +30,10 @@ if [ -z "$GERS_FILESEQN.$GERS_FILEMLLQ" ] || [[ "$GERS_FILESEQN.$GERS_FILEMLLQ" 
   exit 1;
 fi
 
+FILENAME=$GERS_FILEPREF.$GERS_FILEMLLQ;
+
 if [ "$GERS_FILETYPE" = "PDS" ] || [ "$GERS_FILETYPE" = "PS" ] || [ "$GERS_FILETYPE" = "TRS" ]; then
-  echo "$(date) ${BASH_SOURCE##*/} Retrieving $GERS_FILETYPE file $GERS_FILESEQN.$GERS_FILEMLLQ from server $GERS_SERVERID for $GERS_SECUREID";
+  echo "$(date) ${BASH_SOURCE##*/} Retrieving $GERS_FILETYPE file $FILENAME from server $GERS_SERVERID for $GERS_SECUREID";
   if [ -z "$GERS_SECUREID" ] || [[ "$GERS_SECUREID" = "" ]]; then
     echo "$(date) ${BASH_SOURCE##*/} Default file size 100 cylinders";
   else
@@ -58,14 +60,14 @@ else
 fi
 
 # retrieve file: involves interactive ssh session
-./SSHfile.sh $GERS_SECUREID $GERS_SERVERID
+./SSHfile.sh $GERS_SECUREID $GERS_SERVERID $FILENAME
 
 # Remove data preparation directory and create fresh
 rm -Rf prep;
 mkdir prep;
 
 # tailor JCL
-FILENAME=$GERS_FILESEQN.$GERS_FILEMLLQ;
+
 # 7 times as much space for unpacked file
 EXPCYL=$(( GERS_FILECYLS * 7 ));
 
