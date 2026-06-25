@@ -23,7 +23,7 @@ if [ -z "$3" ] || [[ "$3" = "" ]]; then
   exit 1;
 fi
 
-echo "$(date) ${BASH_SOURCE##*/} Logon to your site server ($SERVER) and retrieve your desired file: $FILENAME";
+echo "$(date) ${BASH_SOURCE##*/} Logon to your site server ($SERVER) and retrieve desired file: $FILENAME. Afterwards 'quit' to continue.";
 
 sftp -F ~/.ssh_config $USER@$SERVER;
 exitIfError;
