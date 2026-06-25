@@ -76,11 +76,6 @@ mycmdstr2='s/&$FILECY.'/${GERS_FILECYLS}/'g';
 mycmdstr3='s@&$RUNPTH.'@${GERS_GIT_REPO_DIR}@'g';
 mycmdstr4='s/&$FILECY.'/${EXPCYL}/'g';
 
-echo "cmd1: $mycmdstr1";
-echo "cmd2: $mycmdstr2";
-echo "cmd3: $mycmdstr3";
-echo "cmd4: $mycmdstr4";
-
 # perform substitutions which unfortunately still converts to ACII with -W filecodeset=IBM-1047 
 sed $mycmdstr1 ../JCL/UNTERSE1.jcl > prep/tmp1;
 sed $mycmdstr2 prep/tmp1 > prep/tmp2;
