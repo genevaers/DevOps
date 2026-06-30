@@ -95,7 +95,7 @@ iconv -f ISO8859-1 -t IBM-1047 prep/tmp4 > prep/UNTERS2.jcl;
 chtag -r prep/UNTERS2.jcl;
 
 iconv -f ISO8859-1 -t IBM-1047 prep/tmp5 > prep/UNTERS3.jcl;
-chtag -r prep/UNTERS2.jcl;
+chtag -r prep/UNTERS3.jcl;
 
 # append completion status job step
 cat prep/UNTERS1.jcl ../JCL/UNTERSEDONE.jcl > prep/UNTERSE1.jcl;
