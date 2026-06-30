@@ -15,7 +15,7 @@ source ~/.gers.transfer.profile ;
 exitIfError;
 
 # Create the log files
-. ./CreateLogs.sh ;
+. ./CreateLogs.sh "Transfer";
 
 if [ -z "$GERS_SECUREID" ] || [[ "$GERS_SECUREID" = "" ]]; then
   echo "$(date) ${BASH_SOURCE##*/} No secure user ID has been supplied";
@@ -43,14 +43,14 @@ if [ "$GERS_FILETYPE" = "PDS" ] || [ "$GERS_FILETYPE" = "PS" ] || [ "$GERS_FILET
   fi
 
   echo "$(date) ${BASH_SOURCE##*/} Following temporary files will be used/overwritted when retrieving data (exit if needed):";
-  echo "$(date) ${BASH_SOURCE##*/}   &SYSUID..TRANSFER.TRS";
+  echo "$(date) ${BASH_SOURCE##*/}   $LOGNAME.TRANSFER.TRS";
 
   # cases for dataset types
   if [ "$GERS_FILETYPE" = "PDS" ] ; then
-    echo "$(date) ${BASH_SOURCE##*/}   &SYSUID..TRANSFER.PDS";
+    echo "$(date) ${BASH_SOURCE##*/}   $LOGNAME.TRANSFER.PDS";
   fi
   if [ "$GERS_FILETYPE" = "PS" ] ; then
-    echo "$(date) ${BASH_SOURCE##*/}   &SYSUID..TRANSFER.SEQ";
+    echo "$(date) ${BASH_SOURCE##*/}   $LOGNAME.TRANSFER.SEQ";
   fi
   if [ "$GERS_FILETYPE" = "TRS" ] ; then
     echo "$(date) ${BASH_SOURCE##*/} No UNTERSE has been requested (e.g. used for DB2 unload files)";
