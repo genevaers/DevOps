@@ -8,8 +8,10 @@ source ~/.gers.profile ;
 
 echo "$(date) ${BASH_SOURCE##*/} Copying files from server to ZOS";
 
-# Re-read .gers.DB2Schema.profile in case anything changed
+# Re-read profiles in case anything changed
 source ~/.gers.profile ;
+exitIfError;
+source ~/.gers.transfer.profile ;
 exitIfError;
 
 # Create the log files
@@ -25,12 +27,12 @@ if [ -z "$GERS_SERVERID" ] || [[ "$GERS_SERVERID" = "" ]]; then
   exit 1;
 fi
 
-if [ -z "$GERS_FILESEQN.$GERS_FILEMLLQ" ] || [[ "$GERS_FILESEQN.$GERS_FILEMLLQ" = "" ]]; then
+if [ -z "$GERS_FILESEQN.$GERS_FILESUFF" ] || [[ "$GERS_FILESEQN.$GERS_FILESUFF" = "" ]]; then
   echo "$(date) ${BASH_SOURCE##*/} No file name has been supplied";
   exit 1;
 fi
 
-FILENAME=$GERS_FILEPREF.$GERS_FILEMLLQ;
+FILENAME=$GERS_FILEPREF.$GERS_FILESUFF;
 
 if [ "$GERS_FILETYPE" = "PDS" ] || [ "$GERS_FILETYPE" = "PS" ] || [ "$GERS_FILETYPE" = "TRS" ]; then
   echo "$(date) ${BASH_SOURCE##*/} Retrieving $GERS_FILETYPE file $FILENAME from server $GERS_SERVERID for $GERS_SECUREID";
