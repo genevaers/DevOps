@@ -57,7 +57,7 @@ if [ "$GERS_FILETYPE" = "PDS" ] || [ "$GERS_FILETYPE" = "PS" ] || [ "$GERS_FILET
   fi
 
 else
-  echo "$(date) ${BASH_SOURCE##*/} FILETYPE of ' $GERS_FILETYPE ' given. Either PDS, PS, or TRS (raw) must be specified";
+  echo "$(date) ${BASH_SOURCE##*/} FILETYPE of ' $GERS_FILETYPE ' given. Either PDS, PS, or TRS (no unpacking) must be specified";
   exit 1;
 fi
 
