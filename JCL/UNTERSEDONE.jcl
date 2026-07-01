@@ -2,6 +2,9 @@
 //*   Signal completion to calling script
 //*********************************************************************
 //*
+//* DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
+//* echo $DEV_REPO ;
+//* 
 //CONDAB  IF ABEND THEN
 //STEP99   EXEC PGM=BPXBATCH
 //STDOUT   DD   SYSOUT=*
@@ -10,9 +13,8 @@
 sh ;
 set -o xtrace;
 set -e;
-DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
-echo $DEV_REPO ;
-cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
+cd $GERS_GIT_REPO_DIR/DevOps/SH ;
+pwd ;
 echo "GERS_JOBSTATUS=ABD" > unterse1done;
 cat unterse1done;
 /*
@@ -25,9 +27,8 @@ cat unterse1done;
 sh ;
 set -o xtrace;
 set -e;
-DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
-echo $DEV_REPO ;
-cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
+cd $GERS_GIT_REPO_DIR/DevOps/SH ;
+pwd ;
 echo "GERS_JOBSTATUS=LE4" > untersedone;
 cat untersedone;
 /*
@@ -39,9 +40,8 @@ cat untersedone;
 sh ;
 set -o xtrace;
 set -e;
-DEV_REPO=$(basename $GERS_REMOTE_DEV .git);
-echo $DEV_REPO ;
-cd $GERS_GIT_REPO_DIR/$DEV_REPO/SH ;
+cd $GERS_GIT_REPO_DIR/DevOps/SH ;
+pwd ;
 echo "GERS_JOBSTATUS=GE8" > untersedone;
 cat untersedone;
 /*
