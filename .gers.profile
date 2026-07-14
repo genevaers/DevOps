@@ -146,11 +146,15 @@ export GERS_REMOTE_RUN='https://github.com/genevaers/Run-Control-Apps.git'
 
 #     GERS_JAVA_HOME is the directory where Java is installed.
 #
-export GERS_JAVA_HOME='/Java/J17.0_64'
+export GERS_JAVA_HOME='/Java/J21.0_64'
 
 #     GERS_JVM_PROC_LIB is the name of the Java Virtual Machine proc library.
 #
-export GERS_JVM_PROC_LIB='AJV.V11R0M0.PROCLIB'
+export GERS_JVM_PROC_LIB='AJV.V21R0M0.PROCLIB'
+
+#     GERS_JVM_PROC is the name of the Java Virtual Machine proc.
+#
+export GERS_JVM_PROC='JVMPRC21'
 
 #     GERS_JZOS_LOAD_LIB is the name of the JZOS load library.
 #
@@ -276,12 +280,12 @@ export _BPX_SPAWN_SCRIPT='YES'
 export _MAKE_BI='NO'  
 
 #     Your PATH must point to the bin directories for Maven and Java 
-#     (must be Java 11 or greater).  
+#     (must be Java 21 or greater).  
 #
 TEMP=$PATH                             
 PATH=''                                
 PATH=$PATH:/safr/apache-maven-3.8.4/bin
-PATH=$PATH:/Java/J17.0_64/bin          
+PATH=$PATH:/Java/J21.0_64/bin          
 PATH=$PATH:$TEMP                       
 export PATH;                           
 
@@ -297,6 +301,6 @@ export LIBPATH;
 #     Your Maven and Java options must be set to these values. 
 #
 export MAVEN_OPTS=-Dfile.encoding=IBM-1047 
-export JAVA_HOME=/Java/J17.0_64
+export JAVA_HOME=/Java/J21.0_64
 export JAVA_OPTS=-Dfile.encoding=ISO8859-1 
 export IBM_JAVA_OPTIONS=                   
