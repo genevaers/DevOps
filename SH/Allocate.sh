@@ -12,6 +12,7 @@ cat ../JCL/ALLOCDONE.jcl >> ../JCL/ALLOC.jcl;
 
 echo "$(date) ${BASH_SOURCE##*/} Submit JCL to allocate the build data sets";
 . ./JobSubmitter.sh '../JCL/ALLOC.jcl' allocdone 1>> $err_log;
+exitIfError;
 echo "$(date) ${BASH_SOURCE##*/} JobID: $GERS_JOBID" ;
 . ./JobWaiter.sh 60 allocdone 1>> $err_log;
 exitIfError;
