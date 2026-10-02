@@ -53,18 +53,6 @@ else
     rm rcapps-$MINOR_REL.jar;
     ln -s rcapps-$rev.jar rcapps-$MINOR_REL.jar;
 
-    if [ "$GERS_RUN_TESTS" == "Y" ]; then 
-      echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
-      cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
-      exitIfError;
-      ./target/bin/gerstf;
-      exitIfError ;
-      cd out;
-      chtag  -R -c 819 *;
-      chtag  -R -t *;
-      cat fmoverview.txt ;
-    fi 
-
   elif [ "$GERS_BUILD_RCA" == "WIN" ]; then 
   # already built on Windows and uploaded to zOS
     echo "$(date) ${BASH_SOURCE##*/} Copy and link Windows built RCA";
@@ -104,20 +92,20 @@ else
     chmod 775 gerstf;
     exitIfError ;  
 
-    if [ "$GERS_RUN_TESTS" == "Y" ]; then 
-      echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
-      cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
-      exitIfError ;
-      ./target/bin/gerstf ;
-      exitIfError ;
-      cd out;
-      chtag  -R -c 819 *;
-      chtag  -R -t *;
-      cat fmoverview.txt ;  
-    fi 
-
   fi 
 fi
+
+if [ "$GERS_RUN_TESTS" == "Y" ]; then 
+  echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
+  cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
+  exitIfError ;
+  ./target/bin/gerstf ;
+  exitIfError ;
+  cd out;
+  chtag  -R -c 819 *;
+  chtag  -R -t *;
+  cat fmoverview.txt ;  
+fi 
 
 cd $save_pwd ;
 
