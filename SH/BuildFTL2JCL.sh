@@ -9,11 +9,20 @@ if [ "$msgLevel"  == "verbose" ]; then
 fi 
 save_pwd=$(pwd) ;
 
+# Check if we already have this version of the ftl2jcl jar
+cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL2JCL;
+exitIfError ;
+export rev=`grep "<revision>" pom.xml | awk -F'<revision>||</revision>' '{print $2}'`;
+
+if [[ -f "$GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar" ]]; then
+   echo "FTL2JCL $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar already exists."
+fi
+
 # Are we building on zOS ?
 
 if [ "$GERS_BUILD_RCA" == "ZOS" ]; then 
   echo "$(date) ${BASH_SOURCE##*/} Start FTL2JCL Build";
-  cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL2JCL;
+#  cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL2JCL;
   exitIfError ;
   ./build.sh ;
   exitIfError ;
@@ -21,7 +30,7 @@ if [ "$GERS_BUILD_RCA" == "ZOS" ]; then
 elif [ "$GERS_BUILD_RCA" == "WIN" ]; then 
 # already built on Windows and uploaded to zOS
   echo "$(date) ${BASH_SOURCE##*/} Copy and link Windows built FTL2JCL";
-  cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL2JCL;
+#  cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL2JCL;
   exitIfError ;
 
   export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $2}'`;
@@ -32,7 +41,7 @@ elif [ "$GERS_BUILD_RCA" == "WIN" ]; then
   chmod 775 *.jar ;
   exitIfError ;  
 
-  cp -p ./*-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar;       
+  cp ./*-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar;       
   exitIfError ;                                  
 
   cd $GERS_RCA_JAR_DIR;                                                    
