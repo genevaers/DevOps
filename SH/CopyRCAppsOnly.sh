@@ -9,6 +9,17 @@ if [ "$msgLevel"  == "verbose" ]; then
 fi 
 save_pwd=$(pwd) ;
 MINOR_REL="PM"$GERS_BUILD_VERSION$GERS_BUILD_MAJOR$GERS_BUILD_MINOR;
+
+# Check if we already have this version of the rcapps jar in $GERS_RCA_JAR_DIR
+cd $GERS_GIT_REPO_DIR/$RCA_REPO;
+exitIfError ;
+export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $2}'`;
+
+if [[ -f "$GERS_RCA_JAR_DIR/rcapps-$rev.jar" ]]; then
+  echo "$(date) ${BASH_SOURCE##*/} RCApps $GERS_RCA_JAR_DIR/rcapps-$rev.jar already exists."
+  return 0;
+if
+
 # Are we building on zOS ?
 if [ "$GERS_BUILD_RCA" == "WIN" ]; then 
 # already built on Windows and uploaded to zOS
@@ -16,7 +27,7 @@ if [ "$GERS_BUILD_RCA" == "WIN" ]; then
   cd $GERS_GIT_REPO_DIR/$RCA_REPO;
   exitIfError ;
 
-  export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $2}'`;
+  # export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $2}'`;
   echo "$(date) ${BASH_SOURCE##*/} RCA release number $rev";
 
   cd RCApps/target ;
@@ -24,7 +35,7 @@ if [ "$GERS_BUILD_RCA" == "WIN" ]; then
   chtag -b *.jar ;
   chmod 775 *.jar ;
   exitIfError ;  
-  cp -p rcapps-$rev-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/rcapps-$rev.jar;
+  cp rcapps-$rev-jar-with-dependencies.jar $GERS_RCA_JAR_DIR/rcapps-$rev.jar;
   exitIfError ;  
   cd $GERS_RCA_JAR_DIR;
 
