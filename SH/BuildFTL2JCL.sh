@@ -16,6 +16,7 @@ export rev=`grep "<revision>" pom.xml | awk -F'<revision>||</revision>' '{print 
 
 if [[ -f "$GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar" ]]; then
   echo "$(date) ${BASH_SOURCE##*/} FTL2JCL $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar already exists."
+  echo "$(date) ${BASH_SOURCE##*/} To refresh $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar remove it and rerun build."
 else
 # Are we building on zOS ?
 

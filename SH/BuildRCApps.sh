@@ -17,7 +17,8 @@ export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $
 
 if [[ -f "$GERS_RCA_JAR_DIR/rcapps-$rev.jar" ]]; then
   echo "$(date) ${BASH_SOURCE##*/} RCApps $GERS_RCA_JAR_DIR/rcapps-$rev.jar already exists."
-  echo "$(date) ${BASH_SOURCE##*/} Remove $GERS_RCA_JAR_DIR/rcapps-$rev.jar and rerun build if required."
+  echo "$(date) ${BASH_SOURCE##*/} Remove $GERS_RCA_JAR_DIR/rcapps-$rev.jar and rerun build."
+  exit 1;
 else  
   # Are we building on zOS ?
   if [ "$GERS_BUILD_RCA" == "ZOS" ]; then 
@@ -52,6 +53,18 @@ else
     touch rcapps-$MINOR_REL.jar;
     rm rcapps-$MINOR_REL.jar;
     ln -s rcapps-$rev.jar rcapps-$MINOR_REL.jar;
+
+    if [ "$GERS_RUN_TESTS" == "Y" ]; then 
+      echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
+      cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
+      exitIfError;
+      ./target/bin/gerstf;
+      exitIfError ;
+      cd out;
+      chtag  -R -c 819 *;
+      chtag  -R -t *;
+      cat fmoverview.txt ;
+    fi 
 
   elif [ "$GERS_BUILD_RCA" == "WIN" ]; then 
   # already built on Windows and uploaded to zOS
@@ -92,20 +105,20 @@ else
     chmod 775 gerstf;
     exitIfError ;  
 
+    if [ "$GERS_RUN_TESTS" == "Y" ]; then 
+      echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
+      cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
+      exitIfError ;
+      ./target/bin/gerstf ;
+      exitIfError ;
+      cd out;
+      chtag  -R -c 819 *;
+      chtag  -R -t *;
+      cat fmoverview.txt ;  
+    fi 
+
   fi 
 fi
-
-if [ "$GERS_RUN_TESTS" == "Y" ]; then 
-  echo "$(date) ${BASH_SOURCE##*/} Run regression tests";
-  cd $GERS_GIT_REPO_DIR/$RCA_REPO/PETestFramework/;
-  exitIfError ;
-  ./target/bin/gerstf ;
-  exitIfError ;
-  cd out;
-  chtag  -R -c 819 *;
-  chtag  -R -t *;
-  cat fmoverview.txt ;  
-fi 
 
 cd $save_pwd ;
 

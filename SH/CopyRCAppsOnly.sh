@@ -17,7 +17,8 @@ export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $
 
 if [[ -f "$GERS_RCA_JAR_DIR/rcapps-$rev.jar" ]]; then
   echo "$(date) ${BASH_SOURCE##*/} RCApps $GERS_RCA_JAR_DIR/rcapps-$rev.jar already exists."
-  echo "$(date) ${BASH_SOURCE##*/} Remove $GERS_RCA_JAR_DIR/rcapps-$rev.jar and rerun build if required."
+  echo "$(date) ${BASH_SOURCE##*/} Remove $GERS_RCA_JAR_DIR/rcapps-$rev.jar and rerun copy."
+  exit 1;
 else
   # Are we building on zOS ?
   if [ "$GERS_BUILD_RCA" == "WIN" ]; then 
