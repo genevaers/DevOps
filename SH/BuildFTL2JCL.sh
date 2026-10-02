@@ -16,24 +16,18 @@ export rev=`grep "<revision>" pom.xml | awk -F'<revision>||</revision>' '{print 
 
 if [[ -f "$GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar" ]]; then
   echo "$(date) ${BASH_SOURCE##*/} FTL2JCL $GERS_RCA_JAR_DIR/ftl2jcl-$rev.jar already exists."
-
+else
 # Are we building on zOS ?
 
   if [ "$GERS_BUILD_RCA" == "ZOS" ]; then 
     echo "$(date) ${BASH_SOURCE##*/} Start FTL2JCL Build";
-#  cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL2JCL;
-    exitIfError ;
     ./build.sh ;
     exitIfError ;
     
   elif [ "$GERS_BUILD_RCA" == "WIN" ]; then 
 # already built on Windows and uploaded to zOS
     echo "$(date) ${BASH_SOURCE##*/} Copy and link Windows built FTL2JCL";
-#  cd $GERS_GIT_REPO_DIR/$DEV_REPO/FTL2JCL;
-    exitIfError ;
-
-#    export rev=`grep "<revision>" pom.xml | awk -F'<revision>|</revision>' '{print $2}'`;
-#    echo "FTL2JCL release number" $rev;
+    echo "FTL2JCL release number" $rev;
 
     cd target ;
     chtag -b *.jar ;
